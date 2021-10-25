@@ -1,0 +1,21 @@
+<div class="bg-light text-dark p-2 mb-1"
+     data-bs-toggle="collapse">
+  <div class="d-flex justify-content-between align-items-center cursor-pointer" (click)="onTripClick()">
+    <div>
+      <div><span class="fw-bold fs-5">{{ trip.name }}</span> by {{ trip.author }}</div>
+    </div>
+    <div>
+      {{ trip.likes }} <i class="bi bi-hand-thumbs-up"></i>,
+      {{ trip.favourites }} <i class="bi bi-star"></i>,
+      {{ trip.costs }}$, {{ trip.minutes }} min
+      <i [class]="'bi ' + (withDetails ? 'bi-chevron-up' : 'bi-chevron-down')"></i>
+    </div>
+  </div>
+  <div [class]="withDetails ? '' : 'd-none'">
+    <hr class="m-2" />
+    <div class="d-flex align-items-end justify-content-between">
+      <div class="trip-description">Description: {{ trip.description }}</div>
+      <button class="btn btn-success">Trip details</button>
+    </div>
+  </div>
+</div>
