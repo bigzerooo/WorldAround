@@ -8,7 +8,7 @@ import { TripInfo } from './trip-info';
 })
 export class TripsListComponent implements OnInit {
   @Input() title: string = '';
-  @Input() listName: string = '';
+
   trips: TripInfo[] = [
     new TripInfo(1, 'My first trip', 'Denys', 0, 0, 0, 30, "Some description"),
     new TripInfo(2, 'Best trip', 'Sasha', 0, 0, 0, 120, "Some description"),
