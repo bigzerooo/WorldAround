@@ -12,6 +12,7 @@
 
 # profiling files
 chrome-profiler-events*.json
+Web.config
 
 # IDEs and editors
 /.idea

@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MongoDB", "MongoDB", "{F99C
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "world-around", "world-around\", "{E58660DE-5A52-478A-A835-4A1645A59A6A}"
 	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_58955"
 		Debug.AspNetCompiler.PhysicalPath = "world-around\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_58955\"
