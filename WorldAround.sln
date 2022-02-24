@@ -3,40 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MongoDB", "MongoDB\MongoDB.csproj", "{AC646E25-BA86-4487-B3B7-2B0814DBAD78}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldAround.API", "WorldAround.API\WorldAround.API.csproj", "{9BF39CF3-C6D4-4E3A-BFCF-DB3577CFC837}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ClientApp", "ClientApp", "{F205228A-3604-4F6A-B3F4-9621FF19BB47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldAround.Application", "WorldAround.Application\WorldAround.Application.csproj", "{440FF5E6-5417-4147-A097-FA785FCE1B41}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MongoDB", "MongoDB", "{F99CE200-9288-4107-B239-35D4119FE62A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldAround.Infrastructure", "WorldAround.Infrastructure\WorldAround.Infrastructure.csproj", "{5493504B-F9CD-49F7-800D-3D755BF8F727}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "world-around", "world-around\", "{E58660DE-5A52-478A-A835-4A1645A59A6A}"
-	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_58955"
-		Debug.AspNetCompiler.PhysicalPath = "world-around\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_58955\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/localhost_58955"
-		Release.AspNetCompiler.PhysicalPath = "world-around\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_58955\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "58955"
-		SlnRelativePath = "world-around\"
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldAround.API", "WorldAround.API\WorldAround.API.csproj", "{9BF39CF3-C6D4-4E3A-BFCF-DB3577CFC837}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldAround.Application", "WorldAround.Application\WorldAround.Application.csproj", "{440FF5E6-5417-4147-A097-FA785FCE1B41}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldAround.Infrastructure", "WorldAround.Infrastructure\WorldAround.Infrastructure.csproj", "{5493504B-F9CD-49F7-800D-3D755BF8F727}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldAround.Domain", "WorldAround.Domain\WorldAround.Domain.csproj", "{953D6EAD-3B1F-4488-B6F3-2222BFB43614}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldAround.Domain", "WorldAround.Domain\WorldAround.Domain.csproj", "{953D6EAD-3B1F-4488-B6F3-2222BFB43614}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,14 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AC646E25-BA86-4487-B3B7-2B0814DBAD78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AC646E25-BA86-4487-B3B7-2B0814DBAD78}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AC646E25-BA86-4487-B3B7-2B0814DBAD78}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AC646E25-BA86-4487-B3B7-2B0814DBAD78}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E58660DE-5A52-478A-A835-4A1645A59A6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E58660DE-5A52-478A-A835-4A1645A59A6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E58660DE-5A52-478A-A835-4A1645A59A6A}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{E58660DE-5A52-478A-A835-4A1645A59A6A}.Release|Any CPU.Build.0 = Debug|Any CPU
 		{9BF39CF3-C6D4-4E3A-BFCF-DB3577CFC837}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9BF39CF3-C6D4-4E3A-BFCF-DB3577CFC837}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9BF39CF3-C6D4-4E3A-BFCF-DB3577CFC837}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -71,10 +36,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{AC646E25-BA86-4487-B3B7-2B0814DBAD78} = {F99CE200-9288-4107-B239-35D4119FE62A}
-		{E58660DE-5A52-478A-A835-4A1645A59A6A} = {F205228A-3604-4F6A-B3F4-9621FF19BB47}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9C90B898-9E51-417A-A840-B353479CBDF9}
