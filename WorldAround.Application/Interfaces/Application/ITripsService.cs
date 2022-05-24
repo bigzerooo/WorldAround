@@ -1,9 +1,8 @@
 ﻿using WorldAround.Domain.Models;
 
-namespace WorldAround.Application.Interfaces.Application
+namespace WorldAround.Application.Interfaces.Application;
+
+public interface ITripsService
 {
-    public interface ITripsService
-    {
-        Task<IReadOnlyCollection<GetTripsModel>> GetTrips();
-    }
+    Task<IReadOnlyCollection<GetTripsModel>> GetTrips();
 }

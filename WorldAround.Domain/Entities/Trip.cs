@@ -6,7 +6,10 @@ public class Trip
     public string Name { get; set; }
     public string Description { get; set; }
 
+    //public int AuthorId { get; set; }
     public DateTime CreateDate { get; set; }
 
+    //public User Author { get; set; }
     public List<Pin> Pins { get; set; }
+    public List<Event> Events { get; set; }
 }
