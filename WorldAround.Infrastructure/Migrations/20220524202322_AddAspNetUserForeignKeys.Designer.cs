@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorldAround.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using WorldAround.Infrastructure.Data;
 namespace WorldAround.Infrastructure.Migrations
 {
     [DbContext(typeof(WorldAroundDbContext))]
-    partial class WorldAroundDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220524202322_AddAspNetUserForeignKeys")]
+    partial class AddAspNetUserForeignKeys
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -177,7 +179,7 @@ namespace WorldAround.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Attractions", (string)null);
+                    b.ToTable("Attractions");
                 });
 
             modelBuilder.Entity("WorldAround.Domain.Entities.Event", b =>
@@ -195,7 +197,7 @@ namespace WorldAround.Infrastructure.Migrations
 
                     b.HasIndex("TripId");
 
-                    b.ToTable("Events", (string)null);
+                    b.ToTable("Events");
                 });
 
             modelBuilder.Entity("WorldAround.Domain.Entities.Participant", b =>
@@ -213,7 +215,7 @@ namespace WorldAround.Infrastructure.Migrations
 
                     b.HasIndex("EventId");
 
-                    b.ToTable("Participants", (string)null);
+                    b.ToTable("Participants");
                 });
 
             modelBuilder.Entity("WorldAround.Domain.Entities.Pin", b =>
@@ -251,7 +253,7 @@ namespace WorldAround.Infrastructure.Migrations
 
                     b.HasIndex("TripId");
 
-                    b.ToTable("Pins", (string)null);
+                    b.ToTable("Pins");
                 });
 
             modelBuilder.Entity("WorldAround.Domain.Entities.Trip", b =>
@@ -278,7 +280,7 @@ namespace WorldAround.Infrastructure.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.ToTable("Trips", (string)null);
+                    b.ToTable("Trips");
                 });
 
             modelBuilder.Entity("WorldAround.Domain.Entities.User", b =>
