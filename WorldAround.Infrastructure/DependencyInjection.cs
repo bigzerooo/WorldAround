@@ -10,7 +10,7 @@ namespace WorldAround.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            var connectionString = configuration.GetConnectionString("WorldAroundDb");
+            var connectionString = configuration.GetConnectionString("WorldAround");
             services.AddDbContext<WorldAroundDbContext>(options => options.UseSqlServer(connectionString));
             services.AddScoped<IWorldAroundDbContext, WorldAroundDbContext>();
 

@@ -12,7 +12,6 @@ namespace WorldAround.Infrastructure.Data
         public WorldAroundDbContext(DbContextOptions<WorldAroundDbContext> options)
             : base(options)
         {
-
         }
     }
 }
