@@ -4,5 +4,5 @@ public enum ParticipantRole
 {
     Owner,
     Moderator,
-    Subcriber
+    Subscriber
 }
