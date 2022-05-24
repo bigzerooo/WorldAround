@@ -1,0 +1,104 @@
+p {
+    margin: 0px;
+}
+
+.background {
+    width: 100%;
+    background-color: #2B2D2E;
+    min-height: 86px;
+    padding: 20px 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 36px;
+    color: white;
+    cursor: pointer;
+}
+
+.links {
+    color: #B9C2C7;
+    font-weight: bold;
+    font-size: 24px;
+    display: flex;
+    width: 342px;
+    justify-content: space-between;
+
+    & > p {
+        cursor: pointer;
+
+        &:hover {
+            color: white;
+        }
+    }
+}
+
+.search {
+    width: 507px;
+    display: flex;
+    
+    & > input, & > div {
+        height: 45px;
+        background-color: #B9C2C7;
+        color: #2B2D2E;
+        display: flex;
+        align-items: center;
+        font-size: 24px;
+        color: #2B2D2E;
+        padding: 7px 8px;
+        border: #2B2D2E 0.5px solid;
+
+        &:focus, &:hover {
+            background-color: white;
+        }
+
+        &::placeholder {
+            font-size: 24px;
+            color: #2B2D2E;
+        }
+    }
+
+    & > div {
+        cursor: pointer;
+    }
+}
+
+.caret {
+    margin-left: 10px;
+    margin-top: 10px;
+    width: 20px;
+    height: 20px;
+    background-image: url("/assets/icons/chevron-down.svg");
+    background-size: cover;
+}
+
+.search-button {
+    width: 45px;
+    height: 45px;
+
+    &>div {
+        width: 25px;
+        height: 25px;
+        background-image: url("/assets/icons/search.svg");
+        background-size: cover;
+        filter: invert(15%) sepia(6%) saturate(309%) hue-rotate(155deg) brightness(99%) contrast(92%);
+    }
+}
+
+.profile {
+    cursor: pointer;
+    color: #B9C2C7;
+    font-weight: bold;
+    font-size: 24px;
+
+    &:hover {
+        color: white;
+    }
+}
+
+.active {
+    color: white;
+}
