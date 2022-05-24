@@ -11,8 +11,5 @@ public class WorldAroundDbContext : DbContext, IWorldAroundDbContext
     public DbSet<Attraction> Attractions { get; set; }
 
     public WorldAroundDbContext(DbContextOptions<WorldAroundDbContext> options)
-        : base(options)
-    {
-
-    }
+        : base(options) { }
 }
