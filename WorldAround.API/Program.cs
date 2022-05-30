@@ -9,9 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 var configuration = builder.Configuration;
 
-services.AddApi(configuration);
-services.AddApplication();
 services.AddInfrastructure(configuration);
+services.AddApplication();
+services.AddApi(configuration);
 
 services.AddCors(options =>
 {

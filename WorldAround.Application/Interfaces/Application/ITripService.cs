@@ -2,7 +2,7 @@
 
 namespace WorldAround.Application.Interfaces.Application;
 
-public interface ITripsService
+public interface ITripService
 {
     Task<IReadOnlyCollection<GetTripsModel>> GetTrips();
     Task CreateTrip(CreateTripModel model);
