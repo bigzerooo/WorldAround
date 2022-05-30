@@ -15,4 +15,8 @@ export class TripsGateway {
   public createTrip(createTripModel: any): Observable<any> {
     return this.http.post(this.baseUrl, createTripModel);
   }
+
+  public getTrips(userId: number): Observable<any>{
+    return this.http.get(`${this.baseUrl}?userId=${userId}`);
+  }
 }

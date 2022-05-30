@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CookieModule } from 'ngx-cookie';
 
 import { AppComponent } from './app.component';
@@ -13,12 +14,14 @@ import { TripsComponent } from './components/trips/trips.component';
 import { AttractionsComponent } from './components/attractions/attractions.component';
 import { MyProfileComponent } from './components/my-profile/my-profile.component';
 import { UserInfoComponent } from './components/my-profile/user-info/user-info.component';
-import { TripInfoComponent } from './components/my-profile/trip-info/trip-info.component';
+import { TripsInfoComponent } from './components/my-profile/trips-info/trips-info.component';
 import { CreateTripComponent } from './components/trips/create-trip/create-trip.component';
 import { CreateTripMapComponent } from './components/trips/create-trip/create-trip-map/create-trip-map.component';
 import { AuthorizationService } from 'src/services/authorization.service';
 import { AuthGuard } from 'src/services/auth-guard.service';
 import { JwtModule, JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
+
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,7 @@ import { JwtModule, JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
     AttractionsComponent,
     MyProfileComponent,
     UserInfoComponent,
-    TripInfoComponent,
+    TripsInfoComponent,
     CreateTripComponent,
     CreateTripMapComponent
   ],
@@ -39,6 +42,8 @@ import { JwtModule, JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
     CookieModule.withOptions(),
     JwtModule
   ],

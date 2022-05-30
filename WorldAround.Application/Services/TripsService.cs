@@ -20,9 +20,12 @@ public class TripsService : ITripsService
         _mapper = mapper;
     }
 
-    public async Task<IReadOnlyCollection<GetTripsModel>> GetTrips()
+    public async Task<IReadOnlyCollection<GetTripsModel>> GetTrips(int userId)
     {
-        var trips = await _context.Trips.ToListAsync();
+        var trips = await _context.Trips
+            .Where(x => x.AuthorId == userId)
+            .Include(x => x.Pins)
+            .ToListAsync();
 
         return _mapper.Map<IReadOnlyCollection<GetTripsModel>>(trips);
     }
