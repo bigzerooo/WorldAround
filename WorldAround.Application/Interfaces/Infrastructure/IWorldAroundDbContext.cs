@@ -16,4 +16,6 @@ public interface IWorldAroundDbContext
     DbSet<Rating> Ratings { get; set; }
     DbSet<Trip> Trips { get; set; }
     DbSet<TripEventLink> TripEventLinks { get; set; }
+
+    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

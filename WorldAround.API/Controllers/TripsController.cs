@@ -4,13 +4,13 @@ using WorldAround.Domain.Models;
 
 namespace WorldAround.API.Controllers;
 
-[Route("api/[controller]/[action]")]
+[Route("api/[controller]")]
 [ApiController]
 public class TripsController : ControllerBase
 {
-    private readonly ITripService _tripService;
+    private readonly ITripsService _tripService;
 
-    public TripsController(ITripService tripService)
+    public TripsController(ITripsService tripService)
     {
         _tripService = tripService;
     }
@@ -21,5 +21,13 @@ public class TripsController : ControllerBase
         var trips = await _tripService.GetTrips();
 
         return Ok(trips);
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> CreateTrip(CreateTripModel model)
+    {
+        await _tripService.CreateTrip(model);
+
+        return Ok();
     }
 }
