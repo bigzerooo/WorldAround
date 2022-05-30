@@ -4,6 +4,9 @@ namespace WorldAround.Application.Interfaces.Application;
 
 public interface ITripsService
 {
-    Task<IReadOnlyCollection<GetTripsModel>> GetTrips(int userId);
-    Task CreateTrip(CreateTripModel model);
+    Task<GetTripsModel> GetTripAsync(int tripId);
+    Task<IReadOnlyCollection<GetTripsModel>> GetTripsAsync(int userId);
+    Task<IReadOnlyCollection<GetTripsModel>> SearchTripsAsync(string searchValue);
+    Task CreateTripAsync(CreateTripModel model);
+    Task<CommentModel> AddCommentAsync(AddTripCommentModel model);
 }

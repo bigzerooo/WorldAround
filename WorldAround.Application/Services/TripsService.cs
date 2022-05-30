@@ -20,7 +20,18 @@ public class TripsService : ITripsService
         _mapper = mapper;
     }
 
-    public async Task<IReadOnlyCollection<GetTripsModel>> GetTrips(int userId)
+    public async Task<GetTripsModel> GetTripAsync(int tripId)
+    {
+        var trip = await _context.Trips
+            .Include(x => x.Pins)
+            .Include(x => x.Comments)
+            .ThenInclude(x => x.Author)
+            .FirstOrDefaultAsync(x => x.Id == tripId);
+
+        return _mapper.Map<GetTripsModel>(trip);
+    }
+
+    public async Task<IReadOnlyCollection<GetTripsModel>> GetTripsAsync(int userId)
     {
         var trips = await _context.Trips
             .Where(x => x.AuthorId == userId)
@@ -30,13 +41,23 @@ public class TripsService : ITripsService
         return _mapper.Map<IReadOnlyCollection<GetTripsModel>>(trips);
     }
 
-    public async Task CreateTrip(CreateTripModel model)
+    public async Task<IReadOnlyCollection<GetTripsModel>> SearchTripsAsync(string searchValue)
+    {
+        var trips = await _context.Trips
+            .Where(x => x.Name.ToLower().Contains(searchValue.ToLower())
+                        || x.Description.ToLower().Contains(searchValue.ToLower()))
+            .ToListAsync();
+
+        return _mapper.Map<IReadOnlyCollection<GetTripsModel>>(trips);
+    }
+
+    public async Task CreateTripAsync(CreateTripModel model)
     {
         var trip = new Trip
         {
             Name = model.Name,
             Description = model.Description,
-            //Add author id,
+            AuthorId = model.AuthorId,
             CreateDate = DateTime.Now,
             Pins = model.Pins.Select(x => new Pin
             {
@@ -50,5 +71,25 @@ public class TripsService : ITripsService
 
         _context.Trips.Add(trip);
         await _context.SaveChangesAsync();
+    }
+
+    public async Task<CommentModel> AddCommentAsync(AddTripCommentModel model)
+    {
+        var comment = new Comment
+        {
+            AuthorId = model.UserId,
+            CreateDate = DateTime.Now,
+            Text = model.Text,
+            TripId = model.TripId
+        };
+
+        _context.Comments.Add(comment);
+        await _context.SaveChangesAsync();
+
+        var createdComment = await _context.Comments
+            .Include(x => x.Author)
+            .FirstOrDefaultAsync(x => x.Id == comment.Id);
+
+        return _mapper.Map<CommentModel>(createdComment);
     }
 }

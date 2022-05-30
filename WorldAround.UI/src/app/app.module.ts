@@ -5,7 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
-import { TripsGridComponent } from './components/trips-grid/trips-grid.component';
 import { HeaderComponent } from './components/header/header.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './components/home/home.component';
@@ -18,11 +17,12 @@ import { CreateTripComponent } from './components/trips/create-trip/create-trip.
 import { CreateTripMapComponent } from './components/trips/create-trip/create-trip-map/create-trip-map.component';
 
 import { ToastrModule } from 'ngx-toastr';
+import { TripDetailComponent } from './components/trips/trip-detail/trip-detail.component';
+import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TripsGridComponent,
     HeaderComponent,
     HomeComponent,
     TripsComponent,
@@ -31,7 +31,9 @@ import { ToastrModule } from 'ngx-toastr';
     UserInfoComponent,
     TripsInfoComponent,
     CreateTripComponent,
-    CreateTripMapComponent
+    CreateTripMapComponent,
+    TripDetailComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,56 @@
+.map-container {
+    height: 600px;
+    width: 940px;
+    margin-top: 20px;
+}
+
+.map-frame {
+    border: 2px solid black;
+    height: 100%;
+}
+
+#map2 {
+    height: 100%;
+}
+
+.info-section{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 940px;
+    border-bottom: 1px solid black;
+}
+
+.content {
+    margin: 20px 200px;
+}
+
+.image {
+    background-image: url("/assets/images/userPlaceholder.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    margin-right: 10px;
+}
+
+.comment-name {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.comment {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.comment-add {
+    width: 940px;
+    display: flex;
+    margin-bottom: 20px;
+
+    &> textarea {
+        width: 500px;
+        margin-right: 20px;
+    }
+}

@@ -1,0 +1,36 @@
+<div class="content">
+    
+    <h2 class="name">{{trip?.name}}</h2>
+
+    <div class="map-container">
+        <div class="map-frame">
+            <div id="map2"></div>
+        </div>
+    </div>
+
+    <h5 class="info-section">Description</h5>
+    <p>{{trip?.description}}</p>
+
+    <h5 class="info-section">Pins</h5>
+    <div *ngFor="let pin of trip?.pins">
+        <h6>{{pin.seqNo}}) {{pin.name}} ({{pin.latitude}}, {{pin.longitude}})</h6>
+        <p>{{pin.description}}</p>
+    </div>
+
+    <h5 class="info-section">Comments</h5>
+
+    <div class="comment-add">
+        <textarea placeholder="Comment..." [(ngModel)]="commentText"></textarea>
+        <button class="btn btn-secondary" (click)="addComment()">Create new comment</button>
+    </div>
+
+    <div *ngFor="let comment of trip?.comments" class="comment">
+        <div class="image"></div>
+        <div>
+            <span class="comment-name">{{comment.firstName}} {{comment.lastName}}</span>
+            <span>Created: {{comment.createDate}}</span>
+            <p>{{comment.text}}</p>
+        </div>
+    </div>
+
+</div>
