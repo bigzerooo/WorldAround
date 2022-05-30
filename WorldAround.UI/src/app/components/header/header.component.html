@@ -1,10 +1,10 @@
 <div class="background">
-    <p class="logo">World around</p>
+    <p class="logo" routerLink="/home">World around</p>
 
     <div class="links">
-        <p class="active">Home</p>
-        <p>Trips</p>
-        <p>Attractions</p>
+        <p routerLink="/home" routerLinkActive="active">Home</p>
+        <p routerLink="/trips" routerLinkActive="active">Trips</p>
+        <p routerLink="/attractions" routerLinkActive="active">Attractions</p>
     </div>
 
     <div class="search">
@@ -18,5 +18,5 @@
         </div>
     </div>
     
-    <p class="profile">My Profile</p>
+    <p class="profile" routerLink="/my-profile" routerLinkActive="active">My Profile</p>
 </div>
