@@ -2,25 +2,24 @@
 using WorldAround.Application.Interfaces.Application;
 using WorldAround.Domain.Models;
 
-namespace WorldAround.API.Controllers
+namespace WorldAround.API.Controllers;
+
+[Route("api/[controller]/[action]")]
+[ApiController]
+public class TripsController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class TripsController : ControllerBase
+    private readonly ITripService _tripService;
+
+    public TripsController(ITripService tripService)
     {
-        private readonly ITripsService _tripService;
+        _tripService = tripService;
+    }
 
-        public TripsController(ITripsService tripService)
-        {
-            _tripService = tripService;
-        }
+    [HttpGet]
+    public async Task<ActionResult<IReadOnlyCollection<GetTripsModel>>> GetTrips()
+    {
+        var trips = await _tripService.GetTrips();
 
-        [HttpGet]
-        public async Task<ActionResult<IReadOnlyCollection<GetTripsModel>>> GetTrips()
-        {
-            var trips = await _tripService.GetTrips();
-
-            return Ok(trips);
-        }
+        return Ok(trips);
     }
 }

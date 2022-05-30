@@ -5,7 +5,7 @@ namespace WorldAround.Application.Interfaces.Application;
 
 public interface IAuthenticationService
 {
-    Task<SignInResult> AuthenticateAsync(LoginModel loginModel);
+    Task<AuthenticationResultModel> AuthenticateAsync(LoginModel loginModel);
 
     Task<IdentityResult> CreateAsync(RegistrationModel registrationModel);
 

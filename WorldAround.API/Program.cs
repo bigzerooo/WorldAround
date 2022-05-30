@@ -9,9 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 var configuration = builder.Configuration;
 
-services.AddApi(configuration);
-services.AddApplication();
 services.AddInfrastructure(configuration);
+services.AddApplication();
+services.AddApi(configuration);
 
 var app = builder.Build();
 
@@ -24,9 +24,14 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseRouting();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
+app.UseEndpoints(e =>
+{
+    e.MapControllers();
+});
 
 app.Run();
