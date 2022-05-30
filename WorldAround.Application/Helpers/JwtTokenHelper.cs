@@ -22,6 +22,7 @@ public class JwtTokenHelper : IJwtTokenHelper
         var claims = new List<Claim>
         {
             new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            new("id", user.Id.ToString()),
             new(ClaimTypes.Name, user.UserName),
             new(ClaimTypes.Email, user.Email),
         };

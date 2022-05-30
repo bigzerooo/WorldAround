@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CookieModule } from 'ngx-cookie';
 
 import { AppComponent } from './app.component';
 import { TripsGridComponent } from './components/trips-grid/trips-grid.component';
@@ -16,6 +17,9 @@ import { UserInfoComponent } from './components/my-profile/user-info/user-info.c
 import { TripsInfoComponent } from './components/my-profile/trips-info/trips-info.component';
 import { CreateTripComponent } from './components/trips/create-trip/create-trip.component';
 import { CreateTripMapComponent } from './components/trips/create-trip/create-trip-map/create-trip-map.component';
+import { AuthorizationService } from 'src/services/authorization.service';
+import { AuthGuard } from 'src/services/auth-guard.service';
+import { JwtModule, JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 import { ToastrModule } from 'ngx-toastr';
 
@@ -40,8 +44,15 @@ import { ToastrModule } from 'ngx-toastr';
     HttpClientModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot()
+    CookieModule.withOptions(),
+    JwtModule
   ],
-  providers: [],
+  providers: [
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS},
+    JwtHelperService,
+    AuthorizationService,
+    AuthGuard,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
