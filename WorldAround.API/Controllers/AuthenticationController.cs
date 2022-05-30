@@ -12,7 +12,7 @@ public class AuthenticationController : ControllerBase
 
     public AuthenticationController(
         IAuthenticationService authService
-        , IUserService userService)
+        , IUsersService usersService)
     {
         _authService = authService;
     }

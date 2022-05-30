@@ -5,11 +5,11 @@ using WorldAround.Domain.Entities;
 
 namespace WorldAround.Application.Services;
 
-public class RoleService : IRoleService
+public class RolesService : IRolesService
 {
     private readonly RoleManager<Role> _roleManager;
 
-    public RoleService(RoleManager<Role> roleManager)
+    public RolesService(RoleManager<Role> roleManager)
     {
         _roleManager = roleManager;
     }

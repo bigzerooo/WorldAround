@@ -2,7 +2,7 @@
 
 namespace WorldAround.Application.Interfaces.Application;
 
-public interface IUserService
+public interface IUsersService
 {
     Task<IList<string>> AddToRoleAsync(int userId, string role);
 

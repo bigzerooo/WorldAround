@@ -2,7 +2,7 @@
 
 namespace WorldAround.Application.Interfaces.Application;
 
-public interface IRoleService
+public interface IRolesService
 {
     Task<IReadOnlyCollection<Role>> GetAllRolesAsync();
 
