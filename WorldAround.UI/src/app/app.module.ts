@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CookieModule } from 'ngx-cookie';
 
 import { AppComponent } from './app.component';
 import { TripsGridComponent } from './components/trips-grid/trips-grid.component';
@@ -15,6 +16,9 @@ import { UserInfoComponent } from './components/my-profile/user-info/user-info.c
 import { TripInfoComponent } from './components/my-profile/trip-info/trip-info.component';
 import { CreateTripComponent } from './components/trips/create-trip/create-trip.component';
 import { CreateTripMapComponent } from './components/trips/create-trip/create-trip-map/create-trip-map.component';
+import { AuthorizationService } from 'src/services/authorization.service';
+import { AuthGuard } from 'src/services/auth-guard.service';
+import { JwtModule, JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 @NgModule({
   declarations: [
@@ -34,9 +38,16 @@ import { CreateTripMapComponent } from './components/trips/create-trip/create-tr
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    CookieModule.withOptions(),
+    JwtModule
   ],
-  providers: [],
+  providers: [
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS},
+    JwtHelperService,
+    AuthorizationService,
+    AuthGuard,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
