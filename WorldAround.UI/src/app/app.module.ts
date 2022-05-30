@@ -9,6 +9,10 @@ import { HomeComponent } from './components/home/home.component';
 import { TripsComponent } from './components/trips/trips.component';
 import { AttractionsComponent } from './components/attractions/attractions.component';
 import { MyProfileComponent } from './components/my-profile/my-profile.component';
+import { UserInfoComponent } from './components/my-profile/user-info/user-info.component';
+import { TripInfoComponent } from './components/my-profile/trip-info/trip-info.component';
+import { CreateTripComponent } from './components/trips/create-trip/create-trip.component';
+import { CreateTripMapComponent } from './components/trips/create-trip/create-trip-map/create-trip-map.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +22,11 @@ import { MyProfileComponent } from './components/my-profile/my-profile.component
     HomeComponent,
     TripsComponent,
     AttractionsComponent,
-    MyProfileComponent
+    MyProfileComponent,
+    UserInfoComponent,
+    TripInfoComponent,
+    CreateTripComponent,
+    CreateTripMapComponent
   ],
   imports: [
     BrowserModule,
