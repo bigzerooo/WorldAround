@@ -5,25 +5,25 @@ namespace WorldAround.API.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UsersController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly IUsersService _usersService;
 
-        public UserController(IUserService userService)
+        public UsersController(IUsersService usersService)
         {
-            _userService = userService;
+            _usersService = usersService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _userService.GetAllAsync());
+            return Ok(await _usersService.GetAllAsync());
         }
 
         [HttpGet]
         public async Task<IActionResult> GetById(int id)
         {
-            var user = await _userService.GetAsync(id);
+            var user = await _usersService.GetAsync(id);
 
             return user != null ? Ok(user) : NotFound();
         }
@@ -31,7 +31,7 @@ namespace WorldAround.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetByName(string userName)
         {
-            var user = await _userService.GetByNameAsync(userName);
+            var user = await _usersService.GetByNameAsync(userName);
 
             return user != null ? Ok(user) : NotFound();
         }
@@ -39,13 +39,13 @@ namespace WorldAround.API.Controllers
         [HttpPost]
         public async Task<IActionResult> AddToRole(int userId, string role)
         {
-            return Ok(await _userService.AddToRoleAsync(userId, role));
+            return Ok(await _usersService.AddToRoleAsync(userId, role));
         }
 
         [HttpDelete]
         public async Task<IActionResult> RemoveFromRole(int userId, string role)
         {
-            return Ok(await _userService.AddToRoleAsync(userId, role));
+            return Ok(await _usersService.AddToRoleAsync(userId, role));
         }
     }
 }

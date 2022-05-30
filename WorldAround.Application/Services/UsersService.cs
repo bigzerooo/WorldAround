@@ -8,19 +8,16 @@ using WorldAround.Domain.Models;
 
 namespace WorldAround.Application.Services;
 
-public class UserService : IUserService
+public class UsersService : IUsersService
 {
     private readonly IMapper _mapper;
     private readonly UserManager<User> _userManager;
-    private readonly RoleManager<Role> _roleManager;
 
-    public UserService(
+    public UsersService(
         IMapper mapper
-        , UserManager<User> userManager
-        , RoleManager<Role> roleManager)
+        , UserManager<User> userManager)
     {
         _userManager = userManager;
-        _roleManager = roleManager;
         _mapper = mapper;
     }
 

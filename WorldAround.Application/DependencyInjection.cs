@@ -12,9 +12,9 @@ public static class DependencyInjection
     {
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddScoped<ITripService, TripService>();
-        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IUsersService, UsersService>();
         services.AddScoped<IAuthenticationService, AuthenticationService>();
-        services.AddScoped<IRoleService, RoleService>();
+        services.AddScoped<IRolesService, RolesService>();
         services.AddScoped<IJwtTokenHelper, JwtTokenHelper>();
 
         return services;
