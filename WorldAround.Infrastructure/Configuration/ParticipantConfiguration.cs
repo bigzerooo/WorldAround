@@ -8,6 +8,16 @@ public class ParticipantConfiguration : IEntityTypeConfiguration<Participant>
 {
     public void Configure(EntityTypeBuilder<Participant> builder)
     {
-        builder.HasKey(x => new { x.UserId, x.EventId });
+        builder.HasKey(p => new { p.UserId, p.EventId });
+
+        builder.HasOne(p => p.Event)
+            .WithMany(e => e.Participants)
+            .HasForeignKey(p => p.EventId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasOne(p => p.User)
+            .WithMany(u => u.Participants)
+            .HasForeignKey(p => p.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

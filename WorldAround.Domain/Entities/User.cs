@@ -6,8 +6,13 @@ public class User : IdentityUser<int>
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }
-    public bool IsActive { get; set; }
+    public bool? IsActive { get; set; }
 
+    public List<Comment> CreatedComments { get; set; }
+    public List<Comment> Comments { get; set; }
+    public List<Rating> CreatedRatings { get; set; }
+    public List<Rating> Ratings { get; set; }
     public List<Trip> CreatedTrips { get; set; }
     public List<Participant> Participants { get; set; }
+    public List<Attraction> CreatedAttractions { get; set; }
 }
