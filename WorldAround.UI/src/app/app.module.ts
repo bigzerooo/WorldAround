@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { TripsGridComponent } from './components/trips-grid/trips-grid.component';
@@ -12,9 +13,11 @@ import { TripsComponent } from './components/trips/trips.component';
 import { AttractionsComponent } from './components/attractions/attractions.component';
 import { MyProfileComponent } from './components/my-profile/my-profile.component';
 import { UserInfoComponent } from './components/my-profile/user-info/user-info.component';
-import { TripInfoComponent } from './components/my-profile/trip-info/trip-info.component';
+import { TripsInfoComponent } from './components/my-profile/trips-info/trips-info.component';
 import { CreateTripComponent } from './components/trips/create-trip/create-trip.component';
 import { CreateTripMapComponent } from './components/trips/create-trip/create-trip-map/create-trip-map.component';
+
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,7 @@ import { CreateTripMapComponent } from './components/trips/create-trip/create-tr
     AttractionsComponent,
     MyProfileComponent,
     UserInfoComponent,
-    TripInfoComponent,
+    TripsInfoComponent,
     CreateTripComponent,
     CreateTripMapComponent
   ],
@@ -34,7 +37,9 @@ import { CreateTripMapComponent } from './components/trips/create-trip/create-tr
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
