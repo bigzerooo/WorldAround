@@ -45,7 +45,7 @@ import { SearchComponent } from './components/search/search.component';
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
     CookieModule.withOptions(),
     JwtModule
   ],
