@@ -6,14 +6,20 @@ namespace WorldAround.Infrastructure.Configuration.IdentityConfiguration;
 
 public class UserConfiguration : IEntityTypeConfiguration<User>
 {
-    public void Configure(EntityTypeBuilder<User> builder)
+    public void Configure(EntityTypeBuilder<User> entity)
     {
-        builder.HasKey(u => u.Id);
+        entity.HasKey(x => x.Id);
 
-        builder.Property(u => u.EmailConfirmed)
+        entity.Property(x => x.FirstName)
+            .HasMaxLength(50);
+
+        entity.Property(x => x.LastName)
+            .HasMaxLength(50);
+
+        entity.Property(x => x.EmailConfirmed)
             .HasDefaultValue(true);
 
-        builder.Property(u => u.IsActive)
+        entity.Property(x => x.IsActive)
             .HasDefaultValue(true);
     }
 }
