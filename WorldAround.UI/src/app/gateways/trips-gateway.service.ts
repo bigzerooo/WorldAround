@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class TripsGateway {
 
-  private baseUrl = 'https://localhost:44324/api/Trips';
+  private baseUrl = 'https://localhost:7073/api/Trips';
   
   constructor(private http: HttpClient) { }
 
