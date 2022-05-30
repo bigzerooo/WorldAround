@@ -13,6 +13,19 @@ services.AddApi(configuration);
 services.AddApplication();
 services.AddInfrastructure(configuration);
 
+services.AddCors(options =>
+{
+    options.AddPolicy("localhostUIOrigins",
+        policy =>
+        {
+            policy
+                .WithOrigins("http://localhost:4200")
+                .AllowCredentials()
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -23,6 +36,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("localhostUIOrigins");
 
 app.UseAuthentication();
 app.UseAuthorization();
