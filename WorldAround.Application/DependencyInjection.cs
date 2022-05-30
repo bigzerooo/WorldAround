@@ -11,6 +11,9 @@ namespace WorldAround.Application
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddScoped<ITripsService, TripsService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IAuthenticationService, AuthenticationService>();
+            services.AddTransient<IJwtTokenService, JwtTokenService>();
 
             return services;
         }

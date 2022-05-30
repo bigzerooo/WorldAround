@@ -5,9 +5,9 @@ namespace WorldAround.Domain.Entities;
 public class Pin : Point
 {
     public int Id { get; set; }
- 
+
     public int TripId { get; set; }
-    public int SequenceNo { get; set; }
+    public int SequenceNumber { get; set; }
     public int? AttractionId { get; set; }
 
     public Trip Trip { get; set; }

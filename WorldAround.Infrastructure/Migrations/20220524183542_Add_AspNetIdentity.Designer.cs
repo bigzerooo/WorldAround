@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorldAround.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using WorldAround.Infrastructure.Data;
 namespace WorldAround.Infrastructure.Migrations
 {
     [DbContext(typeof(WorldAroundDbContext))]
-    partial class WorldAroundDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220524183542_Add_AspNetIdentity")]
+    partial class Add_AspNetIdentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +23,6 @@ namespace WorldAround.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("EventTrip", b =>
-                {
-                    b.Property<int>("EventsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TripsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("EventsId", "TripsId");
-
-                    b.HasIndex("TripsId");
-
-                    b.ToTable("TripEventLink", (string)null);
-                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
                 {
@@ -203,16 +190,12 @@ namespace WorldAround.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("TripId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("TripId");
 
                     b.ToTable("Events");
                 });
@@ -258,7 +241,7 @@ namespace WorldAround.Infrastructure.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SequenceNumber")
+                    b.Property<int>("SequenceNo")
                         .HasColumnType("int");
 
                     b.Property<int>("TripId")
@@ -281,9 +264,6 @@ namespace WorldAround.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("AuthorId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
@@ -294,8 +274,6 @@ namespace WorldAround.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AuthorId");
 
                     b.ToTable("Trips");
                 });
@@ -320,17 +298,13 @@ namespace WorldAround.Infrastructure.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
+                        .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("IsActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
@@ -379,21 +353,6 @@ namespace WorldAround.Infrastructure.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-                });
-
-            modelBuilder.Entity("EventTrip", b =>
-                {
-                    b.HasOne("WorldAround.Domain.Entities.Event", null)
-                        .WithMany()
-                        .HasForeignKey("EventsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WorldAround.Domain.Entities.Trip", null)
-                        .WithMany()
-                        .HasForeignKey("TripsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -447,31 +406,29 @@ namespace WorldAround.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("WorldAround.Domain.Entities.Event", b =>
+                {
+                    b.HasOne("WorldAround.Domain.Entities.Trip", null)
+                        .WithMany("Events")
+                        .HasForeignKey("TripId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("WorldAround.Domain.Entities.Participant", b =>
                 {
-                    b.HasOne("WorldAround.Domain.Entities.Event", "Event")
+                    b.HasOne("WorldAround.Domain.Entities.Event", null)
                         .WithMany("Participants")
                         .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("WorldAround.Domain.Entities.User", "User")
-                        .WithMany("Participants")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Event");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("WorldAround.Domain.Entities.Pin", b =>
                 {
                     b.HasOne("WorldAround.Domain.Entities.Attraction", "Attraction")
                         .WithMany("Pins")
-                        .HasForeignKey("AttractionId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .HasForeignKey("AttractionId");
 
                     b.HasOne("WorldAround.Domain.Entities.Trip", "Trip")
                         .WithMany("Pins")
@@ -482,17 +439,6 @@ namespace WorldAround.Infrastructure.Migrations
                     b.Navigation("Attraction");
 
                     b.Navigation("Trip");
-                });
-
-            modelBuilder.Entity("WorldAround.Domain.Entities.Trip", b =>
-                {
-                    b.HasOne("WorldAround.Domain.Entities.User", "Author")
-                        .WithMany("CreatedTrips")
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Author");
                 });
 
             modelBuilder.Entity("WorldAround.Domain.Entities.Attraction", b =>
@@ -507,14 +453,9 @@ namespace WorldAround.Infrastructure.Migrations
 
             modelBuilder.Entity("WorldAround.Domain.Entities.Trip", b =>
                 {
+                    b.Navigation("Events");
+
                     b.Navigation("Pins");
-                });
-
-            modelBuilder.Entity("WorldAround.Domain.Entities.User", b =>
-                {
-                    b.Navigation("CreatedTrips");
-
-                    b.Navigation("Participants");
                 });
 #pragma warning restore 612, 618
         }

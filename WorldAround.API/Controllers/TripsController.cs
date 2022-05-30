@@ -4,9 +4,9 @@ using WorldAround.Domain.Models;
 
 namespace WorldAround.API.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
-    public class TripsController:ControllerBase
+    public class TripsController : ControllerBase
     {
         private readonly ITripsService _tripService;
 
