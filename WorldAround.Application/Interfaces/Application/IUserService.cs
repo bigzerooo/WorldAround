@@ -4,9 +4,13 @@ namespace WorldAround.Application.Interfaces.Application;
 
 public interface IUserService
 {
+    Task<IList<string>> AddToRoleAsync(int userId, string role);
+
+    Task<IList<string>> RemoveFromRoleAsync(int userId, string role);
+
     Task<UserModel> DeactivateAsync(int id);
 
-    Task<IEnumerable<UserModel>> GetAllAsync();
+    Task<IReadOnlyCollection<UserModel>> GetAllAsync();
 
     Task<UserModel> GetAsync(int id);
 
@@ -14,5 +18,5 @@ public interface IUserService
 
     Task<UserModel> GetByNameAsync(string userName);
 
-    Task<UserModel> UpdateAsync(UserModel UserModel);
+    Task<UserModel> UpdateAsync(UserModel userModel);
 }

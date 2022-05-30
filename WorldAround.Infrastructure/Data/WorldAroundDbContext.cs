@@ -7,7 +7,7 @@ using WorldAround.Domain.Entities;
 
 namespace WorldAround.Infrastructure.Data;
 
-public class WorldAroundDbContext : IdentityDbContext<User, IdentityRole<int>, int>, IWorldAroundDbContext
+public class WorldAroundDbContext : IdentityDbContext<User, Role, int>, IWorldAroundDbContext
 {
     public DbSet<Attraction> Attractions { get; set; }
     public DbSet<Comment> Comments { get; set; }

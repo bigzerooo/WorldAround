@@ -10,20 +10,23 @@ namespace WorldAround.Application.Services;
 public class AuthenticationService : IAuthenticationService
 {
     private readonly IMapper _mapper;
+    private readonly IJwtTokenHelper _tokenHelper;
     private readonly UserManager<User> _userManager;
     private readonly SignInManager<User> _signInManager;
 
     public AuthenticationService(
         IMapper mapper
+        , IJwtTokenHelper tokenHelper
         , UserManager<User> userManager
         , SignInManager<User> signInManager)
     {
         _mapper = mapper;
         _userManager = userManager;
         _signInManager = signInManager;
+        _tokenHelper = tokenHelper;
     }
 
-    public async Task<SignInResult> AuthenticateAsync(LoginModel loginModel)
+    public async Task<AuthenticationResultModel> AuthenticateAsync(LoginModel loginModel)
     {
         var login = loginModel.Login;
         var user = UserHelper.IsEmail(login) ?
@@ -35,7 +38,21 @@ public class AuthenticationService : IAuthenticationService
 
         var result = await _signInManager.PasswordSignInAsync(user, loginModel.Password, loginModel.RememberMe, false);
 
-        return result;
+        if (!result.Succeeded)
+        {
+            return new AuthenticationResultModel
+            {
+                Details = result
+            };
+        }
+
+        var roles = await _userManager.GetRolesAsync(user);
+
+        return new AuthenticationResultModel
+        {
+            Details = result,
+            Token = _tokenHelper.GenerateJwtAccessToken(user, roles),
+        };
     }
 
     public async Task<IdentityResult> CreateAsync(RegistrationModel registrationModel)

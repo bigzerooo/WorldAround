@@ -1,10 +1,9 @@
-﻿namespace WorldAround.Application.Helpers
+﻿namespace WorldAround.Application.Helpers;
+
+public static class UserHelper
 {
-    public static class UserHelper
+    public static bool IsEmail(string text)
     {
-        public static bool IsEmail(string text)
-        {
-            return text.Contains('@');
-        }
+        return text.Contains('@');
     }
 }

@@ -1,15 +1,14 @@
-﻿namespace WorldAround.Domain.Models
+﻿namespace WorldAround.Domain.Models;
+
+public class UserModel
 {
-    public class UserModel
-    {
-        public int Id { get; set; }
+    public int Id { get; set; }
 
-        public string UserName { get; set; }
+    public string UserName { get; set; }
 
-        public string Email { get; set; }
+    public string Email { get; set; }
 
-        public string FirstName { get; set; }
+    public string FirstName { get; set; }
 
-        public string LastName { get; set; }
-    }
+    public string LastName { get; set; }
 }
