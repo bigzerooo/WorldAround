@@ -2,23 +2,28 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using WorldAround.Domain.Entities;
 
-namespace WorldAround.Infrastructure.Configuration
+namespace WorldAround.Infrastructure.Configuration;
+
+public class PinConfiguration : IEntityTypeConfiguration<Pin>
 {
-    public class PinConfiguration : IEntityTypeConfiguration<Pin>
+    public void Configure(EntityTypeBuilder<Pin> entity)
     {
-        public void Configure(EntityTypeBuilder<Pin> builder)
-        {
-            builder.HasKey(p => p.Id);
+        entity.HasKey(x => x.Id);
 
-            builder.HasOne(p => p.Trip)
-                .WithMany(t => t.Pins)
-                .HasForeignKey(p => p.TripId)
-                .OnDelete(DeleteBehavior.Cascade);
+        entity.Property(x => x.Name)
+            .HasMaxLength(30);
 
-            builder.HasOne(p => p.Attraction)
-                .WithMany(a => a.Pins)
-                .HasForeignKey(p => p.AttractionId)
-                .OnDelete(DeleteBehavior.SetNull);
-        }
+        entity.Property(x => x.Description)
+            .HasMaxLength(250);
+
+        entity.HasOne(x => x.Trip)
+            .WithMany(x => x.Pins)
+            .HasForeignKey(x => x.TripId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        entity.HasOne(x => x.Attraction)
+            .WithMany(x => x.Pins)
+            .HasForeignKey(x => x.AttractionId)
+            .OnDelete(DeleteBehavior.SetNull);
     }
 }

@@ -4,9 +4,9 @@ using WorldAround.Domain.Entities;
 
 namespace WorldAround.Infrastructure.Configuration;
 
-public class TripConfiguration : IEntityTypeConfiguration<Trip>
+public class AttractionConfiguration : IEntityTypeConfiguration<Attraction>
 {
-    public void Configure(EntityTypeBuilder<Trip> entity)
+    public void Configure(EntityTypeBuilder<Attraction> entity)
     {
         entity.HasKey(x => x.Id);
 
@@ -17,7 +17,7 @@ public class TripConfiguration : IEntityTypeConfiguration<Trip>
             .HasMaxLength(2000);
 
         entity.HasOne(x => x.Author)
-            .WithMany(x => x.CreatedTrips)
+            .WithMany(x => x.CreatedAttractions)
             .HasForeignKey(x => x.AuthorId)
             .OnDelete(DeleteBehavior.NoAction);
     }
