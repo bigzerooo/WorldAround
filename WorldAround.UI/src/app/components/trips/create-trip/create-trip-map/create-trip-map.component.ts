@@ -1,7 +1,10 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import * as L from 'leaflet';
 import'leaflet-routing-machine';
 import { TripsGateway } from 'src/app/gateways/trips-gateway.service';
+
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
@@ -23,7 +26,7 @@ L.Marker.prototype.options.icon = iconDefault;
   templateUrl: './create-trip-map.component.html',
   styleUrls: ['./create-trip-map.component.scss']
 })
-export class CreateTripMapComponent implements OnInit, AfterViewInit {
+export class CreateTripMapComponent implements OnInit, AfterViewInit, OnDestroy {
   
   private map:any;
   public currentMarker:any;
@@ -36,7 +39,14 @@ export class CreateTripMapComponent implements OnInit, AfterViewInit {
   public name: any;
   public description: any;
 
-  constructor(private tripsGateway: TripsGateway){    
+  constructor(private tripsGateway: TripsGateway, 
+    private toastr: ToastrService,
+    private router: Router){    
+  }
+
+  ngOnDestroy(): void {
+    this.map?.off();
+    this.map?.remove();
   }
 
   private initMap(): void {
@@ -57,7 +67,7 @@ export class CreateTripMapComponent implements OnInit, AfterViewInit {
       if(this.currentMarker){
         this.map.removeLayer(this.currentMarker);
       }
-      
+
       this.currentMarker = L.marker([e.latlng.lat, e.latlng.lng]);
       this.map.addLayer(this.currentMarker);
       this.currentPin.latitude = this.currentMarker?._latlng?.lat;
@@ -85,7 +95,23 @@ export class CreateTripMapComponent implements OnInit, AfterViewInit {
     this.initMap();
   }
 
+  validatePin(): boolean{
+
+    if(!this.currentPin.latitude || !this.currentPin.longitude){
+      this.toastr.error('Coordinates of pin should not be empty. Please choose pin on map.', 'Validation error');
+      return false;
+    }
+
+    return true;
+  }
+
   savePin(): void {
+
+    const valid = this.validatePin();
+    if(!valid) {
+      return;
+    }
+    
     this.pins.push(Object.assign({}, this.currentPin));
 
     this.currentPin.seqNo = this.getSeqNo();
@@ -109,12 +135,42 @@ export class CreateTripMapComponent implements OnInit, AfterViewInit {
     return  Math.max(...this.pins.map(o => o.seqNo)) + 1;
   }
 
+  validateTrip(): boolean {
+    if(!this.name) {
+      this.toastr.error('Trip name should not be empty.', 'Validation error');
+      return false;
+    }
+
+    if(!this.description) {
+      this.toastr.error('Trip description should not be empty.', 'Validation error');
+      return false;
+    }
+
+    if(this.pins.length < 2){
+      this.toastr.error('Trip should have at least 2 pins.', 'Validation error');
+      return false;
+    }
+
+    return true;
+  }
+
   saveTrip():void {
+
+    const valid = this.validateTrip();
+
+    if(!valid) {
+      return;
+    }
 
     this.tripsGateway.createTrip({
       name: this.name,
       description: this.description,
       pins: this.pins
-    }).subscribe(x=> console.log('help'));
+    }).subscribe(x=> this.toastr.success('You have successfuly created new Trip!', 'Success'));
+  }
+
+  cancel(): void {
+    this.router.navigate(['/my-profile']);
+    this.toastr.info('You have canceled Trip Creation.', 'Canceled')
   }
 }

@@ -16,9 +16,9 @@ public class TripsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyCollection<GetTripsModel>>> GetTrips()
+    public async Task<ActionResult<IReadOnlyCollection<GetTripsModel>>> GetTrips(int userId)
     {
-        var trips = await _tripService.GetTrips();
+        var trips = await _tripService.GetTrips(userId);
 
         return Ok(trips);
     }

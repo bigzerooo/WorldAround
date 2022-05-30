@@ -6,5 +6,7 @@ public class GetTripsModel
     public string Name { get; set; }
     public string Description { get; set; }
 
+    public List<PinModel> Pins { get; set; }
+
     public DateTime CreateDate { get; set; }
 }
