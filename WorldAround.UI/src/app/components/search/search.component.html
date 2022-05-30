@@ -1,20 +1,11 @@
-<div class="subheader">
-    <div routerLink="/trips/create">
-        <p>Create new trip</p>
-        <div class="plus"></div>
-    </div>
-</div>
+<h1>{{getTitle()}}</h1>
+
 <div class="content">
-    <div class="map-container">
-        <div class="map-frame">
-            <div id="map1"></div>
-        </div>
-    </div>
 
     <div class="trips">
         <div *ngFor="let trip of trips">
             <div class="trip">
-                <div class="trip-info" (click)="showTrip(trip.pins)">
+                <div class="trip-info">
                     <h2>{{trip.name}}</h2>
                     <p>Created: {{trip.createDate}}</p>
                     <p>{{trip.description}}</p>
@@ -23,4 +14,5 @@
             </div>
         </div>
     </div>
+
 </div>

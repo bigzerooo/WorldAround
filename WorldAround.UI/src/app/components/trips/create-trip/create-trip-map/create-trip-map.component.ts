@@ -166,7 +166,10 @@ export class CreateTripMapComponent implements OnInit, AfterViewInit, OnDestroy 
       name: this.name,
       description: this.description,
       pins: this.pins
-    }).subscribe(x=> this.toastr.success('You have successfuly created new Trip!', 'Success'));
+    }).subscribe(x=> {
+      this.toastr.success('You have successfuly created new Trip!', 'Success')
+      this.router.navigate(['/my-profile']);
+    });
   }
 
   cancel(): void {

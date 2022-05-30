@@ -6,7 +6,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CookieModule } from 'ngx-cookie';
 
 import { AppComponent } from './app.component';
-import { TripsGridComponent } from './components/trips-grid/trips-grid.component';
 import { HeaderComponent } from './components/header/header.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './components/home/home.component';
@@ -22,11 +21,12 @@ import { AuthGuard } from 'src/services/auth-guard.service';
 import { JwtModule, JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 import { ToastrModule } from 'ngx-toastr';
+import { TripDetailComponent } from './components/trips/trip-detail/trip-detail.component';
+import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TripsGridComponent,
     HeaderComponent,
     HomeComponent,
     TripsComponent,
@@ -35,7 +35,9 @@ import { ToastrModule } from 'ngx-toastr';
     UserInfoComponent,
     TripsInfoComponent,
     CreateTripComponent,
-    CreateTripMapComponent
+    CreateTripMapComponent,
+    TripDetailComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

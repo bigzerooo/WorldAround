@@ -9,7 +9,8 @@ public class TripsMappingProfile : Profile
     public TripsMappingProfile()
     {
         CreateMap<Trip, GetTripsModel>()
-            .ForMember(d=>d.Pins, o=>o.MapFrom(s=>s.Pins))
+            .ForMember(d => d.Pins, o => o.MapFrom(s => s.Pins))
+            .ForMember(d => d.Comments, o => o.MapFrom(s => s.Comments))
             ;
 
         CreateMap<PinModel, Pin>()
@@ -19,6 +20,11 @@ public class TripsMappingProfile : Profile
 
         CreateMap<Pin, PinModel>()
             .ForMember(d => d.SeqNo, o => o.MapFrom(s => s.SequenceNumber))
+            ;
+
+        CreateMap<Comment, CommentModel>()
+            .ForMember(d => d.FirstName, o => o.MapFrom(s => s.Author.FirstName))
+            .ForMember(d => d.LastName, o => o.MapFrom(s => s.Author.LastName))
             ;
     }
 }

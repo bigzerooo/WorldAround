@@ -8,12 +8,14 @@
     </div>
 
     <div class="search">
-        <input type="text" placeholder="Search...">
-        <div>
-            <p>Attraction</p>
-            <div class="caret"></div>
-        </div>
-        <div class="search-button">
+        <input type="text" [(ngModel)]="inputValue" placeholder="Search...">
+        <select [(ngModel)]="selectedValue">
+            <option [ngValue]="0">Trips</option>
+            <option [ngValue]="1">Attractions</option>
+            <option [ngValue]="2">Events</option>
+            <option [ngValue]="3">Users</option>
+        </select>
+        <div class="search-button" (click)="search()">
             <div></div>
         </div>
     </div>
