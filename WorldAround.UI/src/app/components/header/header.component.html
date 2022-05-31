@@ -3,17 +3,17 @@
 
     <div class="links">
         <p routerLink="/home" routerLinkActive="active">Home</p>
-        <p routerLink="/trips" routerLinkActive="active">Trips</p>
-        <p routerLink="/attractions" routerLinkActive="active">Attractions</p>
+        <!-- <p routerLink="/trips" routerLinkActive="active">Trips</p>
+        <p routerLink="/attractions" routerLinkActive="active">Attractions</p> -->
     </div>
 
     <div class="search">
         <input type="text" [(ngModel)]="inputValue" placeholder="Search...">
         <select [(ngModel)]="selectedValue">
             <option [ngValue]="0">Trips</option>
-            <option [ngValue]="1">Attractions</option>
+            <!-- <option [ngValue]="1">Attractions</option>
             <option [ngValue]="2">Events</option>
-            <option [ngValue]="3">Users</option>
+            <option [ngValue]="3">Users</option> -->
         </select>
         <div class="search-button" (click)="search()">
             <div></div>

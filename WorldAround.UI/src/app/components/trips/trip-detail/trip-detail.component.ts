@@ -4,6 +4,7 @@ import * as L from 'leaflet';
 import 'leaflet-routing-machine';
 import { ToastrService } from 'ngx-toastr';
 import { TripsGateway } from 'src/app/gateways/trips-gateway.service';
+import { AuthorizationService } from 'src/services/authorization.service';
 
 @Component({
   selector: 'app-trip-detail',
@@ -23,7 +24,8 @@ export class TripDetailComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(private activateRoute: ActivatedRoute,
     private tripsGateway: TripsGateway,
-    private toastr: ToastrService) {
+    private toastr: ToastrService,
+    private authService: AuthorizationService) {
 
   }
 
@@ -75,7 +77,7 @@ export class TripDetailComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public addComment() {
     const model = {
-      userId: 1,
+      userId: this.authService.getUserId(),
       tripId: this.tripId,
       text: this.commentText
     }
