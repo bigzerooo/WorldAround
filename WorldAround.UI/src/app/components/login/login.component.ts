@@ -30,24 +30,10 @@ export class LoginComponent implements OnInit {
     .subscribe({
       next: (n) => {
         this.router.navigate(['/home']);
-        this.toastr.success("Authentication passed");
+        this.toastr.success('Authentication passed');
         return n;
       },
-      error: () => { this.toastr.error("Wrong credentials!"); }
+      error: () => { this.toastr.error('Wrong credentials!'); }
     });
-
-
-    // .subscribe(result => {
-    //   if(result.details.succeeded) {
-    //     alert("if")
-    //     this.router.navigate(['/home']);
-    //     this.toastr.success("Authentication passed");
-    //   }
-    //   else {
-    //     alert("else")
-    //     this.toastr.error("Wrong credentials");
-    //   }
-    //   alert("no one")
-    // });
   }
 }

@@ -28,7 +28,6 @@ import { AuthGuard } from 'src/services/auth-guard.service';
 import { ToastrModule } from 'ngx-toastr';
 import { TripDetailComponent } from './components/trips/trip-detail/trip-detail.component';
 import { SearchComponent } from './components/search/search.component';
-import { DialogOverviewExampleDialog } from './components/dialog-overview-example-dialog/dialog-overview-example-dialog.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +44,6 @@ import { DialogOverviewExampleDialog } from './components/dialog-overview-exampl
     TripDetailComponent,
     SearchComponent,
     LoginComponent,
-    DialogOverviewExampleDialog,
     SignupComponent
   ],
   imports: [

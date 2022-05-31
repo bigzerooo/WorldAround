@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RegistrationModel } from 'src/models/registration';
 import { AuthorizationService } from 'src/services/authorization.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-signup',
@@ -12,8 +13,13 @@ export class SignupComponent implements OnInit {
 
   model: RegistrationModel = new RegistrationModel();
 
-  constructor(private router :Router,
-    private authService: AuthorizationService) { }
+  constructor(
+    private router :Router,
+    private authService: AuthorizationService,
+    private toastr: ToastrService)
+  {
+    this.toastr.toastrConfig.positionClass = 'toast-bottom-right';
+  }
 
   ngOnInit(): void {
   }
@@ -21,12 +27,15 @@ export class SignupComponent implements OnInit {
   onSubmit()
   {
     this.authService.SignUp(this.model)
-    .subscribe(result => {
-      if(result.succeeded) {
+    .subscribe({
+      next: () => {
+        this.toastr.success('Successful!');
         this.router.navigate(['authentication/login']);
-      }
-      else {
-        console.log(result.errors);
+      },
+      error: (errors) => {
+        errors.forEach(error => {
+          this.toastr.error(error.code);
+        });
       }
     });
   }
