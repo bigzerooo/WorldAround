@@ -34,7 +34,12 @@ public class AuthenticationService : IAuthenticationService
                 : await _userManager.FindByNameAsync(login);
 
         if (user == null)
-            throw new NullReferenceException("A user with specified login not found");
+        {
+            return new AuthenticationResultModel
+            {
+                Details = new SignInResult()
+            };
+        }
 
         var result = await _signInManager.PasswordSignInAsync(user, loginModel.Password, loginModel.RememberMe, false);
 
