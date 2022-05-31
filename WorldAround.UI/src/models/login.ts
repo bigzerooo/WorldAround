@@ -1,8 +1,7 @@
 export class LoginModel {
 
-  constructor(
-    public login: String,
-    public password: String,
-    public rememberMe: boolean) {
-  }
+  public login: string;
+  public password: string;
+  public rememberMe: boolean;
+
 }

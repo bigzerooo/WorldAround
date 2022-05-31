@@ -4,6 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CookieModule } from 'ngx-cookie';
+import { JwtModule, JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -16,9 +20,10 @@ import { UserInfoComponent } from './components/my-profile/user-info/user-info.c
 import { TripsInfoComponent } from './components/my-profile/trips-info/trips-info.component';
 import { CreateTripComponent } from './components/trips/create-trip/create-trip.component';
 import { CreateTripMapComponent } from './components/trips/create-trip/create-trip-map/create-trip-map.component';
+import { LoginComponent } from './components/login/login.component';
+import { SignupComponent } from './components/signup/signup.component';
 import { AuthorizationService } from 'src/services/authorization.service';
 import { AuthGuard } from 'src/services/auth-guard.service';
-import { JwtModule, JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 import { ToastrModule } from 'ngx-toastr';
 import { TripDetailComponent } from './components/trips/trip-detail/trip-detail.component';
@@ -37,7 +42,9 @@ import { SearchComponent } from './components/search/search.component';
     CreateTripComponent,
     CreateTripMapComponent,
     TripDetailComponent,
-    SearchComponent
+    SearchComponent,
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
@@ -47,10 +54,14 @@ import { SearchComponent } from './components/search/search.component';
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     CookieModule.withOptions(),
-    JwtModule
+    JwtModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatFormFieldModule
   ],
   providers: [
-    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS},
+    { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: false } },
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     JwtHelperService,
     AuthorizationService,
     AuthGuard,
