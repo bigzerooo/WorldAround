@@ -5,6 +5,7 @@ import { TripsGateway } from 'src/app/gateways/trips-gateway.service';
 
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { AuthorizationService } from 'src/services/authorization.service';
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
@@ -41,7 +42,8 @@ export class CreateTripMapComponent implements OnInit, AfterViewInit, OnDestroy 
 
   constructor(private tripsGateway: TripsGateway, 
     private toastr: ToastrService,
-    private router: Router){    
+    private router: Router,
+    private authService: AuthorizationService){    
   }
 
   ngOnDestroy(): void {
@@ -165,7 +167,8 @@ export class CreateTripMapComponent implements OnInit, AfterViewInit, OnDestroy 
     this.tripsGateway.createTrip({
       name: this.name,
       description: this.description,
-      pins: this.pins
+      pins: this.pins,
+      authorId: this.authService.getUserId()
     }).subscribe(x=> {
       this.toastr.success('You have successfuly created new Trip!', 'Success')
       this.router.navigate(['/my-profile']);

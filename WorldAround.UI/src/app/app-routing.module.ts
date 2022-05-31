@@ -11,10 +11,10 @@ import { TripsComponent } from './components/trips/trips.component';
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'trips', component: TripsComponent},
-  {path: 'trips/create', component: CreateTripComponent},
+  {path: 'trips/create', canActivate: [AuthGuard], component: CreateTripComponent},
   {path: 'attractions', component: AttractionsComponent},
-  {path: 'my-profile', component: MyProfileComponent},
-  {path: 'trip/:id', component: TripDetailComponent},
+  {path: 'my-profile', canActivate: [AuthGuard], component: MyProfileComponent},
+  {path: 'trip/:id', canActivate: [AuthGuard], component: TripDetailComponent},
   {path: 'search/:type/:value', component: SearchComponent},
   {path: '**', redirectTo: '/home'}
 ];

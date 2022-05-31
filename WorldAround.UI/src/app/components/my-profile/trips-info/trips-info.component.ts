@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import'leaflet-routing-machine';
 import { TripsGateway } from 'src/app/gateways/trips-gateway.service';
+import { AuthorizationService } from 'src/services/authorization.service';
 
 @Component({
   selector: 'app-trips-info',
@@ -15,7 +16,8 @@ export class TripsInfoComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public trips: any = [];
 
-  constructor(private tripsGateway: TripsGateway) { }
+  constructor(private tripsGateway: TripsGateway,
+    private authService: AuthorizationService) { }
 
   ngOnDestroy(): void {
     this.map?.off();
@@ -23,7 +25,7 @@ export class TripsInfoComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.trips = this.tripsGateway.getTrips(1)
+    this.trips = this.tripsGateway.getTrips(this.authService.getUserId())
     .subscribe(data => {
       this.trips = data;
     });
