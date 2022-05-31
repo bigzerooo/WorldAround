@@ -48,7 +48,7 @@ export class AuthorizationService {
   public SignUp(user: RegistrationModel) {
     const path = 'Create';
 
-    return this.http.post(this.CreateUrl(path), user)
+    return this.http.post<{succeeded: boolean, errors: string[]}>(this.CreateUrl(path), user)
   }
 
   public Logout() {
