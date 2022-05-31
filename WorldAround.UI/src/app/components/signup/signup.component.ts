@@ -32,9 +32,9 @@ export class SignupComponent implements OnInit {
         this.toastr.success('Successful!');
         this.router.navigate(['authentication/login']);
       },
-      error: (errors) => {
-        errors.forEach(error => {
-          this.toastr.error(error.code);
+      error: (response) => {
+        response.error.forEach((e: { code: string; }) => {
+          this.toastr.error(e.code);
         });
       }
     });
