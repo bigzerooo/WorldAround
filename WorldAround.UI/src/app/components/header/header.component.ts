@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthorizationService } from 'src/services/authorization.service';
+import { LoginComponent } from '../login/login.component';
 
 @Component({
   selector: 'app-header',
@@ -16,7 +18,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     private router: Router,
     private toastr: ToastrService,
-    private authService: AuthorizationService) { }
+    private authService: AuthorizationService,
+    private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
@@ -37,5 +40,9 @@ export class HeaderComponent implements OnInit {
 
   authorized(): boolean {
     return this.authService.IsAuthorized();
+  }
+
+  openLogin(): void {
+    this.dialog.open(LoginComponent);
   }
 }

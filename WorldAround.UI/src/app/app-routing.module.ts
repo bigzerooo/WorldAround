@@ -19,7 +19,7 @@ const routes: Routes = [
   {path: 'my-profile', canActivate: [AuthGuard], component: MyProfileComponent},
   {path: 'trip/:id', canActivate: [AuthGuard], component: TripDetailComponent},
   {path: 'search/:type/:value', component: SearchComponent},
-  {path: 'authentication/login', component: LoginComponent},
+  // {path: 'authentication/login', component: LoginComponent},
   {path: 'authentication/register', component: SignupComponent},
   {path: '**', redirectTo: '/home'}
 ];

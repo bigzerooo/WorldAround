@@ -8,6 +8,6 @@
       <button type="submit" [disabled]="loginBtnDisabled">LOGIN</button>
     </div>
 
-    <button id="toSignUp" routerLink="/authentication/register" routerLinkActive="active" type="button">SIGN UP</button>
+    <button id="toSignUp" (click)="openSignUp()" type="button">SIGN UP</button>
   </form>
 </div>
