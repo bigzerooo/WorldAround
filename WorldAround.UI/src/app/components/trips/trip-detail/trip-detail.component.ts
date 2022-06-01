@@ -1,31 +1,31 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import * as L from 'leaflet';
-import 'leaflet-routing-machine';
 import { ToastrService } from 'ngx-toastr';
 import { TripsGateway } from 'src/app/gateways/trips-gateway.service';
+import { AddCommentModel } from 'src/models/comments/addComment';
+import { PointModel } from 'src/models/map/point';
 import { AuthorizationService } from 'src/services/authorization.service';
+import { MapComponent } from '../../shared/map/map.component';
 
 @Component({
   selector: 'app-trip-detail',
   templateUrl: './trip-detail.component.html',
   styleUrls: ['./trip-detail.component.scss']
 })
-export class TripDetailComponent implements OnInit, OnDestroy, AfterViewInit {
+export class TripDetailComponent implements OnInit, OnDestroy {
 
-  private map: any;
-  private route: any;
-  public trip: any;
+  @ViewChild(MapComponent) map: MapComponent;
 
-  public commentText: any;
+  trip: any;
+  commentText: any;
 
   sub: any;
   tripId: number;
 
-  constructor(private activateRoute: ActivatedRoute,
-    private tripsGateway: TripsGateway,
-    private toastr: ToastrService,
-    private authService: AuthorizationService) {
+  constructor(private readonly activateRoute: ActivatedRoute,
+    private readonly tripsGateway: TripsGateway,
+    private readonly toastr: ToastrService,
+    private readonly authService: AuthorizationService) {
 
   }
 
@@ -34,8 +34,8 @@ export class TripDetailComponent implements OnInit, OnDestroy, AfterViewInit {
       this.tripId = params['id'];
       this.tripsGateway.getTrip(this.tripId).subscribe(data => {
         this.trip = data;
-        var waypoints = data.pins.map(x => L.latLng(x.latitude, x.longitude));
-        this.route.setWaypoints(waypoints);
+
+        this.setWaypoints();
       });
     });
   }
@@ -44,43 +44,13 @@ export class TripDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     this.sub.unsubscribe();
   }
 
-  ngAfterViewInit(): void {
-    this.initMap();
+  private setWaypoints(): void {
+    const waypoints = this.trip.pins.map(x => new PointModel(x.latitude, x.longitude));
+    this.map.setWaypoints(waypoints);
   }
 
-  private initMap(): void {
-    this.map = L.map('map2', {
-      center: [48.2852, 25.9287],
-      zoom: 13
-    });
-
-    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 18,
-      minZoom: 3,
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    });
-
-    tiles.addTo(this.map);
-
-    const planOptions = { addWaypoints: false, draggableWaypoints: false };
-    const plan = L.Routing.plan([], planOptions);
-
-    this.route = L.Routing.control({
-      plan,
-      lineOptions: {
-        addWaypoints: false,
-        missingRouteTolerance: 10,
-        extendToWaypoints: false
-      }
-    }).addTo(this.map);
-  }
-
-  public addComment() {
-    const model = {
-      userId: this.authService.getUserId(),
-      tripId: this.tripId,
-      text: this.commentText
-    }
+  public addComment(): void {
+    const model = new AddCommentModel(this.commentText, this.authService.getUserId(), this.tripId);
 
     this.tripsGateway.addTripComment(model).subscribe(data => {
       this.trip.comments.push(data);

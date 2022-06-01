@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WorldAround.Application.Interfaces.Application;
-using WorldAround.Domain.Models;
+using WorldAround.Domain.Models.Comments;
+using WorldAround.Domain.Models.Trips;
 
 namespace WorldAround.API.Controllers;
 
@@ -48,7 +49,7 @@ public class TripsController : ControllerBase
     }
 
     [HttpPost("Comment")]
-    public async Task<ActionResult<CommentModel>> AddTripComment(AddTripCommentModel model)
+    public async Task<ActionResult<CommentModel>> AddTripComment(AddCommentModel model)
     {
         var comment = await _tripService.AddCommentAsync(model);
 

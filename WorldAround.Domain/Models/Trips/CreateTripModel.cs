@@ -1,4 +1,4 @@
-﻿namespace WorldAround.Domain.Models;
+﻿namespace WorldAround.Domain.Models.Trips;
 
 public class CreateTripModel
 {

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using WorldAround.Domain.Entities;
-using WorldAround.Domain.Models;
+using WorldAround.Domain.Models.Comments;
+using WorldAround.Domain.Models.Trips;
 
 namespace WorldAround.Application.Mapping;
 
