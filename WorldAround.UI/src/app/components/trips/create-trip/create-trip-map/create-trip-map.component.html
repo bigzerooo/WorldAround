@@ -3,16 +3,12 @@
   <div class="form">
     <h2>Create new trip</h2>
     <label>Name</label>
-    <textarea [(ngModel)]="name"></textarea>
+    <textarea [(ngModel)]="trip.name"></textarea>
     <label>Description</label>
-    <textarea [(ngModel)]="description"></textarea>
+    <textarea [(ngModel)]="trip.description"></textarea>
   </div>
 
-  <div class="map-container">
-    <div class="map-frame">
-      <div id="map"></div>
-    </div>
-  </div>
+  <app-map height="500px" width="1400px" mapId="create-trip-map" [clickable]="true" (mapClick)="updateCurrentPinCoords($event)"></app-map>
 
   <div>
     <h4>Pins</h4>
@@ -25,7 +21,7 @@
         <th [width]="200">Longitude</th>
         <th [width]="50"></th>
       </tr>
-      <tr *ngFor="let pin of pins">
+      <tr *ngFor="let pin of trip.pins">
         <td>{{pin.seqNo}}</td>
         <td>{{pin.name}}</td>
         <td>{{pin.description}}</td>

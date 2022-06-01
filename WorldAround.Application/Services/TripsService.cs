@@ -3,7 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using WorldAround.Application.Interfaces.Application;
 using WorldAround.Application.Interfaces.Infrastructure;
 using WorldAround.Domain.Entities;
-using WorldAround.Domain.Models;
+using WorldAround.Domain.Models.Comments;
+using WorldAround.Domain.Models.Trips;
 
 namespace WorldAround.Application.Services;
 
@@ -73,14 +74,14 @@ public class TripsService : ITripsService
         await _context.SaveChangesAsync();
     }
 
-    public async Task<CommentModel> AddCommentAsync(AddTripCommentModel model)
+    public async Task<CommentModel> AddCommentAsync(AddCommentModel model)
     {
         var comment = new Comment
         {
             AuthorId = model.UserId,
             CreateDate = DateTime.Now,
             Text = model.Text,
-            TripId = model.TripId
+            TripId = model.TargetId
         };
 
         _context.Comments.Add(comment);

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WorldAround.Domain.Models;
+﻿namespace WorldAround.Domain.Models.Comments;
 
 public class CommentModel
 {

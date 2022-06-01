@@ -1,4 +1,6 @@
-﻿namespace WorldAround.Domain.Models;
+﻿using WorldAround.Domain.Models.Comments;
+
+namespace WorldAround.Domain.Models.Trips;
 
 public class GetTripsModel
 {

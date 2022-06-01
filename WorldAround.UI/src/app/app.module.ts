@@ -28,6 +28,7 @@ import { AuthGuard } from 'src/services/auth-guard.service';
 import { ToastrModule } from 'ngx-toastr';
 import { TripDetailComponent } from './components/trips/trip-detail/trip-detail.component';
 import { SearchComponent } from './components/search/search.component';
+import { MapComponent } from './components/shared/map/map.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { SearchComponent } from './components/search/search.component';
     TripDetailComponent,
     SearchComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
