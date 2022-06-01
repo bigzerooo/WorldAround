@@ -93,4 +93,15 @@ public class TripsService : ITripsService
 
         return _mapper.Map<CommentModel>(createdComment);
     }
+
+    public async Task DeleteTripAsync(int tripId)
+    {
+        var trip = await _context.Trips.FirstOrDefaultAsync(x => x.Id == tripId);
+
+        if (trip != null)
+        {
+            _context.Trips.Remove(trip);
+            await _context.SaveChangesAsync();
+        }
+    }
 }

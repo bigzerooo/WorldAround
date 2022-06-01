@@ -11,6 +11,19 @@
 
 .content {
     margin: 20px 200px;
+    width: 940px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.header-buttons {
+    width: 300px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 .image {

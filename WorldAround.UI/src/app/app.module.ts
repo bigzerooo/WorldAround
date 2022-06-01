@@ -8,6 +8,7 @@ import { JwtModule, JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -29,6 +30,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { TripDetailComponent } from './components/trips/trip-detail/trip-detail.component';
 import { SearchComponent } from './components/search/search.component';
 import { MapComponent } from './components/shared/map/map.component';
+import { IconComponent } from './components/shared/icon/icon.component';
+import { DeleteTripPopupComponent } from './components/trips/trip-detail/delete-trip-popup/delete-trip-popup.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +49,9 @@ import { MapComponent } from './components/shared/map/map.component';
     SearchComponent,
     LoginComponent,
     SignupComponent,
-    MapComponent
+    MapComponent,
+    IconComponent,
+    DeleteTripPopupComponent
   ],
   imports: [
     BrowserModule,
@@ -59,14 +64,15 @@ import { MapComponent } from './components/shared/map/map.component';
     JwtModule,
     MatDialogModule,
     MatButtonModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatTooltipModule
   ],
   providers: [
-    { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: false } },
+    { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true } },
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     JwtHelperService,
     AuthorizationService,
-    AuthGuard,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

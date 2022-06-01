@@ -90,14 +90,6 @@ p {
 .search-button {
     width: 45px;
     height: 45px;
-
-    &>div {
-        width: 25px;
-        height: 25px;
-        background-image: url("/assets/icons/search.svg");
-        background-size: cover;
-        filter: invert(15%) sepia(6%) saturate(309%) hue-rotate(155deg) brightness(99%) contrast(92%);
-    }
 }
 
 .profile {

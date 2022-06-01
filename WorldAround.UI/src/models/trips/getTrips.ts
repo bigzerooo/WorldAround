@@ -4,6 +4,7 @@ import { PinModel } from "./pin";
 export class GetTripsModel {
     constructor(
         public id: number,
+        public authorId: number,
         public name: string,
         public description: string,
         public pins: PinModel[],

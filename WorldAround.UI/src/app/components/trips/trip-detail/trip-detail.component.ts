@@ -1,11 +1,14 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { TripsGateway } from 'src/app/gateways/trips-gateway.service';
 import { AddCommentModel } from 'src/models/comments/addComment';
 import { PointModel } from 'src/models/map/point';
+import { GetTripsModel } from 'src/models/trips/getTrips';
 import { AuthorizationService } from 'src/services/authorization.service';
 import { MapComponent } from '../../shared/map/map.component';
+import { DeleteTripPopupComponent } from './delete-trip-popup/delete-trip-popup.component';
 
 @Component({
   selector: 'app-trip-detail',
@@ -16,23 +19,26 @@ export class TripDetailComponent implements OnInit, OnDestroy {
 
   @ViewChild(MapComponent) map: MapComponent;
 
-  trip: any;
+  trip: GetTripsModel;
   commentText: any;
-
   sub: any;
-  tripId: number;
+  userId: number;
 
   constructor(private readonly activateRoute: ActivatedRoute,
     private readonly tripsGateway: TripsGateway,
     private readonly toastr: ToastrService,
-    private readonly authService: AuthorizationService) {
+    private readonly authService: AuthorizationService,
+    private readonly router: Router,
+    private readonly dialog: MatDialog) {
 
   }
 
   ngOnInit(): void {
+    this.userId = this.authService.getUserId();
+
     this.sub = this.activateRoute.params.subscribe(params => {
-      this.tripId = params['id'];
-      this.tripsGateway.getTrip(this.tripId).subscribe(data => {
+      const tripId = params['id'];
+      this.tripsGateway.getTrip(tripId).subscribe(data => {
         this.trip = data;
 
         this.setWaypoints();
@@ -44,18 +50,32 @@ export class TripDetailComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  private setWaypoints(): void {
-    const waypoints = this.trip.pins.map(x => new PointModel(x.latitude, x.longitude));
-    this.map.setWaypoints(waypoints);
+  openDeleteTripPopup(): void {
+    const dialogRef = this.dialog.open(DeleteTripPopupComponent, {
+      width: '450px',
+      data: this.trip.id
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.toastr.success('Trip successfully deleted!', 'Success');
+        this.router.navigate(['/my-profile']);
+      }
+    });
   }
 
-  public addComment(): void {
-    const model = new AddCommentModel(this.commentText, this.authService.getUserId(), this.tripId);
+  addComment(): void {
+    const model = new AddCommentModel(this.commentText, this.userId, this.trip.id);
 
     this.tripsGateway.addTripComment(model).subscribe(data => {
       this.trip.comments.push(data);
       this.commentText = '';
       this.toastr.success('Comment successfully added.', 'Success');
     });
+  }
+
+  private setWaypoints(): void {
+    const waypoints = this.trip.pins.map(x => new PointModel(x.latitude, x.longitude));
+    this.map.setWaypoints(waypoints);
   }
 }
