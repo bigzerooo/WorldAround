@@ -31,6 +31,10 @@ export class TripsGateway {
     return this.http.post(this.baseUrl, createTripModel);
   }
 
+  deleteTrip(tripId: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${tripId}`);
+  }
+
   addTripComment(addTripCommentModel: AddCommentModel): Observable<CommentModel> {
     return this.http.post<CommentModel>(`${this.baseUrl}/Comment`, addTripCommentModel);
   }

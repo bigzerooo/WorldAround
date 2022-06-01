@@ -48,6 +48,14 @@ public class TripsController : ControllerBase
         return Ok();
     }
 
+    [HttpDelete("{tripId:int}")]
+    public async Task<ActionResult> DeleteTrip(int tripId)
+    {
+        await _tripService.DeleteTripAsync(tripId);
+
+        return Ok();
+    }
+
     [HttpPost("Comment")]
     public async Task<ActionResult<CommentModel>> AddTripComment(AddCommentModel model)
     {

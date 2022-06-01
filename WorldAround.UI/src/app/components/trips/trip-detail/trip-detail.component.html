@@ -1,6 +1,12 @@
 <div class="content">
     
-    <h2 class="name">{{trip?.name}}</h2>
+    <div class="header">
+        <h2 class="name">{{trip?.name}}</h2>
+        <div *ngIf="trip?.authorId == userId" class="header-buttons">
+            <app-icon icon="/assets/icons/trash-fill.svg" color="red" width="30px" height="30px" matTooltip="Delete trip" (click)="openDeleteTripPopup()"></app-icon>
+        </div>
+    </div>
+    
 
     <div class="map-container">
         <app-map mapId="trip-detail-map" width="940px" height="600px"></app-map>
@@ -30,5 +36,4 @@
             <p>{{comment.text}}</p>
         </div>
     </div>
-
 </div>
