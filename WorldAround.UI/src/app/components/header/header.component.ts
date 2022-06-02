@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -10,21 +10,19 @@ import { LoginComponent } from '../authentication/login/login.component';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
 
   selectedValue: any = 0;
   inputValue: any = '';
 
   constructor(
-    private router: Router,
-    private toastr: ToastrService,
-    private authService: AuthorizationService,
-    private dialog: MatDialog) { }
+    private readonly router: Router,
+    private readonly toastr: ToastrService,
+    private readonly authService: AuthorizationService,
+    private readonly dialog: MatDialog) { }
 
-  ngOnInit(): void {
-  }
+  search(): void {
 
-  search() {
     if(!this.inputValue){
       this.toastr.error('Search field should not be empty!', 'Error');
       return;
@@ -34,15 +32,18 @@ export class HeaderComponent implements OnInit {
   }
 
   logout(): void {
+
     this.authService.Logout();
     this.router.navigate(["/home"]);
   }
 
   authorized(): boolean {
+
     return this.authService.IsAuthorized();
   }
 
   openLogin(): void {
+
     this.dialog.open(LoginComponent, {
       panelClass: 'authentication-modal'
     });

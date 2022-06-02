@@ -18,11 +18,11 @@ export class SignupComponent implements OnDestroy, AfterViewInit {
   public model: RegistrationModel = new RegistrationModel();
 
   constructor(
-    private router: Router,
-    private authService: AuthorizationService,
-    private toastr: ToastrService,
-    private dialogRef: MatDialogRef<SignupComponent>,
-    private dialog: MatDialog) {
+    private readonly router: Router,
+    private readonly authService: AuthorizationService,
+    private readonly toastr: ToastrService,
+    private readonly dialogRef: MatDialogRef<SignupComponent>,
+    private readonly dialog: MatDialog) {
 
     this.toastr.toastrConfig.positionClass = 'toast-bottom-right';
   }
