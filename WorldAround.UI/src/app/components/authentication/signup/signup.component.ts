@@ -27,17 +27,17 @@ export class SignupComponent implements OnDestroy, AfterViewInit {
     this.toastr.toastrConfig.positionClass = 'toast-bottom-right';
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
 
     this.email.nativeElement.focus();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
 
     this.toastr.toastrConfig.positionClass = 'toast-top-right';
   }
 
-  openLogin() {
+  openLogin(): void {
 
     this.dialogRef.afterClosed()
       .subscribe(() => {
@@ -48,7 +48,7 @@ export class SignupComponent implements OnDestroy, AfterViewInit {
     this.dialogRef.close();
   }
 
-  onSubmit() {
+  onSubmit(): void {
 
     this.authService.SignUp(this.model)
       .subscribe({
