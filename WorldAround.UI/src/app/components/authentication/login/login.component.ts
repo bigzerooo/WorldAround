@@ -15,8 +15,8 @@ export class LoginComponent implements OnDestroy, AfterViewInit {
 
   @ViewChild('logUserName') userName: ElementRef;
 
-  public loginModel: LoginModel = new LoginModel();
-  public loginBtnDisabled: boolean = false;
+  loginModel: LoginModel = new LoginModel();
+  loginBtnDisabled: boolean = false;
 
   constructor(private readonly router: Router,
     private readonly authService: AuthorizationService,

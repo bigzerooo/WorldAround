@@ -15,7 +15,7 @@ export class SignupComponent implements OnDestroy, AfterViewInit {
 
   @ViewChild('email') email: ElementRef;
 
-  public model: RegistrationModel = new RegistrationModel();
+  model: RegistrationModel = new RegistrationModel();
 
   constructor(
     private readonly router: Router,
