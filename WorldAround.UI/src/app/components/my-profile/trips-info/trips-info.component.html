@@ -13,7 +13,7 @@
                 <div class="trip-info" (click)="showTrip(trip.pins)">
                     <h2>{{trip.name}}</h2>
                     <p>Created: {{trip.createDate}}</p>
-                    <p>{{trip.description}}</p>
+                    <p class="description">{{trip.description}}</p>
                 </div>
                 <div class="arrow" [routerLink]="['/trip', trip.id]"></div>
             </div>

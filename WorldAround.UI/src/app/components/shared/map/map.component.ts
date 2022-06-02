@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import * as L from 'leaflet';
-import'leaflet-routing-machine';
+import 'leaflet-routing-machine';
+import { MapMode } from 'src/models/map/map-mode';
 import { PointModel } from 'src/models/map/point';
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
@@ -27,46 +28,63 @@ export class MapComponent implements AfterViewInit, OnDestroy {
   @Input() width: string = '100%'
   @Input() height: string = '600px';
   @Input() mapId: string = 'mapId';
-  @Input() clickable: boolean = false;
+  @Input() mapMode: MapMode = MapMode.View;
 
   @Output() mapClick: EventEmitter<PointModel> = new EventEmitter<PointModel>();
 
-  private map:any;
+  activeMarkerSeqNo: number;
+
+  private map: any;
   private route: any;
   private activeMarker: any;
-  private markerPoints: PointModel[] = [];
+  private editedMarker;
 
   ngAfterViewInit(): void {
     this.initMap();
-  }  
+  }
 
   ngOnDestroy(): void {
     this.map?.off();
     this.map?.remove();
   }
 
-  setWaypoints(points : PointModel[]): void {
-    const waypoints = points.map(point=> L.latLng(point.x, point.y))
+  setWaypoints(points: PointModel[]): void {
+    const waypoints = points.map(point => L.latLng(point.x, point.y))
     this.route.setWaypoints(waypoints);
   }
 
   saveActiveMarker(): void {
-    if(!this.activeMarker){
+    if (!this.activeMarker) {
       return;
     }
 
-    const point = new PointModel(this.activeMarker?._latlng?.lat, this.activeMarker?._latlng?.lng);
+    this.activeMarker = false;
+  }
 
-    this.markerPoints.push(point);
+  enableClick(): void {
+    this.map.on("click", e => this.onClick(e));
+  }
 
-    this.setWaypoints(this.markerPoints);
+  disableClick(): void {
+    this.map.off("click", e => this.onClick(e));
+  }
 
-    this.map.removeLayer(this.activeMarker);
+  confirmUpdating(): void {
+    this.editedMarker = null;
+    this.activeMarkerSeqNo = null;
+  }
+
+  cancelUpdating(): void {
+    if(this.editedMarker) {
+      this.route.spliceWaypoints(this.activeMarkerSeqNo, 1, this.editedMarker);
+    }
+    this.confirmUpdating();
   }
 
   private initMap(): void {
+
     this.map = L.map(this.mapId, {
-      center: [ 48.2852, 25.9287 ],
+      center: [48.2852, 25.9287],
       zoom: 13
     });
 
@@ -78,31 +96,87 @@ export class MapComponent implements AfterViewInit, OnDestroy {
 
     tiles.addTo(this.map);
 
-    if(this.clickable) {
-      this.map.on("click",  e => this.onClick(e));
+    if (this.mapMode != MapMode.View) {
+      this.map.on("click", e => this.onClick(e));
     }
 
-    const planOptions = {addWaypoints: false, draggableWaypoints: false};
-    const plan = L.Routing.plan([], planOptions);  
+    const planOptions = { addWaypoints: false, draggableWaypoints: false };
+    const plan = L.Routing.plan([], planOptions);
 
     this.route = L.Routing.control({
       plan,
-      lineOptions : {
+      lineOptions: {
         addWaypoints: false,
         missingRouteTolerance: 10,
         extendToWaypoints: false
-    }
+      },
+      waypoints: []
     }).addTo(this.map);
   }
 
-  private onClick(event: any) : void {
-    if(this.activeMarker){
-      this.map.removeLayer(this.activeMarker);
+  private onClick(event: any): void {
+    
+    const point = new PointModel(event.latlng.lat, event.latlng.lng);
+
+    if(this.mapMode == MapMode.Add){
+      this.addPoint(point);
+    }
+    if(this.mapMode == MapMode.Update){
+      this.updatePoint(point);
     }
 
-    this.activeMarker = L.marker([event.latlng.lat, event.latlng.lng]);
-    this.map.addLayer(this.activeMarker);
+    if (!this.activeMarker) {
+      this.activeMarker = true;
+    }
 
-    this.mapClick.emit(new PointModel(event.latlng.lat, event.latlng.lng));
+    this.mapClick.emit(point);
+  }
+
+  private addPoint(point: PointModel) {
+
+    const waypoints = this.route.getWaypoints();
+    const markersLength = waypoints.length;
+
+    const firstEmpty = waypoints.findIndex(x => !x.latLng);
+
+    const removeCount = this.activeMarker || firstEmpty != -1 || this.activeMarker && markersLength == 2 ? 1 : 0;
+    const removeIndex = this.getWaypointRemoveIndex(firstEmpty, this.activeMarker, markersLength);
+
+    this.route.spliceWaypoints(removeIndex, removeCount, L.latLng(point.x, point.y));
+  }
+
+  private getWaypointRemoveIndex(firstEmpty: number, isActive: boolean, markersLength: number): number {
+    if (firstEmpty > -1 && !this.activeMarker) {
+      return firstEmpty;
+    }
+
+    if (firstEmpty == 1 && this.activeMarker) {
+      return 0;
+    }
+
+    if (firstEmpty == -1 && !this.activeMarker) {
+      return markersLength;
+    }
+
+    if (firstEmpty == -1 && this.activeMarker) {
+      return markersLength == 2
+        ? 1
+        : markersLength - 1;
+    }
+
+    return markersLength;
+  }
+
+  private updatePoint(point: PointModel) {
+
+    if(this.activeMarkerSeqNo != null) {
+
+      if(!this.editedMarker) {
+        const waypoints = this.route.getWaypoints();
+        this.editedMarker = waypoints[this.activeMarkerSeqNo];
+      }
+
+      this.route.spliceWaypoints(this.activeMarkerSeqNo, 1, L.latLng(point.x, point.y));      
+    }
   }
 }
