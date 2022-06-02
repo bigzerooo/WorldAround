@@ -1,7 +1,7 @@
 input {
     border: none;
   }
-  
+
   input:focus {
     outline: none;
   }
@@ -11,3 +11,9 @@ input {
   }
 
 html, body { height: 100%; }
+
+.authentication-modal {
+  mat-dialog-container {
+    padding: 0;
+  }
+}

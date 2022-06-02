@@ -20,8 +20,8 @@ import { MyProfileComponent } from './components/my-profile/my-profile.component
 import { UserInfoComponent } from './components/my-profile/user-info/user-info.component';
 import { TripsInfoComponent } from './components/my-profile/trips-info/trips-info.component';
 import { CreateTripComponent } from './components/trips/create-trip/create-trip.component';
-import { LoginComponent } from './components/login/login.component';
-import { SignupComponent } from './components/signup/signup.component';
+import { LoginComponent } from './components/authentication/login/login.component';
+import { SignupComponent } from './components/authentication/signup/signup.component';
 import { AuthorizationService } from 'src/services/authorization.service';
 import { AuthGuard } from 'src/services/auth-guard.service';
 
