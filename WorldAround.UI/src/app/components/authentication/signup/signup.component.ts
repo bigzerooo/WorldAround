@@ -9,7 +9,7 @@ import { LoginComponent } from '../login/login.component';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss']
+  styleUrls: ['./signup.component.scss', '../authentication.scss']
 })
 export class SignupComponent implements OnDestroy, AfterViewInit {
 
@@ -27,13 +27,11 @@ export class SignupComponent implements OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    console.log(this.email);
     this.email.nativeElement.focus();
   }
 
   ngOnDestroy() {
     this.toastr.toastrConfig.positionClass = 'toast-top-right';
-    console.log(this.email);
   }
 
   openLogin() {

@@ -9,7 +9,7 @@ import { SignupComponent } from '../signup/signup.component';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss', '../authentication.scss']
 })
 export class LoginComponent implements OnDestroy, AfterViewInit {
 
@@ -27,7 +27,6 @@ export class LoginComponent implements OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    console.log(this.userName);
     this.userName.nativeElement.focus();
   }
 

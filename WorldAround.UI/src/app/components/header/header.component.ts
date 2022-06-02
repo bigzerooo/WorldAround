@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthorizationService } from 'src/services/authorization.service';
-import { LoginComponent } from '../login/login.component';
+import { LoginComponent } from '../authentication/login/login.component';
 
 @Component({
   selector: 'app-header',
