@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { RegistrationModel } from 'src/models/registration';
 import { AuthorizationService } from 'src/services/authorization.service';
@@ -9,12 +9,13 @@ import { LoginComponent } from '../login/login.component';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./signup.component.scss']
 })
-export class SignupComponent implements OnDestroy {
+export class SignupComponent implements OnDestroy, AfterViewInit {
 
-  model: RegistrationModel = new RegistrationModel();
+  @ViewChild('email') email: ElementRef;
+
+  public model: RegistrationModel = new RegistrationModel();
 
   constructor(
     private router: Router,
@@ -25,15 +26,23 @@ export class SignupComponent implements OnDestroy {
     this.toastr.toastrConfig.positionClass = 'toast-bottom-right';
   }
 
+  ngAfterViewInit() {
+    console.log(this.email);
+    this.email.nativeElement.focus();
+  }
+
   ngOnDestroy() {
     this.toastr.toastrConfig.positionClass = 'toast-top-right';
+    console.log(this.email);
   }
 
   openLogin() {
 
-    this.dialogRef.beforeClosed()
+    this.dialogRef.afterClosed()
       .subscribe(() => {
-        this.dialog.open(LoginComponent);
+        this.dialog.open(LoginComponent, {
+          panelClass: 'authentication-modal'
+        });
       })
     this.dialogRef.close();
   }

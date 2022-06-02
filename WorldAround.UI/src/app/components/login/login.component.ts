@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginModel } from 'src/models/login';
 import { AuthorizationService } from 'src/services/authorization.service';
@@ -9,10 +9,11 @@ import { SignupComponent } from '../signup/signup.component';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnDestroy {
+export class LoginComponent implements OnDestroy, AfterViewInit {
+
+  @ViewChild('logUserName') userName: ElementRef;
 
   public loginModel: LoginModel = new LoginModel();
   public loginBtnDisabled: boolean = false;
@@ -25,15 +26,22 @@ export class LoginComponent implements OnDestroy {
     this.toastr.toastrConfig.positionClass = 'toast-bottom-right';
   }
 
+  ngAfterViewInit() {
+    console.log(this.userName);
+    this.userName.nativeElement.focus();
+  }
+
   ngOnDestroy() {
     this.toastr.toastrConfig.positionClass = 'toast-top-right';
   }
 
   openSignUp() {
 
-    this.dialogRef.beforeClosed()
+    this.dialogRef.afterClosed()
       .subscribe(() => {
-        this.dialog.open(SignupComponent);
+        this.dialog.open(SignupComponent, {
+          panelClass: 'authentication-modal'
+        });
       })
     this.dialogRef.close();
   }

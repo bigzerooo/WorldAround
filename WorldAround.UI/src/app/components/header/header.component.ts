@@ -43,6 +43,8 @@ export class HeaderComponent implements OnInit {
   }
 
   openLogin(): void {
-    this.dialog.open(LoginComponent);
+    this.dialog.open(LoginComponent, {
+      panelClass: 'authentication-modal'
+    });
   }
 }

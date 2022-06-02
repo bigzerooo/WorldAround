@@ -1,17 +1,18 @@
-<div class="login-page">
-  <form id="signUpForm" class="form" (ngSubmit)="onSubmit()">
-    <div>
-      <input type="email" name="email" class="form-control" placeholder="email address" [(ngModel)]="model.email" required />
-      <input type="text" name="userName" placeholder="pick a username" [(ngModel)]="model.userName" required />
-      <input id="regPass" name="password" class="password form-control" type="password" placeholder="set a password" [(ngModel)]="model.password" required />
-      <input id="verifyPass" name="confirmPassword" class="password form-control" type="password" placeholder="repeat a password" [(ngModel)]="model.confirmPassword" required />
-      <br>
-      <br>
-    </div>
+<form id="signUpForm" class="form" (ngSubmit)="onSubmit()">
+  <div>
+    <input #email type="email" name="email" class="form-control" placeholder="email address" [(ngModel)]="model.email"
+      required />
+    <input type="text" name="userName" placeholder="pick a username" [(ngModel)]="model.userName" required />
+    <input id="regPass" name="password" class="password form-control" type="password" placeholder="set a password"
+      [(ngModel)]="model.password" required />
+    <input id="verifyPass" name="confirmPassword" class="password form-control" type="password"
+      placeholder="repeat a password" [(ngModel)]="model.confirmPassword" required />
+    <br>
+    <br>
+  </div>
 
-    <button type="submit">
-      SIGN UP
-    </button>
-    <span (click)="openLogin()" class="tologin">To Login</span>
-  </form>
-</div>
+  <button type="submit">
+    SIGN UP
+  </button>
+  <span (click)="openLogin()" class="tologin">To Login</span>
+</form>
