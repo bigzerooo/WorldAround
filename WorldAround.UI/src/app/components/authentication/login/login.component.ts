@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginModel } from 'src/models/login';
 import { AuthorizationService } from 'src/services/authorization.service';
@@ -18,23 +18,26 @@ export class LoginComponent implements OnDestroy, AfterViewInit {
   public loginModel: LoginModel = new LoginModel();
   public loginBtnDisabled: boolean = false;
 
-  constructor(private router: Router,
-    private authService: AuthorizationService,
-    private toastr: ToastrService,
-    private dialogRef: MatDialogRef<LoginComponent>,
-    private dialog: MatDialog,) {
+  constructor(private readonly router: Router,
+    private readonly authService: AuthorizationService,
+    private readonly toastr: ToastrService,
+    private readonly dialogRef: MatDialogRef<LoginComponent>,
+    private readonly dialog: MatDialog) {
+
     this.toastr.toastrConfig.positionClass = 'toast-bottom-right';
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
+
     this.userName.nativeElement.focus();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
+
     this.toastr.toastrConfig.positionClass = 'toast-top-right';
   }
 
-  openSignUp() {
+  openSignUp(): void {
 
     this.dialogRef.afterClosed()
       .subscribe(() => {
@@ -45,7 +48,7 @@ export class LoginComponent implements OnDestroy, AfterViewInit {
     this.dialogRef.close();
   }
 
-  login() {
+  login(): void {
 
     this.authService.Authorize(this.loginModel)
       .subscribe({

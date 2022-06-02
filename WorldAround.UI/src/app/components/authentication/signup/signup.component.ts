@@ -23,14 +23,17 @@ export class SignupComponent implements OnDestroy, AfterViewInit {
     private toastr: ToastrService,
     private dialogRef: MatDialogRef<SignupComponent>,
     private dialog: MatDialog) {
+
     this.toastr.toastrConfig.positionClass = 'toast-bottom-right';
   }
 
   ngAfterViewInit() {
+
     this.email.nativeElement.focus();
   }
 
   ngOnDestroy() {
+
     this.toastr.toastrConfig.positionClass = 'toast-top-right';
   }
 
@@ -46,6 +49,7 @@ export class SignupComponent implements OnDestroy, AfterViewInit {
   }
 
   onSubmit() {
+
     this.authService.SignUp(this.model)
       .subscribe({
         next: () => {

@@ -1,13 +1,13 @@
-<form id="loginForm" class="form" (ngSubmit)="login()">
+<form class="form" (ngSubmit)="login()">
   <div>
     <input #logUserName name="login" class="form-control" type="text" placeholder="username"
       [(ngModel)]="loginModel.login" />
-    <input id="logPass" name="password" class="password" type="password" id="password" placeholder="password"
+    <input id="logPass" name="password" class="password form-control" type="password" id="password" placeholder="password"
       [(ngModel)]="loginModel.password" />
     <br>
     <br>
     <button type="submit" [disabled]="loginBtnDisabled">LOGIN</button>
   </div>
 
-  <button id="toSignUp" (click)="openSignUp()" type="button">SIGN UP</button>
+  <button (click)="openSignUp()" type="button">SIGN UP</button>
 </form>
