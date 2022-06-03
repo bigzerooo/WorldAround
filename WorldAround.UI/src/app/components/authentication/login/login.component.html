@@ -1,13 +1,30 @@
-<form class="form" (ngSubmit)="login()">
+<form class="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <mat-label><h2>Login</h2></mat-label>
+  <br>
   <div>
-    <input #logUserName name="login" class="form-control" type="text" placeholder="username"
-      [(ngModel)]="loginModel.login" />
-    <input name="password" class="password form-control" type="password" id="password" placeholder="password"
-      [(ngModel)]="loginModel.password" />
+    <mat-form-field>
+      <mat-label>Email or Username</mat-label>
+      <input
+        autofocus
+        matInput
+        name="login"
+        type="login"
+        [matTooltip]="this.validation.login.message()"
+        formControlName="login"
+        matTooltipPosition="right"/>
+      <mat-error *ngIf="!this.validation.login.isValid();"></mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input
+      matInput
+      type="password"
+      name="password"/>
+    </mat-form-field>
     <br>
     <br>
     <button type="submit" [disabled]="loginBtnDisabled">LOGIN</button>
   </div>
 
-  <button (click)="openSignUp()" type="button">SIGN UP</button>
+  <button (click)="openSignUp()" type="button">REGISTER</button>
 </form>
