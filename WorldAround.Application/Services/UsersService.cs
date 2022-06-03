@@ -28,18 +28,7 @@ public class UsersService : IUsersService
         return _mapper.Map<UserModel>(user);
     }
 
-    public async Task<UserModel> GetAsync(string login)
-    {
-        var user = UserHelper.IsEmail(login) ?
-            await _userManager.FindByEmailAsync(login)
-            : await _userManager.FindByNameAsync(login);
-
-        return user == null ?
-            throw new NullReferenceException("A user with specified login not found")
-            : _mapper.Map<UserModel>(user);
-    }
-
-    public async Task<UserModel> GetByNameAsync(string userName)
+    public async Task<UserModel> GetAsync(string userName)
     {
         var user = await _userManager.FindByNameAsync(userName);
 

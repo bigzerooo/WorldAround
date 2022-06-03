@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WorldAround.Application.Interfaces.Application;
 
 namespace WorldAround.API.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
@@ -14,24 +15,24 @@ namespace WorldAround.API.Controllers
             _usersService = usersService;
         }
 
+        [Authorize]
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> Get(string userName)
         {
-            return Ok(await _usersService.GetAllAsync());
-        }
+            if (userName == null)
+            {
+                return Ok(await _usersService.GetAllAsync());
+            }
 
-        [HttpGet]
-        public async Task<IActionResult> GetById(int id)
-        {
-            var user = await _usersService.GetAsync(id);
+            var user = await _usersService.GetAsync(userName);
 
             return user != null ? Ok(user) : NotFound();
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetByName(string userName)
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> Get(int id)
         {
-            var user = await _usersService.GetByNameAsync(userName);
+            var user = await _usersService.GetAsync(id);
 
             return user != null ? Ok(user) : NotFound();
         }
