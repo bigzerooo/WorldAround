@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
-import { MapMode } from 'src/models/map/map-mode';
-import { PointModel } from 'src/models/map/point';
+import { MapMode } from 'src/app/models/map/map-mode';
+import { PointModel } from 'src/app/models/map/point';
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
@@ -115,7 +115,7 @@ export class MapComponent implements AfterViewInit, OnDestroy {
   }
 
   private onClick(event: any): void {
-    
+
     const point = new PointModel(event.latlng.lat, event.latlng.lng);
 
     if(this.mapMode == MapMode.Add){
@@ -176,7 +176,7 @@ export class MapComponent implements AfterViewInit, OnDestroy {
         this.editedMarker = waypoints[this.activeMarkerSeqNo];
       }
 
-      this.route.spliceWaypoints(this.activeMarkerSeqNo, 1, L.latLng(point.x, point.y));      
+      this.route.spliceWaypoints(this.activeMarkerSeqNo, 1, L.latLng(point.x, point.y));
     }
   }
 }

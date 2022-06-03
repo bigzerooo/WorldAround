@@ -4,14 +4,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { PinsGateway } from 'src/app/gateways/pins-gateway.service';
 import { TripsGateway } from 'src/app/gateways/trips-gateway.service';
-import { AddCommentModel } from 'src/models/comments/addComment';
-import { MapMode } from 'src/models/map/map-mode';
-import { PointModel } from 'src/models/map/point';
-import { UpdatePinModel } from 'src/models/pins/updatePin';
-import { GetTripsModel } from 'src/models/trips/getTrips';
-import { PinModel } from 'src/models/trips/pin';
-import { UpdateTripModel } from 'src/models/trips/updateTrip';
-import { AuthorizationService } from 'src/services/authorization.service';
+import { AddCommentModel } from 'src/app/models/comments/addComment';
+import { MapMode } from 'src/app/models/map/map-mode';
+import { PointModel } from 'src/app/models/map/point';
+import { UpdatePinModel } from 'src/app/models/pins/updatePin';
+import { GetTripsModel } from 'src/app/models/trips/getTrips';
+import { PinModel } from 'src/app/models/trips/pin';
+import { UpdateTripModel } from 'src/app/models/trips/updateTrip';
+import { AuthorizationService } from 'src/app/services/authorization.service';
 import { MapComponent } from '../../shared/map/map.component';
 import { DeleteTripPopupComponent } from './delete-trip-popup/delete-trip-popup.component';
 
@@ -27,7 +27,7 @@ export class TripDetailComponent implements OnInit, OnDestroy {
   trip: GetTripsModel;
   commentText: any;
   sub: any;
-  userId: number;  
+  userId: number;
 
   edittingName: boolean = false;
   name: string = '';
@@ -117,7 +117,7 @@ export class TripDetailComponent implements OnInit, OnDestroy {
   togglePinEdit(pinId: number): void {
     this.edittingPin = !this.edittingPin;
     this.mapMode = this.edittingPin ? MapMode.Update : MapMode.View;
-    this.edittingPin 
+    this.edittingPin
       ? this.map.enableClick()
       : this.map.disableClick()
 

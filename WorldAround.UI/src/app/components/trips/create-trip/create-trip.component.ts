@@ -3,11 +3,11 @@ import { TripsGateway } from 'src/app/gateways/trips-gateway.service';
 
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
-import { AuthorizationService } from 'src/services/authorization.service';
-import { CreateTripModel } from 'src/models/trips/createTrip';
+import { AuthorizationService } from 'src/app/services/authorization.service';
+import { CreateTripModel } from 'src/app/models/trips/createTrip';
 import { MapComponent } from 'src/app/components/shared/map/map.component';
-import { PinModel } from 'src/models/trips/pin';
-import { PointModel } from 'src/models/map/point';
+import { PinModel } from 'src/app/models/trips/pin';
+import { PointModel } from 'src/app/models/map/point';
 
 @Component({
   selector: 'app-create-trip',
