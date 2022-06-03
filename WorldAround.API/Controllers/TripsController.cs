@@ -48,6 +48,22 @@ public class TripsController : ControllerBase
         return Ok();
     }
 
+    [HttpPut("Name")]
+    public async Task<ActionResult> UpdateTripName(UpdateTripModel model)
+    {
+        await _tripService.UpdateTripNameAsync(model);
+
+        return Ok();
+    }
+
+    [HttpPut("Description")]
+    public async Task<ActionResult> UpdateTripDescription(UpdateTripModel model)
+    {
+        await _tripService.UpdateTripDescriptionAsync(model);
+
+        return Ok();
+    }
+
     [HttpDelete("{tripId:int}")]
     public async Task<ActionResult> DeleteTrip(int tripId)
     {

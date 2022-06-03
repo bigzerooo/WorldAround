@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { TripsGateway } from 'src/app/gateways/trips-gateway.service';
-import { PointModel } from 'src/models/map/point';
-import { AuthorizationService } from 'src/services/authorization.service';
+import { PointModel } from 'src/app/models/map/point';
+import { AuthorizationService } from 'src/app/services/authorization.service';
 import { MapComponent } from '../../shared/map/map.component';
 
 @Component({

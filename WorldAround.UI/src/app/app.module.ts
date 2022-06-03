@@ -22,11 +22,10 @@ import { MyProfileComponent } from './components/my-profile/my-profile.component
 import { UserInfoComponent } from './components/my-profile/user-info/user-info.component';
 import { TripsInfoComponent } from './components/my-profile/trips-info/trips-info.component';
 import { CreateTripComponent } from './components/trips/create-trip/create-trip.component';
-import { CreateTripMapComponent } from './components/trips/create-trip/create-trip-map/create-trip-map.component';
 import { LoginComponent } from './components/authentication/login/login.component';
 import { SignupComponent } from './components/authentication/signup/signup.component';
-import { AuthorizationService } from 'src/services/authorization.service';
-import { AuthGuard } from 'src/services/auth-guard.service';
+import { AuthorizationService } from 'src/app/services/authorization.service';
+import { AuthGuard } from 'src/app/services/auth-guard.service';
 
 import { TripDetailComponent } from './components/trips/trip-detail/trip-detail.component';
 import { SearchComponent } from './components/search/search.component';
@@ -45,7 +44,6 @@ import { DeleteTripPopupComponent } from './components/trips/trip-detail/delete-
     UserInfoComponent,
     TripsInfoComponent,
     CreateTripComponent,
-    CreateTripMapComponent,
     TripDetailComponent,
     SearchComponent,
     LoginComponent,

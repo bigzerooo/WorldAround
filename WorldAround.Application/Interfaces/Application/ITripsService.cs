@@ -9,6 +9,8 @@ public interface ITripsService
     Task<IReadOnlyCollection<GetTripsModel>> GetTripsAsync(int userId);
     Task<IReadOnlyCollection<GetTripsModel>> SearchTripsAsync(string searchValue);
     Task CreateTripAsync(CreateTripModel model);
-    Task<CommentModel> AddCommentAsync(AddCommentModel model);
+    Task UpdateTripNameAsync(UpdateTripModel model);
+    Task UpdateTripDescriptionAsync(UpdateTripModel model);
     Task DeleteTripAsync(int tripId);
+    Task<CommentModel> AddCommentAsync(AddCommentModel model);
 }

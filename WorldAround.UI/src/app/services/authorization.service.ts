@@ -4,9 +4,9 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { map, catchError } from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie';
 import { environment } from 'src/environments/environment';
-import { LoginModel } from 'src/models/login';
-import { RegistrationModel, RegistrationModelValidationErrors } from 'src/models/registration';
-import { AuthenticationResultModel } from 'src/models/authenticationResult';
+import { LoginModel } from 'src/app/models/login';
+import { RegistrationModel, RegistrationModelValidationErrors } from 'src/app/models/registration';
+import { AuthenticationResultModel } from 'src/app/models/authenticationResult';
 import { throwError } from 'rxjs';
 import { UriHelper } from 'src/app/helpers/uri-helper';
 

@@ -14,8 +14,8 @@ public class TripsService : ITripsService
     private readonly IMapper _mapper;
 
     public TripsService(
-        IWorldAroundDbContext context
-        , IMapper mapper)
+        IWorldAroundDbContext context, 
+        IMapper mapper)
     {
         _context = context;
         _mapper = mapper;
@@ -72,6 +72,28 @@ public class TripsService : ITripsService
 
         _context.Trips.Add(trip);
         await _context.SaveChangesAsync();
+    }
+
+    public async Task UpdateTripNameAsync(UpdateTripModel model)
+    {
+        var trip = await _context.Trips.FirstOrDefaultAsync(x => x.Id == model.TripId);
+
+        if (trip != null)
+        {
+            trip.Name = model.Value;
+            await _context.SaveChangesAsync();
+        }
+    }
+
+    public async Task UpdateTripDescriptionAsync(UpdateTripModel model)
+    {
+        var trip = await _context.Trips.FirstOrDefaultAsync(x => x.Id == model.TripId);
+
+        if (trip != null)
+        {
+            trip.Description = model.Value;
+            await _context.SaveChangesAsync();
+        }
     }
 
     public async Task<CommentModel> AddCommentAsync(AddCommentModel model)

@@ -1,17 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AddCommentModel } from 'src/models/comments/addComment';
-import { CommentModel } from 'src/models/comments/comment';
-import { CreateTripModel } from 'src/models/trips/createTrip';
-import { GetTripsModel } from 'src/models/trips/getTrips';
+import { environment } from 'src/environments/environment';
+import { AddCommentModel } from 'src/app/models/comments/addComment';
+import { CommentModel } from 'src/app/models/comments/comment';
+import { CreateTripModel } from 'src/app/models/trips/createTrip';
+import { GetTripsModel } from 'src/app/models/trips/getTrips';
+import { UpdateTripModel } from 'src/app/models/trips/updateTrip';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TripsGateway {
 
-  private baseUrl = 'https://localhost:7073/api/Trips';
+  private baseUrl = `${environment.apiBaseUrl}Trips`;
 
   constructor(private http: HttpClient) { }
 
@@ -29,6 +31,14 @@ export class TripsGateway {
 
   createTrip(createTripModel: CreateTripModel): Observable<any> {
     return this.http.post(this.baseUrl, createTripModel);
+  }
+
+  updateTripName(updateTripModel: UpdateTripModel): Observable<any> {
+    return this.http.put(`${this.baseUrl}/Name`, updateTripModel);
+  }
+
+  updateTripDescription(updateTripModel: UpdateTripModel): Observable<any> {
+    return this.http.put(`${this.baseUrl}/Description`, updateTripModel);
   }
 
   deleteTrip(tripId: number): Observable<any> {

@@ -1,12 +1,17 @@
-import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { PinsGateway } from 'src/app/gateways/pins-gateway.service';
 import { TripsGateway } from 'src/app/gateways/trips-gateway.service';
-import { AddCommentModel } from 'src/models/comments/addComment';
-import { PointModel } from 'src/models/map/point';
-import { GetTripsModel } from 'src/models/trips/getTrips';
-import { AuthorizationService } from 'src/services/authorization.service';
+import { AddCommentModel } from 'src/app/models/comments/addComment';
+import { MapMode } from 'src/app/models/map/map-mode';
+import { PointModel } from 'src/app/models/map/point';
+import { UpdatePinModel } from 'src/app/models/pins/updatePin';
+import { GetTripsModel } from 'src/app/models/trips/getTrips';
+import { PinModel } from 'src/app/models/trips/pin';
+import { UpdateTripModel } from 'src/app/models/trips/updateTrip';
+import { AuthorizationService } from 'src/app/services/authorization.service';
 import { MapComponent } from '../../shared/map/map.component';
 import { DeleteTripPopupComponent } from './delete-trip-popup/delete-trip-popup.component';
 
@@ -24,8 +29,19 @@ export class TripDetailComponent implements OnInit, OnDestroy {
   sub: any;
   userId: number;
 
+  edittingName: boolean = false;
+  name: string = '';
+
+  edittingDescription: boolean = false;
+  description: string = '';
+
+  edittingPin: boolean= false;
+  pin: PinModel = {};
+  mapMode: MapMode = MapMode.View;
+
   constructor(private readonly activateRoute: ActivatedRoute,
     private readonly tripsGateway: TripsGateway,
+    private readonly pinsGateway: PinsGateway,
     private readonly toastr: ToastrService,
     private readonly authService: AuthorizationService,
     private readonly router: Router,
@@ -50,6 +66,18 @@ export class TripDetailComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
+  toggleNameEdit(): void {
+    this.name = this.trip.name;
+    this.edittingName = !this.edittingName;
+  }
+
+  editName(): void {
+    this.tripsGateway.updateTripName(new UpdateTripModel(this.trip.id, this.name)).subscribe(() => {
+      this.trip.name = this.name;
+      this.toggleNameEdit();
+    });
+  }
+
   openDeleteTripPopup(): void {
     const dialogRef = this.dialog.open(DeleteTripPopupComponent, {
       width: '450px',
@@ -64,6 +92,18 @@ export class TripDetailComponent implements OnInit, OnDestroy {
     });
   }
 
+  toggleDescriptionEdit(): void {
+    this.description = this.trip.description;
+    this.edittingDescription = !this.edittingDescription;
+  }
+
+  editDescription(): void {
+    this.tripsGateway.updateTripDescription(new UpdateTripModel(this.trip.id, this.description)).subscribe(() => {
+      this.trip.description = this.description;
+      this.toggleDescriptionEdit();
+    });
+  }
+
   addComment(): void {
     const model = new AddCommentModel(this.commentText, this.userId, this.trip.id);
 
@@ -72,6 +112,46 @@ export class TripDetailComponent implements OnInit, OnDestroy {
       this.commentText = '';
       this.toastr.success('Comment successfully added.', 'Success');
     });
+  }
+
+  togglePinEdit(pinId: number): void {
+    this.edittingPin = !this.edittingPin;
+    this.mapMode = this.edittingPin ? MapMode.Update : MapMode.View;
+    this.edittingPin
+      ? this.map.enableClick()
+      : this.map.disableClick()
+
+    if(pinId > 0) {
+      this.pin = Object.assign({}, this.trip.pins.find(x=>x.id == pinId));
+      this.map.activeMarkerSeqNo = this.pin.seqNo - 1;
+    } else if (pinId == 0) {
+      this.pin.id = pinId;
+      this.map.cancelUpdating();
+    }
+  }
+
+  pinEdit(): void {
+    const model: UpdatePinModel =  {
+      id: this.pin.id,
+      name: this.pin.name,
+      description: this.pin.description,
+      latitude: this.pin.latitude,
+      longitude: this.pin.longitude
+    };
+
+    this.pinsGateway.updatePin(model).subscribe(() => {
+      this.trip.pins[this.pin.seqNo - 1] = Object.assign({}, this.pin);
+      this.togglePinEdit(-1);
+      this.map.confirmUpdating();
+      this.pin = {};
+    })
+  }
+
+  updateCurrentPinCoords(point: PointModel): void {
+    if(this.pin){
+      this.pin.latitude = point.x;
+      this.pin.longitude = point.y;
+    }
   }
 
   private setWaypoints(): void {
