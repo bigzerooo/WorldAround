@@ -2,11 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { AddCommentModel } from 'src/models/comments/addComment';
-import { CommentModel } from 'src/models/comments/comment';
-import { CreateTripModel } from 'src/models/trips/createTrip';
-import { GetTripsModel } from 'src/models/trips/getTrips';
-import { UpdateTripModel } from 'src/models/trips/updateTrip';
+import { AddCommentModel } from 'src/app/models/comments/addComment';
+import { CommentModel } from 'src/app/models/comments/comment';
+import { CreateTripModel } from 'src/app/models/trips/createTrip';
+import { GetTripsModel } from 'src/app/models/trips/getTrips';
+import { UpdateTripModel } from 'src/app/models/trips/updateTrip';
 
 @Injectable({
   providedIn: 'root'

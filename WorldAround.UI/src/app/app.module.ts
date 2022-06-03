@@ -22,8 +22,8 @@ import { TripsInfoComponent } from './components/my-profile/trips-info/trips-inf
 import { CreateTripComponent } from './components/trips/create-trip/create-trip.component';
 import { LoginComponent } from './components/authentication/login/login.component';
 import { SignupComponent } from './components/authentication/signup/signup.component';
-import { AuthorizationService } from 'src/services/authorization.service';
-import { AuthGuard } from 'src/services/auth-guard.service';
+import { AuthorizationService } from 'src/app/services/authorization.service';
+import { AuthGuard } from 'src/app/services/auth-guard.service';
 
 import { ToastrModule } from 'ngx-toastr';
 import { TripDetailComponent } from './components/trips/trip-detail/trip-detail.component';
