@@ -1,12 +1,16 @@
-<form class="form" (ngSubmit)="onSubmit()">
+<form class="form" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
   <div>
-    <input #email type="email" name="email" class="form-control" placeholder="email address" [(ngModel)]="model.email"
+    <input #email type="email" name="email" class="form-control" placeholder="email address" formControlName="email"
       required />
-    <input type="text" name="username" class="form-control" placeholder="pick a username" [(ngModel)]="model.userName" required />
-    <input name="password" class="password form-control" type="password" placeholder="set a password"
-      [(ngModel)]="model.password" required />
-    <input name="confirm-password" class="password form-control" type="password"
-      placeholder="repeat a password" [(ngModel)]="model.confirmPassword" required />
+    <input type="text" name="username" class="form-control" placeholder="pick a username" formControlName="userName"
+    required />
+    <input name="password" class="password form-control" type="password" placeholder="set a password" formControlName="password"
+    required />
+    <input name="confirm-password" class="password form-control" type="password" placeholder="repeat a password" formControlName="confirmPassword"
+      required />
+    <div *ngIf="signUpForm.get('email').errors?.['passwordsNotSame']">
+
+    </div>
     <br>
     <br>
   </div>

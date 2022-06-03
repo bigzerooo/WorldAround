@@ -50,7 +50,7 @@ export class LoginComponent implements OnDestroy, AfterViewInit {
 
   login(): void {
 
-    this.authService.Authorize(this.loginModel)
+    this.authService.authorize(this.loginModel)
       .subscribe({
         next: () => {
           this.router.navigate(['/home']);

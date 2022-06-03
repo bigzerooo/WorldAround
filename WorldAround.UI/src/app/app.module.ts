@@ -9,6 +9,8 @@ import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/d
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ToastrModule } from 'ngx-toastr';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -26,7 +28,6 @@ import { SignupComponent } from './components/authentication/signup/signup.compo
 import { AuthorizationService } from 'src/services/authorization.service';
 import { AuthGuard } from 'src/services/auth-guard.service';
 
-import { ToastrModule } from 'ngx-toastr';
 import { TripDetailComponent } from './components/trips/trip-detail/trip-detail.component';
 import { SearchComponent } from './components/search/search.component';
 import { MapComponent } from './components/shared/map/map.component';
@@ -65,7 +66,8 @@ import { DeleteTripPopupComponent } from './components/trips/trip-detail/delete-
     MatDialogModule,
     MatButtonModule,
     MatFormFieldModule,
-    MatTooltipModule
+    MatTooltipModule,
+    ReactiveFormsModule
   ],
   providers: [
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true } },
