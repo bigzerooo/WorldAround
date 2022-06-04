@@ -6,10 +6,8 @@ export const identical = (firstControlName: string, secondControlName: string): 
   const firstControl = control.get(firstControlName);
   const secondControl = control.get(secondControlName);
 
-  if (secondControl.value !== null && firstControl.value !== secondControl.value) {
+  if(secondControl.touched && secondControl.value !== '' && firstControl.value !== secondControl.value) {
     secondControl.setErrors({ identical: true });
-  } else {
-    secondControl.setErrors(null);
   }
 
   return null;

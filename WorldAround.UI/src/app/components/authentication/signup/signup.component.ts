@@ -53,7 +53,7 @@ export class SignupComponent implements OnInit, OnDestroy {
         updateOn: 'blur'
       }],
       'password': [null, Validators.required],
-      'confirmPassword': [null],
+      'confirmPassword': [null, Validators.required],
     }, { validators: identical('password', 'confirmPassword') });
 
     this.validation = {
