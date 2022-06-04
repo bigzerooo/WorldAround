@@ -35,6 +35,21 @@ public class UsersService : IUsersService
         return _mapper.Map<UserModel>(user);
     }
 
+    public async Task<UserModel> GetByEmailAsync(string email)
+    {
+        var user = await _userManager.FindByEmailAsync(email);
+
+        return _mapper.Map<UserModel>(user);
+    }
+
+    public async Task<bool> Exists(string login)
+    {
+        var user = await GetByEmailAsync(login);
+        user ??= await GetAsync(login);
+
+        return user != null;
+    }
+
     public async Task<IList<string>> AddToRoleAsync(int userId, string role)
     {
         var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id.Equals(userId));

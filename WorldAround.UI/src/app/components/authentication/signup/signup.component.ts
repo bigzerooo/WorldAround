@@ -8,7 +8,7 @@ import { LoginComponent } from '../login/login.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { identical } from 'src/app/validation/form-validation';
-import { ConfirmPasswordAbstractControlValidation, EmailAbstractControlValidation, PasswordAbstractControlValidation, UsernameAbstractControlValidation } from 'src/app/validation/authentication-control-validation';
+import { ConfirmPasswordAbstractControlValidation, EmailAbstractControlValidation, PasswordAbstractControlValidation, UniqueLoginValidator, UsernameAbstractControlValidation } from 'src/app/validation/authentication-control-validation';
 import { IValidationModel } from 'src/app/models/validation/interfaces/IValidationModel';
 import { FormControlHelper } from 'src/app/helpers/form-control-helper';
 
@@ -34,17 +34,26 @@ export class SignupComponent implements OnInit, OnDestroy {
     private readonly toastr: ToastrService,
     private readonly dialogRef: MatDialogRef<SignupComponent>,
     private readonly dialog: MatDialog,
-    private readonly formBuilder: FormBuilder) { }
+    private readonly formBuilder: FormBuilder,
+    private readonly loginValidator: UniqueLoginValidator) { }
 
   ngOnInit(): void {
 
     this.toastr.toastrConfig.positionClass = 'toast-bottom-right';
     this.model = new RegistrationModel();
     this.signUpForm = this.formBuilder.group({
-      'email': [this.model.email, [Validators.required, Validators.email]],
-      'userName': [this.model.userName, Validators.required],
-      'password': [this.model.password, Validators.required],
-      'confirmPassword': [this.model.confirmPassword],
+      'email': [null, {
+        validators: [Validators.required, Validators.email],
+        asyncValidators: [this.loginValidator.validate.bind(this.loginValidator)],
+        updateOn: 'blur'
+      }],
+      'userName': [null, {
+        validators: [Validators.required],
+        asyncValidators: [this.loginValidator.validate.bind(this.loginValidator)],
+        updateOn: 'blur'
+      }],
+      'password': [null, Validators.required],
+      'confirmPassword': [null],
     }, { validators: identical('password', 'confirmPassword') });
 
     this.validation = {
@@ -76,9 +85,7 @@ export class SignupComponent implements OnInit, OnDestroy {
       return;
     }
 
-    console.log(this.model);
     FormControlHelper.mapToModel(this.model, this.signUpForm);
-    console.log(this.model);
     this.authService.signUp(this.model)
       .subscribe({
         next: () => {
@@ -87,10 +94,11 @@ export class SignupComponent implements OnInit, OnDestroy {
           this.dialogRef.close();
         },
         error: (response) => {
-          console.log(response);
-          response.error.forEach((e: { code: string; }) => {
-            this.toastr.error(e.code);
-          });
+          Object.keys(response).forEach(key => {
+            response[key].forEach((message: string) => {
+              this.toastr.error(message);
+            })
+          })
         }
       });
   }

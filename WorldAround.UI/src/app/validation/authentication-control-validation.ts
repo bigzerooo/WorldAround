@@ -1,5 +1,28 @@
-import { AbstractControl } from "@angular/forms";
+import { Injectable } from "@angular/core";
+import { AbstractControl, AsyncValidator, ValidationErrors } from "@angular/forms";
+import { catchError, map, Observable, of } from "rxjs";
+import { UsersGateway } from "../gateways/users.gateway";
 import { IValidationModel } from "../models/validation/interfaces/IValidationModel";
+
+@Injectable({
+  providedIn: 'root'
+})
+export class UniqueLoginValidator implements AsyncValidator {
+
+  constructor(private readonly gateway: UsersGateway) {}
+
+  validate(control: AbstractControl): Promise<ValidationErrors> | Observable<ValidationErrors> {
+
+    return this.gateway.exists(control.value).pipe(
+      map(isTaken => (isTaken ? { unique: true } : null)),
+      catchError(() => of(null))
+    );
+  }
+
+  registerOnValidatorChange?(fn: () => void): void {
+    throw new Error("Method not implemented.");
+  }
+}
 
 export class AbstractControlValidation {
 
@@ -14,7 +37,7 @@ export class EmailAbstractControlValidation extends AbstractControlValidation im
 
   get message(): string | null {
 
-    if(!this.isValid) {
+    if (!this.isValid) {
       if (this.control.hasError('required')) {
         return 'Email is required';
       }
@@ -38,12 +61,12 @@ export class UsernameAbstractControlValidation extends AbstractControlValidation
 
   get message(): string | null {
 
-    if(!this.isValid) {
+    if (!this.isValid) {
       if (this.control.hasError('required')) {
         return 'Username is required';
       }
       if (this.control.hasError('unique')) {
-        return 'Specified username already exists';
+        return 'Username already exists';
       }
     }
 
@@ -75,7 +98,7 @@ export class ConfirmPasswordAbstractControlValidation extends AbstractControlVal
 
   get message(): string | null {
 
-    if(!this.isValid){
+    if (!this.isValid) {
       if (this.control.hasError('required')) {
         return 'Confirmation is required';
       }
@@ -96,7 +119,7 @@ export class LoginAbstractControlValidation extends AbstractControlValidation im
 
   get message(): string | null {
 
-    if(!this.isValid) {
+    if (!this.isValid) {
       if (this.control.hasError('required')) {
         return 'Login is required';
       }

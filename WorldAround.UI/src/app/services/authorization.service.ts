@@ -28,7 +28,8 @@ export class AuthorizationService {
     private cookie: CookieService,
     private jwtHelper: JwtHelperService) { }
 
-  public authorize(login: LoginModel) {
+  authorize(login: LoginModel) {
+
     const path = 'Authorize';
 
     var result = this.http.post<AuthenticationResultModel>(this.createUrl(path), login)
@@ -48,37 +49,27 @@ export class AuthorizationService {
     return result;
   }
 
-  public getUserId() {
+  getUserId() {
+
     let token = this.cookie.get(TOKEN)
 
     return this.jwtHelper.decodeToken(token).id;
   }
 
-  public signUp(user: RegistrationModel) {
+  signUp(user: RegistrationModel) {
+
     const path = 'Create';
 
     return this.http.post(this.createUrl(path), user)
       .pipe(catchError(this.handleError));
   }
 
-  private handleError(errorResponse: HttpErrorResponse) {
-
-    if (errorResponse.status === BAD_REQUEST_STATUS) {
-      let errors = errorResponse.error.errors;
-
-      let validationErrors: RegistrationModelValidationErrors = errors;
-
-      console.log("Validation Errors", validationErrors);
-    }
-
-    return throwError(() => new Error('Something bad happened; please try again later.'));
-  }
-
-  public logout() {
+  logout() {
     this.cookie.remove(TOKEN);
   }
 
-  public isAuthorized(): boolean {
+  isAuthorized(): boolean {
+
     const token = this.cookie.get(TOKEN);
 
     if (token == null) {
@@ -86,6 +77,17 @@ export class AuthorizationService {
     }
 
     return !this.jwtHelper.isTokenExpired(token);
+  }
+
+  private handleError(errorResponse: HttpErrorResponse) {
+
+    if (errorResponse.status === BAD_REQUEST_STATUS) {
+      let modelErrors: RegistrationModelValidationErrors = errorResponse.error.errors;
+
+      return throwError(() => modelErrors);
+    }
+
+    return throwError(() => new Error('Something bad happened. Please try again later.'));
   }
 
   private setToken(token: string): void {

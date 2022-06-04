@@ -11,6 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ToastrModule } from 'ngx-toastr';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from "@angular/material/input";
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -24,15 +25,15 @@ import { TripsInfoComponent } from './components/my-profile/trips-info/trips-inf
 import { CreateTripComponent } from './components/trips/create-trip/create-trip.component';
 import { LoginComponent } from './components/authentication/login/login.component';
 import { SignupComponent } from './components/authentication/signup/signup.component';
-import { AuthorizationService } from 'src/app/services/authorization.service';
-import { AuthGuard } from 'src/app/services/auth-guard.service';
-
 import { TripDetailComponent } from './components/trips/trip-detail/trip-detail.component';
 import { SearchComponent } from './components/search/search.component';
 import { MapComponent } from './components/shared/map/map.component';
 import { IconComponent } from './components/shared/icon/icon.component';
 import { DeleteTripPopupComponent } from './components/trips/trip-detail/delete-trip-popup/delete-trip-popup.component';
-import { MatInputModule } from "@angular/material/input";
+import { UsersGateway } from './gateways/users.gateway';
+import { AuthGuard } from 'src/app/services/auth-guard.service';
+import { AuthorizationService } from 'src/app/services/authorization.service';
+import { UniqueLoginValidator } from './validation/authentication-control-validation';
 
 @NgModule({
   declarations: [
@@ -72,9 +73,11 @@ import { MatInputModule } from "@angular/material/input";
   providers: [
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true } },
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    UsersGateway,
+    AuthGuard,
     JwtHelperService,
     AuthorizationService,
-    AuthGuard
+    UniqueLoginValidator
   ],
   bootstrap: [AppComponent]
 })

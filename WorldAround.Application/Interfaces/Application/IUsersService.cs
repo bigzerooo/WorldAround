@@ -16,5 +16,9 @@ public interface IUsersService
 
     Task<UserModel> GetAsync(string userName);
 
+    Task<UserModel> GetByEmailAsync(string email);
+
+    Task<bool> Exists(string login);
+
     Task<UserModel> UpdateAsync(UserModel userModel);
 }

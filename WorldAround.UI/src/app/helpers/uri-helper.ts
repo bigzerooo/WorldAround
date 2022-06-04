@@ -7,7 +7,10 @@ export class UriHelper {
     paths.forEach((path, index) => {
 
       if (index === paths.length - 1) {
-        uri += this.removeStartSlashes(path);
+        path = this.removeStartSlashes(path);
+
+        uri += path;
+
         return;
       }
 

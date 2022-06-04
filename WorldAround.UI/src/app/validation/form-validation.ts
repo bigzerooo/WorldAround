@@ -8,6 +8,8 @@ export const identical = (firstControlName: string, secondControlName: string): 
 
   if (secondControl.value !== null && firstControl.value !== secondControl.value) {
     secondControl.setErrors({ identical: true });
+  } else {
+    secondControl.setErrors(null);
   }
 
   return null;
