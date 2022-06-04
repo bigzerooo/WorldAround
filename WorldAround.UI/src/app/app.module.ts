@@ -33,7 +33,6 @@ import { MapComponent } from './components/shared/map/map.component';
 import { IconComponent } from './components/shared/icon/icon.component';
 import { DeleteTripPopupComponent } from './components/trips/trip-detail/delete-trip-popup/delete-trip-popup.component';
 import { MatInputModule } from "@angular/material/input";
-import { AutoFocus } from './directives/autofocus.directive';
 
 @NgModule({
   declarations: [
@@ -52,8 +51,7 @@ import { AutoFocus } from './directives/autofocus.directive';
     SignupComponent,
     MapComponent,
     IconComponent,
-    DeleteTripPopupComponent,
-    AutoFocus
+    DeleteTripPopupComponent
   ],
   imports: [
     BrowserModule,

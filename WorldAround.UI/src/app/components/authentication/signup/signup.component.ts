@@ -5,25 +5,25 @@ import { AuthorizationService } from 'src/app/services/authorization.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LoginComponent } from '../login/login.component';
-import { AbstractControl, AsyncValidator, FormBuilder, FormGroup, ValidationErrors, } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { identical } from 'src/app/validation/form-validation';
-import { Observable } from 'rxjs';
 import { ConfirmPasswordAbstractControlValidation, EmailAbstractControlValidation, PasswordAbstractControlValidation, UsernameAbstractControlValidation } from 'src/app/validation/authentication-control-validation';
 import { IValidationModel } from 'src/app/models/validation/interfaces/IValidationModel';
+import { FormControlHelper } from 'src/app/helpers/form-control-helper';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss', '../authentication.scss']
 })
-export class SignupComponent implements OnInit, OnDestroy, AsyncValidator {
+export class SignupComponent implements OnInit, OnDestroy {
 
   model: RegistrationModel;
   signUpForm: FormGroup;
   validation: {
     email: IValidationModel,
-    username: IValidationModel,
+    userName: IValidationModel,
     password: IValidationModel,
     confirmPassword: IValidationModel
   }
@@ -41,17 +41,17 @@ export class SignupComponent implements OnInit, OnDestroy, AsyncValidator {
     this.toastr.toastrConfig.positionClass = 'toast-bottom-right';
     this.model = new RegistrationModel();
     this.signUpForm = this.formBuilder.group({
-      'email': [null, [Validators.required, Validators.email]],
-      'username': [null, Validators.required],
-      'password': [null, Validators.required],
-      'confirm-password': [null]
-    }, { validators: identical('password', 'confirm-password') });
+      'email': [this.model.email, [Validators.required, Validators.email]],
+      'userName': [this.model.userName, Validators.required],
+      'password': [this.model.password, Validators.required],
+      'confirmPassword': [this.model.confirmPassword],
+    }, { validators: identical('password', 'confirmPassword') });
 
     this.validation = {
       email: new EmailAbstractControlValidation(this.signUpForm.get('email')),
-      username: new UsernameAbstractControlValidation(this.signUpForm.get('username')),
+      userName: new UsernameAbstractControlValidation(this.signUpForm.get('userName')),
       password: new PasswordAbstractControlValidation(this.signUpForm.get('password')),
-      confirmPassword: new ConfirmPasswordAbstractControlValidation(this.signUpForm.get('confirm-password')),
+      confirmPassword: new ConfirmPasswordAbstractControlValidation(this.signUpForm.get('confirmPassword')),
     };
   }
 
@@ -72,10 +72,13 @@ export class SignupComponent implements OnInit, OnDestroy, AsyncValidator {
 
   onSubmit(): void {
 
-    if (this.signUpForm.valid) {
+    if (!this.signUpForm.valid) {
       return;
     }
 
+    console.log(this.model);
+    FormControlHelper.mapToModel(this.model, this.signUpForm);
+    console.log(this.model);
     this.authService.signUp(this.model)
       .subscribe({
         next: () => {
@@ -90,13 +93,5 @@ export class SignupComponent implements OnInit, OnDestroy, AsyncValidator {
           });
         }
       });
-  }
-
-  validate(control: AbstractControl): Promise<ValidationErrors> | Observable<ValidationErrors> {
-    throw new Error('Method not implemented.');
-  }
-
-  registerOnValidatorChange?(fn: () => void): void {
-    throw new Error('Method not implemented.');
   }
 }

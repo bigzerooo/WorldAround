@@ -1,72 +1,69 @@
-<form class="form" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
-  <mat-label><h2>Registration</h2></mat-label>
+<form
+  class="form"
+  [formGroup]="signUpForm"
+  (ngSubmit)="onSubmit()">
+  <mat-label>
+    <h2>Registration</h2>
+  </mat-label>
   <br>
   <div>
-    <mat-form-field>
+    <mat-form-field
+      [matTooltip]="this.validation.email.message"
+      matTooltipPosition="right">
       <mat-label>Email</mat-label>
       <input
         matInput
-        tabindex="1"
         type="email"
         name="email"
-        [matTooltip]="this.validation.email.message()"
-        matTooltipPosition="right"
         formControlName="email"
         placeholder="example@example.com">
-      <mat-error *ngIf="!this.validation.email.isValid()"></mat-error>
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field
+      [matTooltip]="this.validation.userName.message"
+      matTooltipPosition="right">
       <mat-label>Username</mat-label>
       <input
         matInput
-        tabindex="2"
         type="username"
         name="username"
-        [matTooltip]="this.validation.username.message()"
-        matTooltipPosition="right"
         placeholder="pick a username"
-        formControlName="username"/>
-      <mat-error *ngIf="!this.validation.username.isValid()"></mat-error>
+        formControlName="userName" />
     </mat-form-field>
-
-    <mat-form-field>
+    <mat-form-field
+      [matTooltip]="this.validation.password.message"
+      matTooltipPosition="right">
       <mat-label>Password</mat-label>
       <input
         matInput
-        tabindex="3"
         type="password"
         name="password"
-        [matTooltip]="this.validation.password.message()"
-        matTooltipPosition="right"
         placeholder="set a password"
         formControlName="password"
-        required/>
-      <mat-error *ngIf="this.validation.password.isValid()"></mat-error>
+        required />
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field
+      [matTooltip]="this.validation.confirmPassword.message"
+      matTooltipPosition="right">
       <mat-label>Confirm password</mat-label>
       <input
         matInput
-        tabindex="4"
         type="password"
         name="confirm-password"
-        [matTooltip]="this.validation.confirmPassword.message()"
-        matTooltipPosition="right"
         placeholder="confirm the password"
-        formControlName="confirm-password"
-        required/>
-      <mat-error *ngIf="!this.validation.confirmPassword.isValid()"></mat-error>
+        formControlName="confirmPassword"
+        required />
     </mat-form-field>
     <br>
     <br>
   </div>
-
   <button
-    tabindex="6"
+    class="button"
     type="submit">
     SIGN UP
   </button>
   <span
-    class="tologin"
-    (click)="openLogin()">To Login</span>
+    type="button"
+    (click)="openLogin()">
+    To Login
+  </span>
 </form>

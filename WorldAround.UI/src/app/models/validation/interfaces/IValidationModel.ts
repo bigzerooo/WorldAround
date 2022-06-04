@@ -1,4 +1,4 @@
 export interface IValidationModel {
-  isValid: () => boolean;
-  message: () => string | null;
+  get isValid(): boolean;
+  get message(): string | null;
 }
