@@ -33,13 +33,13 @@ export class HeaderComponent {
 
   logout(): void {
 
-    this.authService.Logout();
+    this.authService.logout();
     this.router.navigate(["/home"]);
   }
 
   authorized(): boolean {
 
-    return this.authService.IsAuthorized();
+    return this.authService.isAuthorized();
   }
 
   openLogin(): void {

@@ -28,22 +28,26 @@ public class UsersService : IUsersService
         return _mapper.Map<UserModel>(user);
     }
 
-    public async Task<UserModel> GetAsync(string login)
-    {
-        var user = UserHelper.IsEmail(login) ?
-            await _userManager.FindByEmailAsync(login)
-            : await _userManager.FindByNameAsync(login);
-
-        return user == null ?
-            throw new NullReferenceException("A user with specified login not found")
-            : _mapper.Map<UserModel>(user);
-    }
-
-    public async Task<UserModel> GetByNameAsync(string userName)
+    public async Task<UserModel> GetAsync(string userName)
     {
         var user = await _userManager.FindByNameAsync(userName);
 
         return _mapper.Map<UserModel>(user);
+    }
+
+    public async Task<UserModel> GetByEmailAsync(string email)
+    {
+        var user = await _userManager.FindByEmailAsync(email);
+
+        return _mapper.Map<UserModel>(user);
+    }
+
+    public async Task<bool> Exists(string login)
+    {
+        var user = await GetByEmailAsync(login);
+        user ??= await GetAsync(login);
+
+        return user != null;
     }
 
     public async Task<IList<string>> AddToRoleAsync(int userId, string role)

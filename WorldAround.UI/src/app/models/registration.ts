@@ -1,6 +1,12 @@
 export class RegistrationModel {
-  public userName: string;
-  public email: string;
-  public password: string;
-  public confirmPassword: string;
+  userName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
+export class RegistrationModelValidationErrors {
+  userName: string[];
+  email: string[];
+  password: string[];
 }

@@ -14,9 +14,11 @@ public interface IUsersService
 
     Task<UserModel> GetAsync(int id);
 
-    Task<UserModel> GetAsync(string login);
+    Task<UserModel> GetAsync(string userName);
 
-    Task<UserModel> GetByNameAsync(string userName);
+    Task<UserModel> GetByEmailAsync(string email);
+
+    Task<bool> Exists(string login);
 
     Task<UserModel> UpdateAsync(UserModel userModel);
 }

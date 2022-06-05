@@ -1,9 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Reflection.Metadata.Ecma335;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WorldAround.Application.Interfaces.Application;
+using WorldAround.Domain.Models;
 
 namespace WorldAround.API.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
@@ -14,24 +18,41 @@ namespace WorldAround.API.Controllers
             _usersService = usersService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
+        [HttpGet("[action]")]
+        public async Task<IActionResult> Exists(string login)
         {
-            return Ok(await _usersService.GetAllAsync());
+            var exists = await _usersService.Exists(login);
+
+            return Ok(exists);
         }
 
+        [Authorize]
         [HttpGet]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> Get(string userName, string email)
         {
-            var user = await _usersService.GetAsync(id);
+            UserModel user;
+
+            if (userName == null && email == null)
+            {
+                return Ok(await _usersService.GetAllAsync());
+            }
+
+            if (userName != null)
+            {
+                user = await _usersService.GetAsync(userName);
+            }
+            else
+            {
+                user = await _usersService.GetAsync(email);
+            }
 
             return user != null ? Ok(user) : NotFound();
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetByName(string userName)
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> Get(int id)
         {
-            var user = await _usersService.GetByNameAsync(userName);
+            var user = await _usersService.GetAsync(id);
 
             return user != null ? Ok(user) : NotFound();
         }

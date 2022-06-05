@@ -20,7 +20,7 @@ public class AuthenticationController : ControllerBase
     {
         var result = await _authService.AuthenticateAsync(loginModel);
 
-        return result.Details.Succeeded ? Ok(result) : BadRequest(result.Details);
+        return result.Details.Succeeded ? Ok(result) : BadRequest(result);
     }
 
     [HttpPost]
