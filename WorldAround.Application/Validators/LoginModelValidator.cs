@@ -7,8 +7,6 @@ namespace WorldAround.Application.Validators
     {
         public LoginModelValidator()
         {
-            RuleLevelCascadeMode = CascadeMode.Stop;
-
             RuleFor(x => x.Login)
                 .NotEmpty();
 
