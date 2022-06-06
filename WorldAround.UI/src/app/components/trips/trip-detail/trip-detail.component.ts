@@ -8,8 +8,8 @@ import { AddCommentModel } from 'src/app/models/comments/addComment';
 import { MapMode } from 'src/app/models/map/map-mode';
 import { PointModel } from 'src/app/models/map/point';
 import { UpdatePinModel } from 'src/app/models/pins/updatePin';
-import { GetTripsModel } from 'src/app/models/trips/getTrips';
 import { PinModel } from 'src/app/models/trips/pin';
+import { TripModel } from 'src/app/models/trips/tripModel';
 import { UpdateTripModel } from 'src/app/models/trips/updateTrip';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 import { MapComponent } from '../../shared/map/map.component';
@@ -24,7 +24,7 @@ export class TripDetailComponent implements OnInit, OnDestroy {
 
   @ViewChild(MapComponent) map: MapComponent;
 
-  trip: GetTripsModel;
+  trip: TripModel;
   commentText: any;
   sub: any;
   userId: number;
