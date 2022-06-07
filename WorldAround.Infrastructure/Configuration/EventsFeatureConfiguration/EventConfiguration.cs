@@ -10,6 +10,7 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
     {
         entity.HasKey(e => e.Id);
         entity.Property(e => e.Title)
+            .HasMaxLength(30)
             .IsRequired();
 
         entity.Property(e => e.Display)

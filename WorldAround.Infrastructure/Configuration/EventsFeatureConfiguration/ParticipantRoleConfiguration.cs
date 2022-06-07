@@ -14,6 +14,7 @@ public class ParticipantRoleConfiguration : IEntityTypeConfiguration<Participant
             .ValueGeneratedNever();
 
         entity.Property(e => e.Name)
+            .HasMaxLength(30)
             .IsRequired();
     }
 }

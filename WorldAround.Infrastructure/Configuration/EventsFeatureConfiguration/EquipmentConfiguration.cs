@@ -9,7 +9,8 @@ public class EquipmentConfiguration : IEntityTypeConfiguration<Equipment>
     public void Configure(EntityTypeBuilder<Equipment> entity)
     {
         entity.HasKey(e => e.Id);
-        entity.Property(e => e.Name);
+        entity.Property(e => e.Name)
+            .HasMaxLength(30);
 
         entity.HasOne(e => e.Event)
             .WithMany(e => e.Equipments)

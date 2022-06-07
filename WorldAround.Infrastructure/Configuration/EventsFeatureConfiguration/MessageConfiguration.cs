@@ -10,6 +10,10 @@ public class MessageConfiguration : IEntityTypeConfiguration<Message>
     {
         entity.HasKey(e => e.Id);
 
+        entity.Property(e => e.Text)
+            .HasMaxLength(2000)
+            .IsRequired();
+
         entity.Property(e => e.IsRead)
             .HasDefaultValue(false);
 

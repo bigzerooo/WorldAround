@@ -9,6 +9,8 @@ public class AlbumConfiguration : IEntityTypeConfiguration<Album>
     public void Configure(EntityTypeBuilder<Album> entity)
     {
         entity.HasKey(e => e.Id);
+        entity.Property(e => e.Name)
+            .HasMaxLength(50);
         entity.Property(e => e.EventId)
             .IsRequired();
 

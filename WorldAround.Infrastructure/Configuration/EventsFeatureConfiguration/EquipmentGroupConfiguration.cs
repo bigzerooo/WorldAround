@@ -10,6 +10,7 @@ public class EquipmentGroupConfiguration : IEntityTypeConfiguration<EquipmentGro
     {
         entity.HasKey(e => e.Id);
         entity.Property(e => e.Name)
+            .HasMaxLength(30)
             .IsRequired();
 
         entity.HasOne(e => e.Event)

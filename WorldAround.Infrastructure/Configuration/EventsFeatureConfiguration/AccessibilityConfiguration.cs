@@ -10,6 +10,7 @@ public class AccessibilityConfiguration : IEntityTypeConfiguration<Accessibility
     {
         entity.HasKey(e => e.Id);
         entity.Property(e => e.Name)
+            .HasMaxLength(50)
             .IsRequired();
     }
 }
