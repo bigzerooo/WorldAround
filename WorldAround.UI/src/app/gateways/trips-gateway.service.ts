@@ -1,12 +1,13 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AddCommentModel } from 'src/app/models/comments/addComment';
 import { CommentModel } from 'src/app/models/comments/comment';
 import { CreateTripModel } from 'src/app/models/trips/createTrip';
-import { GetTripsModel } from 'src/app/models/trips/getTrips';
+import { GetTripsModel } from 'src/app/models/trips/getTripsModel';
 import { UpdateTripModel } from 'src/app/models/trips/updateTrip';
+import { TripModel } from '../models/trips/tripModel';
 
 @Injectable({
   providedIn: 'root'
@@ -17,16 +18,12 @@ export class TripsGateway {
 
   constructor(private http: HttpClient) { }
 
-  getTrip(tripId: number): Observable<GetTripsModel> {
-    return this.http.get<GetTripsModel>(`${this.baseUrl}/${tripId}`);
+  getTrip(tripId: number): Observable<TripModel> {
+    return this.http.get<TripModel>(`${this.baseUrl}/${tripId}`);
   }
 
-  getTrips(userId: number): Observable<GetTripsModel[]> {
-    return this.http.get<GetTripsModel[]>(`${this.baseUrl}?userId=${userId}`);
-  }
-
-  searchTrips(value: string): Observable<GetTripsModel[]> {
-    return this.http.get<GetTripsModel[]>(`${this.baseUrl}/Search?value=${value}`);
+  getTrips(params: any): Observable<GetTripsModel> {
+    return this.http.get<GetTripsModel>(this.baseUrl, {params: params});
   }
 
   createTrip(createTripModel: CreateTripModel): Observable<any> {
