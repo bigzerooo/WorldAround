@@ -72,6 +72,10 @@ export class AuthorizationService {
     return !this.jwtHelper.isTokenExpired(token);
   }
 
+  getToken(): string {
+    return this.cookie.get(TOKEN);
+  }
+
   private handleError(errorResponse: HttpErrorResponse) {
 
     if (errorResponse.status === BAD_REQUEST_STATUS) {
@@ -85,10 +89,6 @@ export class AuthorizationService {
 
   private setToken(token: string): void {
     this.cookie.put(TOKEN, token);
-  }
-
-  private getToken(): string {
-    return this.cookie.get(TOKEN);
   }
 
   private setAuthorizationHeader(): HttpHeaders {
