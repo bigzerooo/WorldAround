@@ -14,42 +14,60 @@ public class TripsService : ITripsService
     private readonly IMapper _mapper;
 
     public TripsService(
-        IWorldAroundDbContext context, 
+        IWorldAroundDbContext context,
         IMapper mapper)
     {
         _context = context;
         _mapper = mapper;
     }
 
-    public async Task<GetTripsModel> GetTripAsync(int tripId)
+    public async Task<TripModel> GetTripAsync(int tripId, CancellationToken cancellationToken)
     {
         var trip = await _context.Trips
             .Include(x => x.Pins)
             .Include(x => x.Comments)
             .ThenInclude(x => x.Author)
-            .FirstOrDefaultAsync(x => x.Id == tripId);
+            .FirstOrDefaultAsync(x => x.Id == tripId, cancellationToken);
 
-        return _mapper.Map<GetTripsModel>(trip);
+        return _mapper.Map<TripModel>(trip);
     }
 
-    public async Task<IReadOnlyCollection<GetTripsModel>> GetTripsAsync(int userId)
+    public async Task<GetTripsModel> GetTripsAsync(GetTripsParams @params,
+        CancellationToken cancellationToken)
     {
-        var trips = await _context.Trips
-            .Where(x => x.AuthorId == userId)
-            .Include(x => x.Pins)
-            .ToListAsync();
+        var tripsQuery = _context.Trips.AsQueryable();
 
-        return _mapper.Map<IReadOnlyCollection<GetTripsModel>>(trips);
-    }
+        if (@params.IncludePins)
+        {
+            tripsQuery = tripsQuery.Include(x => x.Pins);
+        }
 
-    public async Task<IReadOnlyCollection<GetTripsModel>> SearchTripsAsync(string searchValue)
-    {
-        var trips = await _context.Trips
-            .Where(x => x.Name.ToLower().Contains(searchValue.ToLower())
-                        || x.Description.ToLower().Contains(searchValue.ToLower()))
-            .ToListAsync();
+        if (@params.UserId is not null)
+        {
+            tripsQuery = tripsQuery.Where(x => x.AuthorId == @params.UserId);
+        }
 
-        return _mapper.Map<IReadOnlyCollection<GetTripsModel>>(trips);
+        if (!string.IsNullOrWhiteSpace(@params.SearchValue))
+        {
+            var searchValue = @params.SearchValue.ToLower();
+            tripsQuery = tripsQuery.Where(x =>
+                x.Name.ToLower().Contains(searchValue) || x.Description.ToLower().Contains(searchValue));
+        }
+
+        var result = await _context.Trips.Select(x => new
+        {
+            Data = tripsQuery
+                .Skip(@params.PageIndex * @params.PageSize)
+                .Take(@params.PageSize)
+                .ToList(),
+            Length = tripsQuery.Count()
+        }).FirstOrDefaultAsync(cancellationToken);
+        
+        return new GetTripsModel
+        {
+            Data = _mapper.Map<IReadOnlyCollection<TripModel>>(result?.Data),
+            Length = result?.Length ?? 0
+        };
     }
 
     public async Task CreateTripAsync(CreateTripModel model)

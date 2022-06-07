@@ -17,29 +17,22 @@ public class TripsController : ControllerBase
     }
 
     [HttpGet("{tripId:int}")]
-    public async Task<ActionResult<GetTripsModel>> GetTrip(int tripId)
+    public async Task<ActionResult<GetTripsModel>> GetTrip(int tripId, CancellationToken cancellationToken)
     {
-        var trip = await _tripService.GetTripAsync(tripId);
+        var trip = await _tripService.GetTripAsync(tripId, cancellationToken);
 
         return Ok(trip);
     }
 
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyCollection<GetTripsModel>>> GetTrips(int userId)
+    public async Task<ActionResult<IReadOnlyCollection<GetTripsModel>>> GetTrips([FromQuery]GetTripsParams @params,
+        CancellationToken cancellationToken)
     {
-        var trips = await _tripService.GetTripsAsync(userId);
+        var trips = await _tripService.GetTripsAsync(@params, cancellationToken);
 
         return Ok(trips);
     }
-
-    [HttpGet("Search")]
-    public async Task<ActionResult<IReadOnlyCollection<GetTripsModel>>> SearchTrips(string value)
-    {
-        var trips = await _tripService.SearchTripsAsync(value);
-
-        return Ok(trips);
-    }
-
+    
     [HttpPost]
     public async Task<ActionResult> CreateTrip(CreateTripModel model)
     {

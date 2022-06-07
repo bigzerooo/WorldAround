@@ -9,7 +9,7 @@ public class TripsMappingProfile : Profile
 {
     public TripsMappingProfile()
     {
-        CreateMap<Trip, GetTripsModel>()
+        CreateMap<Trip, TripModel>()
             .ForMember(d => d.Pins, o => o.MapFrom(s => s.Pins))
             .ForMember(d => d.Comments, o => o.MapFrom(s => s.Comments))
             ;
