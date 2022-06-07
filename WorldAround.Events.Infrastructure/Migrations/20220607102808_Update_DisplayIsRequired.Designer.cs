@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorldAround.Events.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using WorldAround.Events.Infrastructure.Data;
 namespace WorldAround.Events.Infrastructure.Migrations
 {
     [DbContext(typeof(EventsContext))]
-    partial class EventsContextModelSnapshot : ModelSnapshot
+    [Migration("20220607102808_Update_DisplayIsRequired")]
+    partial class Update_DisplayIsRequired
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

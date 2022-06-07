@@ -1,17 +1,16 @@
+using WorldAround.Events.Infrastructure;
+using WorldAround.Events.Application;
+using WorldAround.Events.API;
+
 var builder = WebApplication.CreateBuilder(args);
+var services = builder.Services;
 
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-WorldAround.Events.Infrastructure.DependencyInjection.AddInfrastructure(builder.Services, builder.Configuration);
+services.AddInfrastructure(builder.Configuration);
+services.AddApplication(builder.Configuration);
+services.AddApi();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

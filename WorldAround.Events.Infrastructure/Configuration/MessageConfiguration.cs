@@ -14,7 +14,6 @@ public class MessageConfiguration : IEntityTypeConfiguration<Message>
             .HasDefaultValue(false);
 
         entity.Property(e => e.Display)
-            .IsRequired(false)
             .HasDefaultValue(true);
 
         entity.HasOne(e => e.Event)

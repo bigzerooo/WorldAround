@@ -11,7 +11,7 @@ public class Event : IEntity<int>
     public DateTime CreateDate { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
-    public bool? Display { get; set; }
+    public bool Display { get; set; }
 
     public AccessibilityProfile? AccessibilityId { get; set; }
 
