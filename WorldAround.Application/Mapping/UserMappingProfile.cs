@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using WorldAround.Domain.Entities;
-using WorldAround.Domain.Models;
+using WorldAround.Domain.Models.Identity;
+using WorldAround.Domain.Models.Users;
 
 namespace WorldAround.Application.Mapping;
 

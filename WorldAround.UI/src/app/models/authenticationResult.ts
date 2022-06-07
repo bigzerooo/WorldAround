@@ -4,7 +4,7 @@ export class AuthenticationResultModel {
   public token: string;
 }
 
-class AuthenticationResultDetails {
+export class AuthenticationResultDetails {
   public succeeded: boolean;
   public isLockedOut: boolean;
   public isNotAllowed: boolean;

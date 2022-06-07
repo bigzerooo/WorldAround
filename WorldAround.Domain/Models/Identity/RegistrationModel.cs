@@ -1,4 +1,4 @@
-﻿namespace WorldAround.Domain.Models;
+﻿namespace WorldAround.Domain.Models.Identity;
 
 public class RegistrationModel
 {
