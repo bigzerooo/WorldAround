@@ -25,7 +25,8 @@ jobs:
         run: |
           npm install
           npm run build --prod
-
+        working-directory: .
+          
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
@@ -50,6 +51,5 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'WorldAround'
-          slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B83B7454BF8547AEAC7FDDDE44BF4A7F }}
-          package: .
+          package: ./dist/hello-world-app
