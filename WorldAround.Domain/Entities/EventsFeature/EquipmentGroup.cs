@@ -1,8 +1,6 @@
-﻿using WorldAround.Domain.Interfaces;
+﻿namespace WorldAround.Domain.Entities;
 
-namespace WorldAround.Domain.Entities;
-
-public class EquipmentGroup : IEntity<int>
+public class EquipmentGroup
 {
     public int Id { get; set; }
     public string Name { get; set; }

@@ -1,8 +1,6 @@
-﻿using WorldAround.Domain.Interfaces;
+﻿namespace WorldAround.Domain.Entities;
 
-namespace WorldAround.Domain.Entities;
-
-public class Image : IEntity<int>
+public class Image
 {
     public int Id { get; set; }
     public string? FilePath { get; set; }

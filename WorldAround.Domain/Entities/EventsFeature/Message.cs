@@ -1,8 +1,6 @@
-﻿using WorldAround.Domain.Interfaces;
+﻿namespace WorldAround.Domain.Entities;
 
-namespace WorldAround.Domain.Entities;
-
-public class Message : IEntity<Guid>
+public class Message
 {
     public Guid Id { get; set; }
     public string Text { get; set; }

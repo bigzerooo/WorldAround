@@ -1,9 +1,8 @@
 ﻿using WorldAround.Domain.Enums;
-using WorldAround.Domain.Interfaces;
 
 namespace WorldAround.Domain.Entities;
 
-public class Participant : IEntity<int>
+public class Participant
 {
     public int Id { get; set; }
 
