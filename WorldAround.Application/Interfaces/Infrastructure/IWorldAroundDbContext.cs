@@ -5,17 +5,24 @@ namespace WorldAround.Application.Interfaces.Infrastructure;
 
 public interface IWorldAroundDbContext
 {
-    DbSet<Attraction> Attractions { get; set; }
-    DbSet<Comment> Comments { get; set; }
-    DbSet<Event> Events { get; set; }
-    DbSet<Participant> Participants { get; set; }
-    DbSet<ParticipantPermission> ParticipantsPermissions { get; set; }
-    DbSet<ParticipantRole> ParticipantRoles { get; set; }
-    DbSet<ParticipantRolePermissionLink> ParticipantRolePermissionLinks { get; set; }
-    DbSet<Pin> Pins { get; set; }
-    DbSet<Rating> Ratings { get; set; }
-    DbSet<Trip> Trips { get; set; }
-    DbSet<TripEventLink> TripEventLinks { get; set; }
+    public DbSet<Attraction> Attractions { get; set; }
+    public DbSet<Comment> Comments { get; set; }
+    public DbSet<Pin> Pins { get; set; }
+    public DbSet<Rating> Ratings { get; set; }
+    public DbSet<Trip> Trips { get; set; }
+    public DbSet<Accessibility> Accessibilities { get; set; }
+    public DbSet<Album> Albums { get; set; }
+    public DbSet<Chat> Chats { get; set; }
+    public DbSet<Equipment> Equipments { get; set; }
+    public DbSet<EquipmentGroup> EquipmentsGroups { get; set; }
+    public DbSet<Event> Events { get; set; }
+    public DbSet<Image> Images { get; set; }
+    public DbSet<Message> Messages { get; set; }
+    public DbSet<Participant> Participants { get; set; }
+    public DbSet<ParticipantPermission> ParticipantsPermissions { get; set; }
+    public DbSet<ParticipantPermissionLink> ParticipantPermissionLinks { get; set; }
+    public DbSet<ParticipantRole> ParticipantRoles { get; set; }
+    public DbSet<TripEventLink> TripEventLinks { get; set; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }
