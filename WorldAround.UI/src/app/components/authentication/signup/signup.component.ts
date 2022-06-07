@@ -29,7 +29,6 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private readonly router: Router,
     private readonly authService: AuthorizationService,
     private readonly toastr: ToastrService,
     private readonly dialogRef: MatDialogRef<SignupComponent>,
@@ -90,8 +89,7 @@ export class SignupComponent implements OnInit, OnDestroy {
       .subscribe({
         next: () => {
           this.toastr.success('Successful!');
-          this.router.navigate(['authentication/login']);
-          this.dialogRef.close();
+          this.openLogin();
         },
         error: (response) => {
           Object.keys(response).forEach(key => {

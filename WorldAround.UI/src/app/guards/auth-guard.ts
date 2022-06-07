@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { CanActivate } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { LoginComponent } from '../components/authentication/login/login.component';
 import { AuthorizationService } from '../services/authorization.service';
 
@@ -11,17 +11,20 @@ export class AuthGuard implements CanActivate {
 
   constructor(
     private authorizationService: AuthorizationService,
-    private readonly dialog: MatDialog) { }
+    private readonly dialog: MatDialog,
+    private readonly router: Router) { }
 
-  canActivate(): boolean {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
 
-    if (!this.authorizationService.isAuthorized()) {
-      this.dialog.open(LoginComponent, {
-        panelClass: 'authentication-modal'
-      });
-      return false;
+    if (this.authorizationService.isAuthorized()) {
+      return true;
     }
 
-    return true;
+    this.router.navigate([], { queryParams: { returnUrl: state.url } });
+    this.dialog.open(LoginComponent, {
+      panelClass: 'authentication-modal'
+    });
+
+    return false;
   }
 }
