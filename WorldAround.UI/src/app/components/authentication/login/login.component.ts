@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LoginModel } from 'src/app/models/login';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 import { ToastrService } from 'ngx-toastr';
@@ -17,6 +17,8 @@ import { FormControlHelper } from 'src/app/helpers/form-control-helper';
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
+  private returnUrl;
+
   loginForm: FormGroup;
   loginModel: LoginModel = new LoginModel();
   loginBtnDisabled: boolean = false;
@@ -24,7 +26,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     login: IValidationModel,
   }
 
-  constructor(private readonly router: Router,
+  constructor(
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
     private readonly authService: AuthorizationService,
     private readonly toastr: ToastrService,
     private readonly dialogRef: MatDialogRef<LoginComponent>,
@@ -34,13 +38,17 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     this.toastr.toastrConfig.positionClass = 'toast-bottom-right';
+
     this.loginForm = this.formBuilder.group({
       'login': [null, [Validators.required]],
       'password': [null]
     });
+
     this.validation = {
       login: new LoginAbstractControlValidation(this.loginForm.get('login'))
     };
+
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   ngOnDestroy(): void {
@@ -61,7 +69,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {
 
-    if(!this.loginForm.valid) {
+    if (!this.loginForm.valid) {
       return;
     }
 
@@ -70,7 +78,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.authService.signIn(this.loginModel)
       .subscribe({
         next: () => {
-          this.router.navigate(['/home']);
+          this.router.navigate([this.returnUrl]);
           this.toastr.success('Authentication passed');
           this.dialogRef.close();
         },
