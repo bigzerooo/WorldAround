@@ -14,9 +14,16 @@ public class AlbumConfiguration : IEntityTypeConfiguration<Album>
         entity.Property(e => e.EventId)
             .IsRequired();
 
+        entity.HasOne(e => e.Trip)
+            .WithMany(e => e.Albums)
+            .HasForeignKey(e => e.TripId)
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.NoAction);
+
         entity.HasOne(e => e.Event)
             .WithMany(e => e.Albums)
             .HasForeignKey(e => e.EventId)
+            .IsRequired(false)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }
