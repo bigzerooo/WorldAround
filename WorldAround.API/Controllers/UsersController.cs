@@ -1,10 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Reflection.Metadata.Ecma335;
-using Microsoft.AspNetCore.Authentication.OAuth.Claims;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WorldAround.Application.Interfaces.Application;
-using WorldAround.Domain.Models;
 using WorldAround.Domain.Models.Users;
 
 namespace WorldAround.API.Controllers
