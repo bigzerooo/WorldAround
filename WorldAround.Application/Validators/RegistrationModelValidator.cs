@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using WorldAround.Domain.Models;
+using WorldAround.Domain.Models.Identity;
 
 namespace WorldAround.Application.Validators
 {

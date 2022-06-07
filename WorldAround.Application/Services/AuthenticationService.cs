@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using WorldAround.Application.Helpers;
 using WorldAround.Application.Interfaces.Application;
 using WorldAround.Domain.Entities;
-using WorldAround.Domain.Models;
+using WorldAround.Domain.Models.Identity;
 
 namespace WorldAround.Application.Services;
 
@@ -72,10 +72,5 @@ public class AuthenticationService : IAuthenticationService
         }
 
         return result;
-    }
-
-    public async Task SignOutAsync()
-    {
-        await _signInManager.SignOutAsync();
     }
 }

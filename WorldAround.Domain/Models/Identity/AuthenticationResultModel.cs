@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace WorldAround.Domain.Models;
+namespace WorldAround.Domain.Models.Identity;
 
 public class AuthenticationResultModel
 {

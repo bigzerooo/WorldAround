@@ -1,4 +1,5 @@
 ﻿using WorldAround.Domain.Models;
+using WorldAround.Domain.Models.Users;
 
 namespace WorldAround.Application.Interfaces.Application;
 
@@ -14,9 +15,7 @@ public interface IUsersService
 
     Task<UserModel> GetAsync(int id);
 
-    Task<UserModel> GetAsync(string userName);
-
-    Task<UserModel> GetByEmailAsync(string email);
+    Task<UserModel> GetAsync(GetUserParams @params);
 
     Task<bool> Exists(string login);
 
