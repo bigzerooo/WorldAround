@@ -12,6 +12,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ToastrModule } from 'ngx-toastr';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from "@angular/material/input";
+import { MatPaginatorModule} from '@angular/material/paginator';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -35,6 +36,7 @@ import { AuthGuard } from 'src/app/guards/auth-guard';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 import { UniqueLoginValidator } from './validation/authentication-control-validation';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
+import { TripsGridComponent } from './components/shared/trips-grid/trips-grid.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,8 @@ import { AuthInterceptor } from './interceptors/auth-interceptor';
     SignupComponent,
     MapComponent,
     IconComponent,
-    DeleteTripPopupComponent
+    DeleteTripPopupComponent,
+    TripsGridComponent
   ],
   imports: [
     BrowserModule,
@@ -70,6 +73,7 @@ import { AuthInterceptor } from './interceptors/auth-interceptor';
     MatTooltipModule,
     ReactiveFormsModule,
     MatInputModule,
+    MatPaginatorModule
   ],
   providers: [
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true } },
