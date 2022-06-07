@@ -9,10 +9,12 @@ public class EquipmentGroupConfiguration : IEntityTypeConfiguration<EquipmentGro
     public void Configure(EntityTypeBuilder<EquipmentGroup> entity)
     {
         entity.HasKey(e => e.Id);
+        entity.Property(e => e.Name)
+            .IsRequired();
 
         entity.HasOne(e => e.Event)
             .WithMany(e => e.EquipmentGroups)
             .HasForeignKey(e => e.EventId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.NoAction);
     }
 }

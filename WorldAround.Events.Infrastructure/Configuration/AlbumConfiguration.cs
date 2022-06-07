@@ -9,7 +9,8 @@ public class AlbumConfiguration : IEntityTypeConfiguration<Album>
     public void Configure(EntityTypeBuilder<Album> entity)
     {
         entity.HasKey(e => e.Id);
-        entity.Property(e => e.EventId).IsRequired();
+        entity.Property(e => e.EventId)
+            .IsRequired();
 
         entity.HasOne(e => e.Event)
             .WithMany(e => e.Albums)

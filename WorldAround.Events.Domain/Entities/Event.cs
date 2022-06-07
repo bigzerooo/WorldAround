@@ -11,8 +11,9 @@ public class Event : IEntity<int>
     public DateTime CreateDate { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
+    public bool? Display { get; set; }
 
-    public AccessibilityProfile AccessibilityId { get; set; }
+    public AccessibilityProfile? AccessibilityId { get; set; }
 
     public Accessibility Accessibility { get; set; }
 
@@ -23,6 +24,5 @@ public class Event : IEntity<int>
     public IEnumerable<Chat> Chats { get; set; }
     public IEnumerable<Message> Messages { get; set; }
     public IEnumerable<Participant> Participants { get; set; }
-
     public IEnumerable<TripEventLink> TripEventLinks { get; set; }
 }

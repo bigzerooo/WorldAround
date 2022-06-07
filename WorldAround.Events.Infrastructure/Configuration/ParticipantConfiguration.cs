@@ -13,16 +13,18 @@ public class ParticipantConfiguration : IEntityTypeConfiguration<Participant>
         entity.HasIndex(e => new { e.UserId, e.EventId })
             .IsUnique();
 
-        entity.Property(e => e.UserId).ValueGeneratedNever();
+        entity.Property(e => e.UserId)
+            .ValueGeneratedNever();
 
         entity.HasOne(e => e.ParticipantRole)
             .WithMany(e => e.Participants)
             .HasForeignKey(e => e.ParticipantRoleId)
-            .OnDelete(DeleteBehavior.NoAction);
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.SetNull);
 
         entity.HasOne(e => e.Event)
             .WithMany(e => e.Participants)
             .HasForeignKey(e => e.EventId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.NoAction);
     }
 }

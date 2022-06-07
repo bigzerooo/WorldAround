@@ -13,10 +13,14 @@ public class MessageConfiguration : IEntityTypeConfiguration<Message>
         entity.Property(e => e.IsRead)
             .HasDefaultValue(false);
 
+        entity.Property(e => e.Display)
+            .IsRequired(false)
+            .HasDefaultValue(true);
+
         entity.HasOne(e => e.Event)
             .WithMany(e => e.Messages)
             .HasForeignKey(e => e.EventId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.NoAction);
 
         entity.HasOne(e => e.Chat)
             .WithMany(e => e.Messages)
@@ -26,6 +30,7 @@ public class MessageConfiguration : IEntityTypeConfiguration<Message>
         entity.HasOne(e => e.ReplyMessage)
             .WithMany(e => e.ReplyMessages)
             .HasForeignKey(e => e.ReplyMessageId)
-            .OnDelete(DeleteBehavior.SetNull);
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.NoAction);
     }
 }

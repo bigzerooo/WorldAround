@@ -9,7 +9,7 @@ public class Participant : IEntity<int>
 
     public int UserId { get; set; }
     public int EventId { get; set; }
-    public ParticipantRoleProfile ParticipantRoleId { get; set; }
+    public ParticipantRoleProfile? ParticipantRoleId { get; set; }
 
     public Event Event { get; set; }
     public ParticipantRole ParticipantRole { get; set; }

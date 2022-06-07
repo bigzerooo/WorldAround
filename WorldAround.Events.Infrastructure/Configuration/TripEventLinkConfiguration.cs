@@ -10,11 +10,12 @@ public class TripEventLinkConfiguration : IEntityTypeConfiguration<TripEventLink
     {
         entity.HasKey(e => new { e.TripId, e.EventId });
 
-        entity.Property(e => e.TripId).ValueGeneratedNever();
+        entity.Property(e => e.TripId)
+            .ValueGeneratedNever();
 
         entity.HasOne(e => e.Event)
             .WithMany(e => e.TripEventLinks)
             .HasForeignKey(e => e.EventId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.NoAction);
     }
 }

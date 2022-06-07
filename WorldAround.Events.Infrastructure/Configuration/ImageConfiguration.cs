@@ -13,11 +13,12 @@ public class ImageConfiguration : IEntityTypeConfiguration<Image>
         entity.HasOne(e => e.Event)
             .WithMany(e => e.Images)
             .HasForeignKey(e => e.EventId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.NoAction);
 
         entity.HasOne(e => e.Album)
             .WithMany(e => e.Images)
             .HasForeignKey(e => e.AlbumId)
+            .IsRequired(false)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

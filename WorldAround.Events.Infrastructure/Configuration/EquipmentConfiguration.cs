@@ -14,11 +14,12 @@ public class EquipmentConfiguration : IEntityTypeConfiguration<Equipment>
         entity.HasOne(e => e.Event)
             .WithMany(e => e.Equipments)
             .HasForeignKey(e => e.EventId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.NoAction);
 
         entity.HasOne(e => e.EquipmentGroup)
             .WithMany(e => e.Equipments)
             .HasForeignKey(e => e.EquipmentGroupId)
+            .IsRequired(false)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

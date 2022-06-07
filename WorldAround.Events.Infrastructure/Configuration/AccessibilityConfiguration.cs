@@ -9,6 +9,7 @@ public class AccessibilityConfiguration : IEntityTypeConfiguration<Accessibility
     public void Configure(EntityTypeBuilder<Accessibility> entity)
     {
         entity.HasKey(e => e.Id);
-        entity.Property(e => e.Name).IsRequired();
+        entity.Property(e => e.Name)
+            .IsRequired();
     }
 }

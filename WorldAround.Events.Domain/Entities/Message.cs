@@ -8,10 +8,11 @@ public class Message : IEntity<Guid>
     public string Text { get; set; }
     public DateTime CreateDate { get; set; }
     public bool IsRead { get; set; }
+    public bool? Display { get; set; }
 
     public int EventId { get; set; }
     public int AuthorId { get; set; }
-    public int? ReplyMessageId { get; set; }
+    public Guid? ReplyMessageId { get; set; }
     public int? ChatId { get; set; }
 
     public Event Event { get; set; }
