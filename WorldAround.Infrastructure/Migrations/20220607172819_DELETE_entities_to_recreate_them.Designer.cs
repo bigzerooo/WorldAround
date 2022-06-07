@@ -12,8 +12,8 @@ using WorldAround.Infrastructure.Data;
 namespace WorldAround.Infrastructure.Migrations
 {
     [DbContext(typeof(WorldAroundDbContext))]
-    [Migration("20220607125938_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20220607172819_DELETE_entities_to_recreate_them")]
+    partial class DELETE_entities_to_recreate_them
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -127,41 +127,6 @@ namespace WorldAround.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("WorldAround.Domain.Entities.Accessibility", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Accessibilities");
-                });
-
-            modelBuilder.Entity("WorldAround.Domain.Entities.Album", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("EventId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EventId");
-
-                    b.ToTable("Albums");
-                });
-
             modelBuilder.Entity("WorldAround.Domain.Entities.Attraction", b =>
                 {
                     b.Property<int>("Id")
@@ -192,28 +157,6 @@ namespace WorldAround.Infrastructure.Migrations
                     b.HasIndex("AuthorId");
 
                     b.ToTable("Attractions");
-                });
-
-            modelBuilder.Entity("WorldAround.Domain.Entities.Chat", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("EventId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EventId");
-
-                    b.ToTable("Chats");
                 });
 
             modelBuilder.Entity("WorldAround.Domain.Entities.Comment", b =>
@@ -252,269 +195,11 @@ namespace WorldAround.Infrastructure.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.HasIndex("EventId");
-
                     b.HasIndex("TripId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("Comments");
-                });
-
-            modelBuilder.Entity("WorldAround.Domain.Entities.Equipment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<double>("ActualQuantity")
-                        .HasColumnType("float");
-
-                    b.Property<int?>("EquipmentGroupId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EventId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("NeededQuantity")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EquipmentGroupId");
-
-                    b.HasIndex("EventId");
-
-                    b.ToTable("Equipments");
-                });
-
-            modelBuilder.Entity("WorldAround.Domain.Entities.EquipmentGroup", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("EventId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EventId");
-
-                    b.ToTable("EquipmentsGroups");
-                });
-
-            modelBuilder.Entity("WorldAround.Domain.Entities.Event", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int?>("AccessibilityId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Display")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AccessibilityId");
-
-                    b.ToTable("Events");
-                });
-
-            modelBuilder.Entity("WorldAround.Domain.Entities.Image", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int?>("AlbumId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AttractionId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("EventId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FilePath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("PinId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TripId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AlbumId");
-
-                    b.HasIndex("AttractionId");
-
-                    b.HasIndex("EventId");
-
-                    b.HasIndex("PinId");
-
-                    b.HasIndex("TripId");
-
-                    b.ToTable("Images");
-                });
-
-            modelBuilder.Entity("WorldAround.Domain.Entities.Message", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("AuthorId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ChatId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Display")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
-
-                    b.Property<int>("EventId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsRead")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<Guid?>("ReplyMessageId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Text")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ChatId");
-
-                    b.HasIndex("EventId");
-
-                    b.HasIndex("ReplyMessageId");
-
-                    b.ToTable("Messages");
-                });
-
-            modelBuilder.Entity("WorldAround.Domain.Entities.Participant", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("EventId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ParticipantRoleId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EventId");
-
-                    b.HasIndex("ParticipantRoleId");
-
-                    b.HasIndex("UserId", "EventId")
-                        .IsUnique();
-
-                    b.ToTable("Participants");
-                });
-
-            modelBuilder.Entity("WorldAround.Domain.Entities.ParticipantPermission", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ParticipantsPermissions");
-                });
-
-            modelBuilder.Entity("WorldAround.Domain.Entities.ParticipantPermissionLink", b =>
-                {
-                    b.Property<int>("ParticipantId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PermissionId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ParticipantId", "PermissionId");
-
-                    b.HasIndex("PermissionId");
-
-                    b.ToTable("ParticipantPermissionLinks");
-                });
-
-            modelBuilder.Entity("WorldAround.Domain.Entities.ParticipantRole", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ParticipantRoles");
                 });
 
             modelBuilder.Entity("WorldAround.Domain.Entities.Pin", b =>
@@ -589,8 +274,6 @@ namespace WorldAround.Infrastructure.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.HasIndex("EventId");
-
                     b.HasIndex("TripId");
 
                     b.HasIndex("UserId");
@@ -655,21 +338,6 @@ namespace WorldAround.Infrastructure.Migrations
                     b.HasIndex("AuthorId");
 
                     b.ToTable("Trips");
-                });
-
-            modelBuilder.Entity("WorldAround.Domain.Entities.TripEventLink", b =>
-                {
-                    b.Property<int>("TripId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EventId")
-                        .HasColumnType("int");
-
-                    b.HasKey("TripId", "EventId");
-
-                    b.HasIndex("EventId");
-
-                    b.ToTable("TripEventLinks");
                 });
 
             modelBuilder.Entity("WorldAround.Domain.Entities.User", b =>
@@ -806,17 +474,6 @@ namespace WorldAround.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WorldAround.Domain.Entities.Album", b =>
-                {
-                    b.HasOne("WorldAround.Domain.Entities.Event", "Event")
-                        .WithMany("Albums")
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Event");
-                });
-
             modelBuilder.Entity("WorldAround.Domain.Entities.Attraction", b =>
                 {
                     b.HasOne("WorldAround.Domain.Entities.User", "Author")
@@ -825,17 +482,6 @@ namespace WorldAround.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Author");
-                });
-
-            modelBuilder.Entity("WorldAround.Domain.Entities.Chat", b =>
-                {
-                    b.HasOne("WorldAround.Domain.Entities.Event", "Event")
-                        .WithMany("Chats")
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Event");
                 });
 
             modelBuilder.Entity("WorldAround.Domain.Entities.Comment", b =>
@@ -851,11 +497,6 @@ namespace WorldAround.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("WorldAround.Domain.Entities.Event", "Event")
-                        .WithMany("Comments")
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("WorldAround.Domain.Entities.Trip", "Trip")
                         .WithMany("Comments")
                         .HasForeignKey("TripId")
@@ -870,158 +511,9 @@ namespace WorldAround.Infrastructure.Migrations
 
                     b.Navigation("Author");
 
-                    b.Navigation("Event");
-
                     b.Navigation("Trip");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("WorldAround.Domain.Entities.Equipment", b =>
-                {
-                    b.HasOne("WorldAround.Domain.Entities.EquipmentGroup", "EquipmentGroup")
-                        .WithMany("Equipments")
-                        .HasForeignKey("EquipmentGroupId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("WorldAround.Domain.Entities.Event", "Event")
-                        .WithMany("Equipments")
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("EquipmentGroup");
-
-                    b.Navigation("Event");
-                });
-
-            modelBuilder.Entity("WorldAround.Domain.Entities.EquipmentGroup", b =>
-                {
-                    b.HasOne("WorldAround.Domain.Entities.Event", "Event")
-                        .WithMany("EquipmentGroups")
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Event");
-                });
-
-            modelBuilder.Entity("WorldAround.Domain.Entities.Event", b =>
-                {
-                    b.HasOne("WorldAround.Domain.Entities.Accessibility", "Accessibility")
-                        .WithMany("Events")
-                        .HasForeignKey("AccessibilityId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.Navigation("Accessibility");
-                });
-
-            modelBuilder.Entity("WorldAround.Domain.Entities.Image", b =>
-                {
-                    b.HasOne("WorldAround.Domain.Entities.Album", "Album")
-                        .WithMany("Images")
-                        .HasForeignKey("AlbumId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("WorldAround.Domain.Entities.Attraction", "Attraction")
-                        .WithMany("Images")
-                        .HasForeignKey("AttractionId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("WorldAround.Domain.Entities.Event", "Event")
-                        .WithMany("Images")
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("WorldAround.Domain.Entities.Pin", "Pin")
-                        .WithMany("Images")
-                        .HasForeignKey("PinId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("WorldAround.Domain.Entities.Trip", "Trip")
-                        .WithMany("Images")
-                        .HasForeignKey("TripId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("Album");
-
-                    b.Navigation("Attraction");
-
-                    b.Navigation("Event");
-
-                    b.Navigation("Pin");
-
-                    b.Navigation("Trip");
-                });
-
-            modelBuilder.Entity("WorldAround.Domain.Entities.Message", b =>
-                {
-                    b.HasOne("WorldAround.Domain.Entities.Chat", "Chat")
-                        .WithMany("Messages")
-                        .HasForeignKey("ChatId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("WorldAround.Domain.Entities.Event", "Event")
-                        .WithMany("Messages")
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("WorldAround.Domain.Entities.Message", "ReplyMessage")
-                        .WithMany("ReplyMessages")
-                        .HasForeignKey("ReplyMessageId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("Chat");
-
-                    b.Navigation("Event");
-
-                    b.Navigation("ReplyMessage");
-                });
-
-            modelBuilder.Entity("WorldAround.Domain.Entities.Participant", b =>
-                {
-                    b.HasOne("WorldAround.Domain.Entities.Event", "Event")
-                        .WithMany("Participants")
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("WorldAround.Domain.Entities.ParticipantRole", "ParticipantRole")
-                        .WithMany("Participants")
-                        .HasForeignKey("ParticipantRoleId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("WorldAround.Domain.Entities.User", "User")
-                        .WithMany("Participants")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Event");
-
-                    b.Navigation("ParticipantRole");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("WorldAround.Domain.Entities.ParticipantPermissionLink", b =>
-                {
-                    b.HasOne("WorldAround.Domain.Entities.Participant", "Participant")
-                        .WithMany("ParticipantPermissionLinks")
-                        .HasForeignKey("ParticipantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WorldAround.Domain.Entities.ParticipantPermission", "Permission")
-                        .WithMany("ParticipantPermissionLinks")
-                        .HasForeignKey("PermissionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Participant");
-
-                    b.Navigation("Permission");
                 });
 
             modelBuilder.Entity("WorldAround.Domain.Entities.Pin", b =>
@@ -1054,11 +546,6 @@ namespace WorldAround.Infrastructure.Migrations
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("WorldAround.Domain.Entities.Event", "Event")
-                        .WithMany("Ratings")
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("WorldAround.Domain.Entities.Trip", "Trip")
                         .WithMany("Ratings")
                         .HasForeignKey("TripId")
@@ -1072,8 +559,6 @@ namespace WorldAround.Infrastructure.Migrations
                     b.Navigation("Attraction");
 
                     b.Navigation("Author");
-
-                    b.Navigation("Event");
 
                     b.Navigation("Trip");
 
@@ -1090,115 +575,22 @@ namespace WorldAround.Infrastructure.Migrations
                     b.Navigation("Author");
                 });
 
-            modelBuilder.Entity("WorldAround.Domain.Entities.TripEventLink", b =>
-                {
-                    b.HasOne("WorldAround.Domain.Entities.Event", "Event")
-                        .WithMany("TripEventLinks")
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("WorldAround.Domain.Entities.Trip", "Trip")
-                        .WithMany("TripEventLinks")
-                        .HasForeignKey("TripId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Event");
-
-                    b.Navigation("Trip");
-                });
-
-            modelBuilder.Entity("WorldAround.Domain.Entities.Accessibility", b =>
-                {
-                    b.Navigation("Events");
-                });
-
-            modelBuilder.Entity("WorldAround.Domain.Entities.Album", b =>
-                {
-                    b.Navigation("Images");
-                });
-
             modelBuilder.Entity("WorldAround.Domain.Entities.Attraction", b =>
                 {
                     b.Navigation("Comments");
 
-                    b.Navigation("Images");
-
                     b.Navigation("Pins");
 
                     b.Navigation("Ratings");
-                });
-
-            modelBuilder.Entity("WorldAround.Domain.Entities.Chat", b =>
-                {
-                    b.Navigation("Messages");
-                });
-
-            modelBuilder.Entity("WorldAround.Domain.Entities.EquipmentGroup", b =>
-                {
-                    b.Navigation("Equipments");
-                });
-
-            modelBuilder.Entity("WorldAround.Domain.Entities.Event", b =>
-                {
-                    b.Navigation("Albums");
-
-                    b.Navigation("Chats");
-
-                    b.Navigation("Comments");
-
-                    b.Navigation("EquipmentGroups");
-
-                    b.Navigation("Equipments");
-
-                    b.Navigation("Images");
-
-                    b.Navigation("Messages");
-
-                    b.Navigation("Participants");
-
-                    b.Navigation("Ratings");
-
-                    b.Navigation("TripEventLinks");
-                });
-
-            modelBuilder.Entity("WorldAround.Domain.Entities.Message", b =>
-                {
-                    b.Navigation("ReplyMessages");
-                });
-
-            modelBuilder.Entity("WorldAround.Domain.Entities.Participant", b =>
-                {
-                    b.Navigation("ParticipantPermissionLinks");
-                });
-
-            modelBuilder.Entity("WorldAround.Domain.Entities.ParticipantPermission", b =>
-                {
-                    b.Navigation("ParticipantPermissionLinks");
-                });
-
-            modelBuilder.Entity("WorldAround.Domain.Entities.ParticipantRole", b =>
-                {
-                    b.Navigation("Participants");
-                });
-
-            modelBuilder.Entity("WorldAround.Domain.Entities.Pin", b =>
-                {
-                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("WorldAround.Domain.Entities.Trip", b =>
                 {
                     b.Navigation("Comments");
 
-                    b.Navigation("Images");
-
                     b.Navigation("Pins");
 
                     b.Navigation("Ratings");
-
-                    b.Navigation("TripEventLinks");
                 });
 
             modelBuilder.Entity("WorldAround.Domain.Entities.User", b =>
@@ -1212,8 +604,6 @@ namespace WorldAround.Infrastructure.Migrations
                     b.Navigation("CreatedRatings");
 
                     b.Navigation("CreatedTrips");
-
-                    b.Navigation("Participants");
 
                     b.Navigation("Ratings");
                 });
