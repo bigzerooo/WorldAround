@@ -31,7 +31,7 @@ import { MapComponent } from './components/shared/map/map.component';
 import { IconComponent } from './components/shared/icon/icon.component';
 import { DeleteTripPopupComponent } from './components/trips/trip-detail/delete-trip-popup/delete-trip-popup.component';
 import { UsersGateway } from './gateways/users.gateway';
-import { AuthGuard } from 'src/app/services/auth-guard.service';
+import { AuthGuard } from 'src/app/guards/auth.guard';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 import { UniqueLoginValidator } from './validation/authentication-control-validation';
 
@@ -73,8 +73,8 @@ import { UniqueLoginValidator } from './validation/authentication-control-valida
   providers: [
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true } },
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
-    UsersGateway,
     AuthGuard,
+    UsersGateway,
     JwtHelperService,
     AuthorizationService,
     UniqueLoginValidator

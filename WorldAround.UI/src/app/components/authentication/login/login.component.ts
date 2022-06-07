@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     FormControlHelper.mapToModel(this.loginModel, this.loginForm);
     this.loginBtnDisabled = true;
-    this.authService.authorize(this.loginModel)
+    this.authService.signIn(this.loginModel)
       .subscribe({
         next: () => {
           this.router.navigate(['/home']);
