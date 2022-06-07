@@ -1,14 +1,13 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { map, catchError } from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie';
-import { environment } from 'src/environments/environment';
 import { LoginModel } from 'src/app/models/login';
 import { RegistrationModel, RegistrationModelValidationErrors } from 'src/app/models/registration';
-import { AuthenticationResultModel } from 'src/app/models/authenticationResult';
-import { throwError } from 'rxjs';
-import { UriHelper } from 'src/app/helpers/uri-helper';
+import { Observable, throwError } from 'rxjs';
+import { AuthorizationGateway } from '../gateways/authorization.gateway';
+import { AuthenticationResultDetails } from 'src/app/models/authenticationResult';
 
 const TOKEN = 'TOKEN';
 const BAD_REQUEST_STATUS = 400;
@@ -21,18 +20,14 @@ const httpOptions = {
 })
 export class AuthorizationService {
 
-  baseController = 'Authentication/';
-
   constructor(
-    private http: HttpClient,
-    private cookie: CookieService,
-    private jwtHelper: JwtHelperService) { }
+    private readonly cookie: CookieService,
+    private readonly jwtHelper: JwtHelperService,
+    private readonly authGateway: AuthorizationGateway) { }
 
-  authorize(login: LoginModel) {
+  signIn(login: LoginModel): Observable<AuthenticationResultDetails> {
 
-    const path = 'Authorize';
-
-    var result = this.http.post<AuthenticationResultModel>(this.createUrl(path), login)
+    var result = this.authGateway.authorize(login)
       .pipe(
         map((response) => {
 
@@ -58,9 +53,7 @@ export class AuthorizationService {
 
   signUp(user: RegistrationModel) {
 
-    const path = 'Create';
-
-    return this.http.post(this.createUrl(path), user)
+    return this.authGateway.createUser(user)
       .pipe(catchError(this.handleError));
   }
 
@@ -79,6 +72,10 @@ export class AuthorizationService {
     return !this.jwtHelper.isTokenExpired(token);
   }
 
+  getToken(): string {
+    return this.cookie.get(TOKEN);
+  }
+
   private handleError(errorResponse: HttpErrorResponse) {
 
     if (errorResponse.status === BAD_REQUEST_STATUS) {
@@ -94,15 +91,7 @@ export class AuthorizationService {
     this.cookie.put(TOKEN, token);
   }
 
-  private getToken(): string {
-    return this.cookie.get(TOKEN);
-  }
-
   private setAuthorizationHeader(): HttpHeaders {
     return httpOptions.headers.set('Authorization', 'Bearer' + this.getToken());
-  }
-
-  private createUrl(path: string): string {
-    return UriHelper.createUri(environment.apiBaseUrl, this.baseController, path);
   }
 }

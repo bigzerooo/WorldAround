@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CookieModule } from 'ngx-cookie';
 import { JwtModule, JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
@@ -32,9 +32,10 @@ import { MapComponent } from './components/shared/map/map.component';
 import { IconComponent } from './components/shared/icon/icon.component';
 import { DeleteTripPopupComponent } from './components/trips/trip-detail/delete-trip-popup/delete-trip-popup.component';
 import { UsersGateway } from './gateways/users.gateway';
-import { AuthGuard } from 'src/app/services/auth-guard.service';
+import { AuthGuard } from 'src/app/guards/auth-guard';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 import { UniqueLoginValidator } from './validation/authentication-control-validation';
+import { AuthInterceptor } from './interceptors/auth-interceptor';
 import { TripsGridComponent } from './components/shared/trips-grid/trips-grid.component';
 
 @NgModule({
@@ -77,8 +78,9 @@ import { TripsGridComponent } from './components/shared/trips-grid/trips-grid.co
   providers: [
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true } },
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
-    UsersGateway,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     AuthGuard,
+    UsersGateway,
     JwtHelperService,
     AuthorizationService,
     UniqueLoginValidator

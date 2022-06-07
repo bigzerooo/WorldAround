@@ -41,7 +41,7 @@ public class AuthenticationService : IAuthenticationService
             };
         }
 
-        var result = await _signInManager.PasswordSignInAsync(user, loginModel.Password, loginModel.RememberMe, false);
+        var result = await _signInManager.CheckPasswordSignInAsync(user, loginModel.Password, false);
 
         if (!result.Succeeded)
         {
