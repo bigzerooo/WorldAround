@@ -1,9 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Reflection.Metadata.Ecma335;
+using Microsoft.AspNetCore.Authentication.OAuth.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WorldAround.Application.Interfaces.Application;
 using WorldAround.Domain.Models;
+using WorldAround.Domain.Models.Users;
 
 namespace WorldAround.API.Controllers
 {
@@ -26,27 +28,19 @@ namespace WorldAround.API.Controllers
             return Ok(exists);
         }
 
-        [Authorize]
         [HttpGet]
-        public async Task<IActionResult> Get(string userName, string email)
+        public async Task<IActionResult> Get()
         {
-            UserModel user;
+            return Ok(await _usersService.GetAllAsync());
+        }
 
-            if (userName == null && email == null)
-            {
-                return Ok(await _usersService.GetAllAsync());
-            }
+        [Authorize]
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetUser([FromQuery] GetUserParams @params)
+        {
+            var user = await _usersService.GetAsync(@params);
 
-            if (userName != null)
-            {
-                user = await _usersService.GetAsync(userName);
-            }
-            else
-            {
-                user = await _usersService.GetAsync(email);
-            }
-
-            return user != null ? Ok(user) : NotFound();
+            return Ok(user);
         }
 
         [HttpGet("{id:int}")]

@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using WorldAround.Application.Helpers;
 using WorldAround.Application.Interfaces.Application;
 using WorldAround.Domain.Entities;
 using WorldAround.Domain.Models;
+using WorldAround.Domain.Models.Users;
 
 namespace WorldAround.Application.Services;
 
@@ -28,24 +28,26 @@ public class UsersService : IUsersService
         return _mapper.Map<UserModel>(user);
     }
 
-    public async Task<UserModel> GetAsync(string userName)
+    public async Task<UserModel> GetAsync(GetUserParams @params)
     {
-        var user = await _userManager.FindByNameAsync(userName);
+        User user = null;
 
-        return _mapper.Map<UserModel>(user);
-    }
-
-    public async Task<UserModel> GetByEmailAsync(string email)
-    {
-        var user = await _userManager.FindByEmailAsync(email);
+        if (@params.UserName != null)
+        {
+            user = await _userManager.FindByNameAsync(@params.UserName);
+        }
+        else if (@params.Email != null)
+        {
+            user = await _userManager.FindByEmailAsync(@params.Email);
+        }
 
         return _mapper.Map<UserModel>(user);
     }
 
     public async Task<bool> Exists(string login)
     {
-        var user = await GetByEmailAsync(login);
-        user ??= await GetAsync(login);
+        var user = await _userManager.FindByEmailAsync(login);
+        user ??= await _userManager.FindByNameAsync(login);
 
         return user != null;
     }

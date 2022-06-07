@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WorldAround.Application.Interfaces.Application;
-using WorldAround.Domain.Models;
+using WorldAround.Domain.Models.Identity;
 
 namespace WorldAround.API.Controllers;
 
@@ -29,13 +29,5 @@ public class AuthenticationController : ControllerBase
         var result = await _authService.CreateAsync(registrationModel);
 
         return result.Succeeded ? Ok(result) : BadRequest(result.Errors);
-    }
-
-    [HttpGet]
-    public async Task<IActionResult> Logout()
-    {
-        await _authService.SignOutAsync();
-
-        return Ok();
     }
 }
