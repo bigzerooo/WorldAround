@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { CanActivate } from '@angular/router';
+import { LoginComponent } from '../components/authentication/login/login.component';
 import { AuthorizationService } from '../services/authorization.service';
 
 @Injectable({
@@ -9,12 +11,14 @@ export class AuthGuard implements CanActivate {
 
   constructor(
     private authorizationService: AuthorizationService,
-    private router: Router) { }
+    private readonly dialog: MatDialog) { }
 
   canActivate(): boolean {
 
     if (!this.authorizationService.isAuthorized()) {
-      this.router.navigate(['authentication/login']);
+      this.dialog.open(LoginComponent, {
+        panelClass: 'authentication-modal'
+      });
       return false;
     }
 
