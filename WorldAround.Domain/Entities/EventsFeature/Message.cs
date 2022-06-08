@@ -17,5 +17,5 @@ public class Message
     public Chat Chat { get; set; }
     public Message ReplyMessage { get; set; }
 
-    public IEnumerable<Message> ReplyMessages { get; set; }
+    public List<Message> ReplyMessages { get; set; }
 }

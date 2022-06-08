@@ -8,5 +8,5 @@ public class EquipmentGroup
     public int EventId { get; set; }
 
     public Event Event { get; set; }
-    public IEnumerable<Equipment> Equipments { get; set; }
+    public List<Equipment> Equipments { get; set; }
 }

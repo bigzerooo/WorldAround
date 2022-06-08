@@ -16,14 +16,14 @@ public class Event
 
     public Accessibility Accessibility { get; set; }
 
-    public IEnumerable<Album> Albums { get; set; }
-    public IEnumerable<Image> Images { get; set; }
-    public IEnumerable<EquipmentGroup> EquipmentGroups { get; set; }
-    public IEnumerable<Equipment> Equipments { get; set; }
-    public IEnumerable<Chat> Chats { get; set; }
-    public IEnumerable<Message> Messages { get; set; }
-    public IEnumerable<Participant> Participants { get; set; }
-    public IEnumerable<TripEventLink> TripEventLinks { get; set; }
-    public IEnumerable<Comment> Comments { get; set; }
-    public IEnumerable<Rating> Ratings { get; set; }
+    public List<Album> Albums { get; set; }
+    public List<Image> Images { get; set; }
+    public List<EquipmentGroup> EquipmentGroups { get; set; }
+    public List<Equipment> Equipments { get; set; }
+    public List<Chat> Chats { get; set; }
+    public List<Message> Messages { get; set; }
+    public List<Participant> Participants { get; set; }
+    public List<TripEventLink> TripEventLinks { get; set; }
+    public List<Comment> Comments { get; set; }
+    public List<Rating> Ratings { get; set; }
 }

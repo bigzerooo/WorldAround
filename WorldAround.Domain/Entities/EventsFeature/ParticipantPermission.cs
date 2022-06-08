@@ -6,5 +6,5 @@ public class ParticipantPermission
     public string Name { get; set; }
     public string? Description { get; set; }
 
-    public IEnumerable<ParticipantPermissionLink> ParticipantPermissionLinks { get; set; }
+    public List<ParticipantPermissionLink> ParticipantPermissionLinks { get; set; }
 }

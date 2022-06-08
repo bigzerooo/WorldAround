@@ -7,5 +7,5 @@ public class ParticipantRole
     public ParticipantRoleProfile Id { get; set; }
     public string Name { get; set; }
 
-    public IEnumerable<Participant> Participants { get; set; }
+    public List<Participant> Participants { get; set; }
 }

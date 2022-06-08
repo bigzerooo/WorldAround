@@ -14,5 +14,5 @@ public class Participant
     public Event Event { get; set; }
     public ParticipantRole ParticipantRole { get; set; }
 
-    public IEnumerable<ParticipantPermissionLink> ParticipantPermissionLinks { get; set; }
+    public List<ParticipantPermissionLink> ParticipantPermissionLinks { get; set; }
 }
