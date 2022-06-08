@@ -8,12 +8,14 @@ public class ParticipantPermissionConfiguration : IEntityTypeConfiguration<Parti
 {
     public void Configure(EntityTypeBuilder<ParticipantPermission> entity)
     {
-        entity.HasKey(x => x.Id);
+        entity.HasKey(e => e.Id);
 
-        entity.Property(x => x.Name)
-            .HasMaxLength(30);
+        entity.Property(e => e.Name)
+            .HasMaxLength(30)
+            .IsRequired();
 
-        entity.Property(x => x.Descripsion)
-            .HasMaxLength(250);
+        entity.Property(e => e.Description)
+            .HasMaxLength(200)
+            .IsRequired(false);
     }
 }

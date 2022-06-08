@@ -8,9 +8,13 @@ public class ParticipantRoleConfiguration : IEntityTypeConfiguration<Participant
 {
     public void Configure(EntityTypeBuilder<ParticipantRole> entity)
     {
-        entity.HasKey(x => x.Id);
+        entity.HasKey(e => e.Id);
 
-        entity.Property(x => x.Name)
-            .HasMaxLength(30);
+        entity.Property(e => e.Id)
+            .ValueGeneratedNever();
+
+        entity.Property(e => e.Name)
+            .HasMaxLength(30)
+            .IsRequired();
     }
 }

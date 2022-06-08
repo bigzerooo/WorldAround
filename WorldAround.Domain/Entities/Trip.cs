@@ -13,4 +13,6 @@ public class Trip
     public List<TripEventLink> TripEventLinks { get; set; }
     public List<Rating> Ratings { get; set; }
     public List<Comment> Comments { get; set; }
+    public List<Image> Images { get; set; }
+    public List<Album> Albums { get; set; }
 }

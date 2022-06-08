@@ -12,4 +12,5 @@ public class Pin : Point
 
     public Trip Trip { get; set; }
     public Attraction Attraction { get; set; }
+    public List<Image> Images { get; set; }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorldAround.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using WorldAround.Infrastructure.Data;
 namespace WorldAround.Infrastructure.Migrations
 {
     [DbContext(typeof(WorldAroundDbContext))]
-    partial class WorldAroundDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220607181350_ALTER_added_foreign_key")]
+    partial class ALTER_added_foreign_key
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -138,18 +140,6 @@ namespace WorldAround.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Accessibilities");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Public"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Private"
-                        });
                 });
 
             modelBuilder.Entity("WorldAround.Domain.Entities.Album", b =>
@@ -543,23 +533,6 @@ namespace WorldAround.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ParticipantRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Owner"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Admin"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "User"
-                        });
                 });
 
             modelBuilder.Entity("WorldAround.Domain.Entities.Pin", b =>

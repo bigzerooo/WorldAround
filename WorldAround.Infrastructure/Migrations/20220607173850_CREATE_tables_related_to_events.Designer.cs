@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorldAround.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using WorldAround.Infrastructure.Data;
 namespace WorldAround.Infrastructure.Migrations
 {
     [DbContext(typeof(WorldAroundDbContext))]
-    partial class WorldAroundDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220607173850_CREATE_tables_related_to_events")]
+    partial class CREATE_tables_related_to_events
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -132,24 +134,11 @@ namespace WorldAround.Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Accessibilities");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Public"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Private"
-                        });
                 });
 
             modelBuilder.Entity("WorldAround.Domain.Entities.Album", b =>
@@ -160,22 +149,15 @@ namespace WorldAround.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("EventId")
-                        .IsRequired()
+                    b.Property<int>("EventId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int?>("TripId")
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("EventId");
-
-                    b.HasIndex("TripId");
 
                     b.ToTable("Albums");
                 });
@@ -225,8 +207,7 @@ namespace WorldAround.Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(70)
-                        .HasColumnType("nvarchar(70)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -298,8 +279,7 @@ namespace WorldAround.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("NeededQuantity")
                         .HasColumnType("float");
@@ -326,8 +306,7 @@ namespace WorldAround.Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -366,8 +345,7 @@ namespace WorldAround.Infrastructure.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -449,9 +427,7 @@ namespace WorldAround.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Text")
-                        .IsRequired()
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -502,13 +478,10 @@ namespace WorldAround.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Description")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -537,29 +510,11 @@ namespace WorldAround.Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("ParticipantRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Owner"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Admin"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "User"
-                        });
                 });
 
             modelBuilder.Entity("WorldAround.Domain.Entities.Pin", b =>
@@ -856,16 +811,10 @@ namespace WorldAround.Infrastructure.Migrations
                     b.HasOne("WorldAround.Domain.Entities.Event", "Event")
                         .WithMany("Albums")
                         .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("WorldAround.Domain.Entities.Trip", "Trip")
-                        .WithMany("Albums")
-                        .HasForeignKey("TripId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Event");
-
-                    b.Navigation("Trip");
                 });
 
             modelBuilder.Entity("WorldAround.Domain.Entities.Attraction", b =>
@@ -1241,8 +1190,6 @@ namespace WorldAround.Infrastructure.Migrations
 
             modelBuilder.Entity("WorldAround.Domain.Entities.Trip", b =>
                 {
-                    b.Navigation("Albums");
-
                     b.Navigation("Comments");
 
                     b.Navigation("Images");
