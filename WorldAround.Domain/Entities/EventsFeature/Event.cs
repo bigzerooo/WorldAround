@@ -12,7 +12,7 @@ public class Event
     public DateTime EndDate { get; set; }
     public bool Display { get; set; }
 
-    public AccessibilityProfile? AccessibilityId { get; set; }
+    public AccessibilityProfile AccessibilityId { get; set; }
 
     public Accessibility Accessibility { get; set; }
 
