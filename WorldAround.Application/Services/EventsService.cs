@@ -33,7 +33,9 @@ public class EventsService : IEventsService
 
     public async Task<EventDetailsModel> GetEvent(int id)
     {
-        var @event = await Events.FirstOrDefaultAsync(e => e.Id.Equals(id));
+        var @event = await Events.Include(e => e.TripEventLinks)
+            .ThenInclude(e => e.Trip)
+            .FirstOrDefaultAsync(e => e.Id.Equals(id));
 
         return _mapper.Map<EventDetailsModel>(@event);
     }
@@ -60,7 +62,7 @@ public class EventsService : IEventsService
 
         await _context.SaveChangesAsync();
 
-        return _mapper.Map<EventDetailsModel>(@event);
+        return await GetEvent(@event.Id);
     }
 
     public async Task DeleteEvent(int id)
@@ -79,17 +81,20 @@ public class EventsService : IEventsService
 
     public async Task<EventDetailsModel> UpdateEvent(UpdateEventModel model)
     {
-        var @event = Events.FirstOrDefault(e => e.Id.Equals(model.Id));
+        var @event = Events.Include(e => e.TripEventLinks)
+            .FirstOrDefault(e => e.Id.Equals(model.Id));
+
+        if (@event == null)
+        {
+            throw new Exception("Event not found");
+        }
 
         _mapper.Map(model, @event);
 
-        if (@event != null)
-        {
-            _context.Events.Update(@event);
-            await _context.SaveChangesAsync();
-        }
+        _context.Events.Update(@event);
+        await _context.SaveChangesAsync();
 
-        return _mapper.Map<EventDetailsModel>(@event);
+        return await GetEvent(@event.Id);
     }
 
     private async Task<GetEventsPageModel> GetEvents(

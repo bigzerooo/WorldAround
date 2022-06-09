@@ -1,4 +1,6 @@
-﻿namespace WorldAround.Domain.Models.Events;
+﻿using WorldAround.Domain.Models.Trips;
+
+namespace WorldAround.Domain.Models.Events;
 
 public class EventDetailsModel
 {
@@ -8,4 +10,6 @@ public class EventDetailsModel
     public DateTime CreateDate { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
+
+    public GetTripsModel Trips { get; set; }
 }
