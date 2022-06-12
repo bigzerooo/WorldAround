@@ -9,7 +9,8 @@ public class Event
     public string Description { get; set; }
     public DateTime CreateDate { get; set; }
     public DateTime StartDate { get; set; }
-    public DateTime EndDate { get; set; }
+    public DateTime? EndDate { get; set; }
+    public string ImagePath { get; set; }
     public bool Display { get; set; }
 
     public AccessibilityProfile AccessibilityId { get; set; }

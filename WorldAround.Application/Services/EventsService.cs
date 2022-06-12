@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using WorldAround.Application.Interfaces.Application;
 using WorldAround.Application.Interfaces.Infrastructure;
@@ -35,6 +36,8 @@ public class EventsService : IEventsService
     {
         var @event = await Events.Include(e => e.TripEventLinks)
             .ThenInclude(e => e.Trip)
+            .Include(e => e.Participants)
+            .ThenInclude(e => e.User)
             .FirstOrDefaultAsync(e => e.Id.Equals(id));
 
         return _mapper.Map<EventDetailsModel>(@event);
@@ -54,11 +57,50 @@ public class EventsService : IEventsService
         return await GetEvents(queryEvents, @params, page);
     }
 
+    public async Task UpdateImage(int eventId, IFormFile image)
+    {
+        Console.WriteLine("eventId: " + eventId);
+    }
+
     public async Task<EventDetailsModel> CreateEvent(CreateEventModel model)
     {
         var @event = _mapper.Map<Event>(model);
 
         await _context.Events.AddAsync(@event);
+        await _context.SaveChangesAsync();
+
+        @event.Participants = new List<Participant>
+        {
+            new()
+            {
+                EventId = @event.Id,
+                UserId = model.CreateUserId,
+                ParticipantRoleId = ParticipantRoleProfile.Owner
+            }
+        };
+
+        if (model.Trips != null || model.Participants != null)
+        {
+            @event.TripEventLinks = new List<TripEventLink>();
+            model.Trips?.ForEach(id =>
+            {
+                @event.TripEventLinks.Add(new TripEventLink
+                {
+                    EventId = @event.Id,
+                    TripId = id
+                });
+            });
+
+            model.Participants?.ForEach(id =>
+            {
+                @event.Participants.Add(new Participant
+                {
+                    EventId = @event.Id,
+                    UserId = id,
+                    ParticipantRoleId = ParticipantRoleProfile.User
+                });
+            });
+        }
 
         await _context.SaveChangesAsync();
 

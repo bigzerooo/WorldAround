@@ -38,6 +38,14 @@ namespace WorldAround.API.Controllers
             return Ok(await _service.CreateEvent(@event));
         }
 
+        [HttpPut("[action]/{eventId:int}"), DisableRequestSizeLimit]
+        public async Task<IActionResult> UpdateEventImage(int eventId, [FromForm] IFormFile image)
+        {
+            await _service.UpdateImage(eventId, image);
+
+            return Ok();
+        }
+
         // PUT api/<EventsController>/5
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Put(int id, [FromBody] UpdateEventModel @event)

@@ -13,6 +13,12 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
             .HasMaxLength(30)
             .IsRequired();
 
+        entity.Property(e => e.ImagePath)
+            .IsRequired(false);
+
+        entity.Property(e => e.EndDate)
+            .IsRequired(false);
+
         entity.Property(e => e.CreateDate)
             .HasDefaultValueSql("GETDATE()");
 

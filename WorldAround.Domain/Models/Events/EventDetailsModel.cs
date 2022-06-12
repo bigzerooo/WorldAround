@@ -1,4 +1,5 @@
 ﻿using WorldAround.Domain.Models.Trips;
+using WorldAround.Domain.Models.Users;
 
 namespace WorldAround.Domain.Models.Events;
 
@@ -12,4 +13,5 @@ public class EventDetailsModel
     public DateTime EndDate { get; set; }
 
     public GetTripsModel Trips { get; set; }
+    public List<ParticipantModel> Participants { get; set; }
 }

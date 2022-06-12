@@ -1,4 +1,5 @@
-﻿using WorldAround.Domain.Models.Base;
+﻿using Microsoft.AspNetCore.Http;
+using WorldAround.Domain.Models.Base;
 using WorldAround.Domain.Models.Events;
 using WorldAround.Domain.Models.Paging;
 
@@ -11,6 +12,8 @@ public interface IEventsService
     public Task<EventDetailsModel> GetEvent(int id);
 
     public Task<GetEventsPageModel> GetUserEvents(GetUserEventsParams @params, GetPageModel page);
+
+    public Task UpdateImage(int eventId, IFormFile image);
 
     public Task<EventDetailsModel> CreateEvent(CreateEventModel model);
 

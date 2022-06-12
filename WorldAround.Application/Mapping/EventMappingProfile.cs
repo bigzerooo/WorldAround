@@ -2,6 +2,7 @@
 using WorldAround.Domain.Entities;
 using WorldAround.Domain.Models.Events;
 using WorldAround.Domain.Models.Trips;
+using WorldAround.Domain.Models.Users;
 
 namespace WorldAround.Application.Mapping;
 
@@ -10,12 +11,16 @@ public class EventMappingProfile : Profile
     public EventMappingProfile()
     {
         CreateMap<CreateEventModel, Event>()
+            .ForMember(dest => dest.Participants, opts => opts.Ignore())
+            .ForMember(dest => dest.TripEventLinks, opts => opts.Ignore())
+            .ForMember(dest => dest.ImagePath, opts => opts.Ignore())
             .ForMember(dest => dest.Accessibility, opts => opts.Ignore())
             .ForMember(dest => dest.AccessibilityId, opts =>
             {
                 opts.MapFrom(src => src.Accessibility);
                 opts.Condition(m => m.Accessibility != 0);
             });
+
         CreateMap<Event, CreateEventModel>()
             .ForMember(dest => dest.Accessibility, opts => opts.MapFrom(src => src.AccessibilityId));
 
@@ -34,8 +39,34 @@ public class EventMappingProfile : Profile
 
         CreateMap<Event, GetEventModel>();
         CreateMap<Event, EventDetailsModel>()
-            .ForMember(dest => dest.Trips, opts => opts.ConvertUsing(new GetEventModelValueFormatter(), src => src));
+            .ForMember(dest => dest.Trips, opts => opts.ConvertUsing(new GetEventModelValueFormatter(), src => src))
+            .ForMember(dest => dest.Participants, opts => opts.MapFrom(src => src.Participants));
     }
+
+    // public class ParticipantUserModelValueFormatter : IValueConverter<List<Participant>, List<UserModel>>
+    // {
+    //     private readonly IMapper _mapper;
+    //
+    //     public ParticipantUserModelValueFormatter()
+    //     {
+    //         _mapper = new MapperConfiguration(cfg =>
+    //         {
+    //             cfg.AddProfile<UserMappingProfile>();
+    //         }).CreateMapper();
+    //     }
+    //
+    //     public List<UserModel> Convert(List<Participant> source, ResolutionContext context)
+    //     {
+    //         var result = new List<UserModel>();
+    //
+    //         source.ForEach(participant =>
+    //         {
+    //             result.Add(_mapper.Map<UserModel>(participant.User));
+    //         });
+    //
+    //         return result;
+    //     }
+    // }
 
     public class GetEventModelValueFormatter : IValueConverter<Event, GetTripsModel>
     {

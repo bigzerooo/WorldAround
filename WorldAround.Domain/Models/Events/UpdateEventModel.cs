@@ -12,4 +12,5 @@ public class UpdateEventModel
     public AccessibilityProfile? Accessibility { get; set; }
 
     public List<int> TripIds { get; set; }
+    public List<int> ParticipantIds { get; set; }
 }

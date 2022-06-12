@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorldAround.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using WorldAround.Infrastructure.Data;
 namespace WorldAround.Infrastructure.Migrations
 {
     [DbContext(typeof(WorldAroundDbContext))]
-    partial class WorldAroundDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220612112112_ALTER_TABLE_add_ImagePath_column")]
+    partial class ALTER_TABLE_add_ImagePath_column
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -360,7 +362,7 @@ namespace WorldAround.Infrastructure.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(true);
 
-                    b.Property<DateTime?>("EndDate")
+                    b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ImagePath")
