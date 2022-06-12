@@ -6,11 +6,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CookieModule } from 'ngx-cookie';
 import { JwtModule, JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
+import { ToastrModule } from 'ngx-toastr';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { ToastrModule } from 'ngx-toastr';
-import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from "@angular/material/input";
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -20,6 +20,10 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -49,6 +53,7 @@ import { ChoosePlacesComponent } from './components/shared/choose-places/choose-
 import { ChoosePeopleComponent } from './components/shared/choose-people/choose-people.component';
 import { EventsGateway } from './gateways/events.gateway';
 import { EventsService } from './services/events.service';
+import { SidenavContentComponent } from './components/sidenav-content/sidenav-content.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +76,8 @@ import { EventsService } from './services/events.service';
     TripsGridComponent,
     CreateEventComponent,
     ChoosePlacesComponent,
-    ChoosePeopleComponent
+    ChoosePeopleComponent,
+    SidenavContentComponent
   ],
   imports: [
     BrowserModule,
@@ -95,7 +101,11 @@ import { EventsService } from './services/events.service';
     MatIconModule,
     MatChipsModule,
     MatRadioModule,
-    MatTabsModule
+    MatTabsModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatCardModule,
+    MatListModule
   ],
   providers: [
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true } },
