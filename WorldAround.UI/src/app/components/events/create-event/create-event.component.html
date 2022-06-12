@@ -1,0 +1,98 @@
+<form
+  class="main-form"
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()">
+  <div class="title">
+    <h1>New Event</h1>
+    <div
+      matTooltip="Accessibility"
+      matTooltipPosition="left">
+      <mat-radio-group formControlName="accessibility">
+        <mat-radio-button *ngFor="let enum of accessibilityEnum; index as i;" [value]="enum.value">
+          {{enum.key}}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </div>
+  <div>
+    <div class="form">
+      <mat-form-field appearance="fill">
+        <mat-label>Title of the event</mat-label>
+        <input matInput formControlName="title">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Description</mat-label>
+        <textarea formControlName="description" matInput></textarea>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Start date</mat-label>
+        <input matInput formControlName="startDate" [matDatepicker]="startDatePicker">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="this.startDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #startDatePicker></mat-datepicker>
+      </mat-form-field>
+      <mat-checkbox #several color="primary">Event for several days</mat-checkbox>
+      <mat-form-field *ngIf="this.several.checked" appearance="fill">
+        <mat-label>End date</mat-label>
+        <input matInput formControlName="endDate" [matDatepicker]="endDatePicker">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #endDatePicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="add-photo">
+      <div *ngIf="!this.imageUrl; else elseBlock" class="add-photo-plus" (click)="fileInput.click()">
+        <div></div>
+        <div></div>
+      </div>
+      <ng-template #elseBlock>
+        <div class="add-photo-plus" (click)="fileInput.click()">
+          <img *ngIf="this.imageUrl" [src]="this.imageUrl" alt="" style="height: inherit; width: max-content;">
+        </div>
+      </ng-template>
+      <span class="add-photo-span">Choose image</span>
+      <input #fileInput type="file" accept="image/png, image/jpeg, image/svg+xml" (change)="onImageSelected($event)"
+        style="display:none;" />
+    </div>
+  </div>
+  <div class="chip">
+    <div class="chip-title" (click)="openPlacesChoosing()">
+      <h3>Choose places of interest</h3>
+    </div>
+    <mat-form-field>
+      <mat-chip-list #chipList aria-label="Fruit selection">
+        <mat-chip-list aria-label="Fish selection">
+          <mat-chip color="primary" selected>
+            Primary place
+            <button matChipRemove>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip>
+        </mat-chip-list>
+      </mat-chip-list>
+    </mat-form-field>
+  </div>
+  <div class="chip">
+    <div class="chip-title" (click)="openParticipantsChoosing()">
+      <mat-icon>people</mat-icon>
+      <h3>Add people</h3>
+    </div>
+    <mat-form-field>
+      <mat-chip-list #chipList aria-label="Fruit selection">
+        <mat-chip-list aria-label="Fish selection">
+          <mat-chip color="accent" selected>
+            Accent person
+            <button matChipRemove>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip>
+        </mat-chip-list>
+      </mat-chip-list>
+    </mat-form-field>
+  </div>
+  <div class="finish-adding">
+    <button type="submit" mat-raised-button>
+      Complete
+    </button>
+  </div>
+</form>

@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { RegistrationModel } from 'src/app/models/registration';
+import { RegistrationModel } from 'src/app/models/authorization/registration';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -10,7 +9,7 @@ import { Validators } from '@angular/forms';
 import { identical } from 'src/app/validation/form-validation';
 import { ConfirmPasswordAbstractControlValidation, EmailAbstractControlValidation, PasswordAbstractControlValidation, UniqueLoginValidator, UsernameAbstractControlValidation } from 'src/app/validation/authentication-control-validation';
 import { IValidationModel } from 'src/app/models/validation/interfaces/IValidationModel';
-import { FormControlHelper } from 'src/app/helpers/form-control-helper';
+import { FormGroupHelper } from 'src/app/helpers/form-group-helper';
 
 @Component({
   selector: 'app-signup',
@@ -34,7 +33,8 @@ export class SignupComponent implements OnInit, OnDestroy {
     private readonly dialogRef: MatDialogRef<SignupComponent>,
     private readonly dialog: MatDialog,
     private readonly formBuilder: FormBuilder,
-    private readonly loginValidator: UniqueLoginValidator) { }
+    private readonly loginValidator: UniqueLoginValidator) {
+  }
 
   ngOnInit(): void {
 
@@ -84,7 +84,7 @@ export class SignupComponent implements OnInit, OnDestroy {
       return;
     }
 
-    FormControlHelper.mapToModel(this.model, this.signUpForm);
+    FormGroupHelper.mapToModel(this.model, this.signUpForm);
     this.authService.signUp(this.model)
       .subscribe({
         next: () => {

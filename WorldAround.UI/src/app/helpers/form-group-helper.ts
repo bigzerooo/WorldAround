@@ -1,6 +1,6 @@
 import { FormGroup } from "@angular/forms";
 
-export class FormControlHelper {
+export class FormGroupHelper {
 
   static mapToModel(model: any, group: FormGroup): void {
 

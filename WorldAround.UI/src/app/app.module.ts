@@ -12,7 +12,14 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ToastrModule } from 'ngx-toastr';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from "@angular/material/input";
-import { MatPaginatorModule} from '@angular/material/paginator';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatIconModule } from '@angular/material/icon';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -37,6 +44,11 @@ import { AuthorizationService } from 'src/app/services/authorization.service';
 import { UniqueLoginValidator } from './validation/authentication-control-validation';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
 import { TripsGridComponent } from './components/shared/trips-grid/trips-grid.component';
+import { CreateEventComponent } from './components/events/create-event/create-event.component';
+import { ChoosePlacesComponent } from './components/shared/choose-places/choose-places.component';
+import { ChoosePeopleComponent } from './components/shared/choose-people/choose-people.component';
+import { EventsGateway } from './gateways/events.gateway';
+import { EventsService } from './services/events.service';
 
 @NgModule({
   declarations: [
@@ -56,7 +68,10 @@ import { TripsGridComponent } from './components/shared/trips-grid/trips-grid.co
     MapComponent,
     IconComponent,
     DeleteTripPopupComponent,
-    TripsGridComponent
+    TripsGridComponent,
+    CreateEventComponent,
+    ChoosePlacesComponent,
+    ChoosePeopleComponent
   ],
   imports: [
     BrowserModule,
@@ -73,7 +88,14 @@ import { TripsGridComponent } from './components/shared/trips-grid/trips-grid.co
     MatTooltipModule,
     ReactiveFormsModule,
     MatInputModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatCheckboxModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatIconModule,
+    MatChipsModule,
+    MatRadioModule,
+    MatTabsModule
   ],
   providers: [
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true } },
@@ -81,9 +103,11 @@ import { TripsGridComponent } from './components/shared/trips-grid/trips-grid.co
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     AuthGuard,
     UsersGateway,
+    EventsGateway,
     JwtHelperService,
     AuthorizationService,
-    UniqueLoginValidator
+    UniqueLoginValidator,
+    EventsService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LoginModel } from 'src/app/models/login';
+import { LoginModel } from 'src/app/models/authorization/login';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -8,7 +8,7 @@ import { SignupComponent } from '../signup/signup.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IValidationModel } from 'src/app/models/validation/interfaces/IValidationModel';
 import { LoginAbstractControlValidation } from 'src/app/validation/authentication-control-validation';
-import { FormControlHelper } from 'src/app/helpers/form-control-helper';
+import { FormGroupHelper } from 'src/app/helpers/form-group-helper';
 
 @Component({
   selector: 'app-login',
@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       return;
     }
 
-    FormControlHelper.mapToModel(this.loginModel, this.loginForm);
+    FormGroupHelper.mapToModel(this.loginModel, this.loginForm);
     this.loginBtnDisabled = true;
     this.authService.signIn(this.loginModel)
       .subscribe({

@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { LoginModel } from 'src/app/models/login';
-import { RegistrationModel } from 'src/app/models/registration';
-import { AuthenticationResultModel } from 'src/app/models/authenticationResult';
+import { LoginModel } from 'src/app/models/authorization/login';
+import { RegistrationModel } from 'src/app/models/authorization/registration';
+import { AuthenticationResultModel } from 'src/app/models/authorization/authentication-result';
 import { Observable } from 'rxjs';
 import { UriHelper } from 'src/app/helpers/uri-helper';
 
