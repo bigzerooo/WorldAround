@@ -15,16 +15,6 @@ services.AddApi(configuration);
 
 services.AddCors(options =>
 {
-    options.AddPolicy("localhostUIOrigins",
-        policy =>
-        {
-            policy
-                .WithOrigins("http://localhost:4200")
-                .AllowCredentials()
-                .AllowAnyHeader()
-                .AllowAnyMethod();
-        });
-
     options.AddPolicy("prodOrigins",
         policy =>
         {
@@ -47,7 +37,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors("localhostUIOrigins");
 app.UseCors("prodOrigins");
 
 app.UseAuthentication();
