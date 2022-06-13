@@ -15,14 +15,17 @@ public class EventsService : IEventsService
 {
     private readonly IMapper _mapper;
     private readonly IWorldAroundDbContext _context;
+    private readonly IBlobStorageGateway _blobStorageGateway;
     private IQueryable<Event> Events => _context.Events.Where(e => e.Display);
 
     public EventsService(
         IMapper mapper,
-        IWorldAroundDbContext context)
+        IWorldAroundDbContext context,
+        IBlobStorageGateway blobStorageGateway)
     {
         _mapper = mapper;
         _context = context;
+        _blobStorageGateway = blobStorageGateway;
     }
 
     public async Task<GetEventsPageModel> GetEvents(GetDataParams @params, GetPageModel page)
@@ -59,7 +62,9 @@ public class EventsService : IEventsService
 
     public async Task UpdateImage(int eventId, IFormFile image)
     {
-        Console.WriteLine("eventId: " + eventId);
+        var blobName = $"Event{eventId}_{DateTime.Now.ToFileTime()}_{image.FileName}";
+
+        await _blobStorageGateway.UploadImageAsync(blobName, image);
     }
 
     public async Task<EventDetailsModel> CreateEvent(CreateEventModel model)
