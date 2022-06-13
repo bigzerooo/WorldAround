@@ -3,11 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { UsersGateway } from 'src/app/gateways/users.gateway';
 import { UpdateUserModel } from 'src/app/models/users/update-user';
-import { UserDetailsModel } from 'src/app/models/users/user-details';
 import { IValidationModel } from 'src/app/models/validation/interfaces/IValidationModel';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 import { ConfirmPasswordAbstractControlValidation, EmailAbstractControlValidation, PasswordAbstractControlValidation, UniqueLoginValidator, UsernameAbstractControlValidation } from 'src/app/validation/authentication-control-validation';
 import { identical } from 'src/app/validation/form-validation';
+import { CurrentPasswordValidator } from 'src/app/validation/user-validation';
 
 @Component({
   selector: 'app-user-settings',
@@ -21,13 +21,15 @@ export class UserSettingsComponent implements OnInit {
   validation: {
     email: IValidationModel,
     userName: IValidationModel,
-    password: IValidationModel,
+    currentPassword: IValidationModel,
+    newPassword: IValidationModel,
     confirmPassword: IValidationModel
   }
 
   constructor(
     private readonly toastr: ToastrService,
     private readonly formBuilder: FormBuilder,
+    private readonly passwordValidator: CurrentPasswordValidator,
     private readonly loginValidator: UniqueLoginValidator,
     private readonly usersGateway: UsersGateway,
     private readonly authService: AuthorizationService) {
@@ -49,15 +51,23 @@ export class UserSettingsComponent implements OnInit {
         asyncValidators: [this.loginValidator.validate.bind(this.loginValidator)],
         updateOn: 'blur'
       }],
-      'password': [null, Validators.required],
-      'confirmPassword': [null, Validators.required],
-    }, { validators: identical('password', 'confirmPassword') });
+      'passwordsGroup': this.formBuilder.group({
+        'currentPassword': [null, {
+          validators: [Validators.required],
+          asyncValidators: [this.passwordValidator.validate.bind(this.passwordValidator)],
+          updateOn: 'blur'
+        }],
+        'newPassword': [null, Validators.required],
+        'confirmPassword': [null, Validators.required]
+      }, { validators: identical('newPassword', 'confirmPassword') })
+    });
 
     this.validation = {
       email: new EmailAbstractControlValidation(this.formGroup.get('email')),
       userName: new UsernameAbstractControlValidation(this.formGroup.get('userName')),
-      password: new PasswordAbstractControlValidation(this.formGroup.get('password')),
-      confirmPassword: new ConfirmPasswordAbstractControlValidation(this.formGroup.get('confirmPassword')),
+      currentPassword: new PasswordAbstractControlValidation(this.formGroup.get('passwordsGroup').get('currentPassword')),
+      newPassword: new PasswordAbstractControlValidation(this.formGroup.get('passwordsGroup').get('newPassword')),
+      confirmPassword: new ConfirmPasswordAbstractControlValidation(this.formGroup.get('passwordsGroup').get('confirmPassword')),
     };
     this.usersGateway.getUserById(this.authService.getUserId())
       .subscribe(result => {
@@ -70,11 +80,27 @@ export class UserSettingsComponent implements OnInit {
       });
   }
 
+  updatePassword(): void {
+
+    let group = this.formGroup.get('passwordsGroup');
+    let currentPasswordControl = group.get('currentPassword');
+    let confirmPasswordControl = group.get('confirmPassword')
+
+    if (!currentPasswordControl.valid || !confirmPasswordControl.valid) {
+      return;
+    }
+
+    this.usersGateway.updatePassword(this.authService.getUserId(), currentPasswordControl.value, confirmPasswordControl.value)
+    .subscribe(() => {
+      window.location.reload();
+    })
+  }
+
   updateField(controlName): void {
 
     let control = this.formGroup.get(controlName);
 
-    if(!control.valid) {
+    if (!control.valid) {
       return;
     }
 
@@ -83,10 +109,10 @@ export class UserSettingsComponent implements OnInit {
     user[controlName] = control.value;
 
     this.usersGateway.update(user)
-    .subscribe(result => {
-      this.model[controlName] = result[controlName];
-      this.reset(controlName);
-    });
+      .subscribe(result => {
+        this.model[controlName] = result[controlName];
+        this.reset(controlName);
+      });
   }
 
   reset(controlName) {

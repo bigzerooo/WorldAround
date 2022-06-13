@@ -47,10 +47,23 @@ namespace WorldAround.API.Controllers
             return user != null ? Ok(user) : NotFound();
         }
 
+        [HttpGet("[action]")]
+        public async Task<IActionResult> CheckPassword([FromQuery] int userId, [FromQuery] string password)
+        {
+            return Ok(await _usersService.CheckPassword(userId, password));
+        }
+
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] UserModel user)
         {
             return Ok(await _usersService.UpdateAsync(user));
+        }
+
+        [HttpPut("[action]")]
+        public async Task<IActionResult> UpdatePassword([FromBody] UpdateUserPasswordParameters @params)
+        {
+            await _usersService.UpdatePasswordAsync(@params);
+            return Ok();
         }
 
         [HttpPost]
