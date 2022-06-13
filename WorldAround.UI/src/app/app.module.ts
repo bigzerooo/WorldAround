@@ -54,6 +54,7 @@ import { ChoosePeopleComponent } from './components/shared/choose-people/choose-
 import { EventsGateway } from './gateways/events.gateway';
 import { EventsService } from './services/events.service';
 import { SidenavContentComponent } from './components/sidenav-content/sidenav-content.component';
+import { UserSettingsComponent } from './components/user-settings/user-settings.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +78,8 @@ import { SidenavContentComponent } from './components/sidenav-content/sidenav-co
     CreateEventComponent,
     ChoosePlacesComponent,
     ChoosePeopleComponent,
-    SidenavContentComponent
+    SidenavContentComponent,
+    UserSettingsComponent
   ],
   imports: [
     BrowserModule,

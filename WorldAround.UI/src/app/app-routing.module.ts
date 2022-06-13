@@ -9,6 +9,7 @@ import { SearchComponent } from './components/search/search.component';
 import { CreateTripComponent } from './components/trips/create-trip/create-trip.component';
 import { TripDetailComponent } from './components/trips/trip-detail/trip-detail.component';
 import { TripsComponent } from './components/trips/trips.component';
+import { UserSettingsComponent } from './components/user-settings/user-settings.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'trip/:id', canActivate: [AuthGuard], component: TripDetailComponent },
   { path: 'search/:type/:value', component: SearchComponent },
   { path: 'events/create', component: CreateEventComponent },
+  { path: 'settings', canActivate: [AuthGuard], component: UserSettingsComponent },
   { path: '**', redirectTo: '/home' }
 ];
 

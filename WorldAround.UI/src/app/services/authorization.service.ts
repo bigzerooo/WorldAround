@@ -44,7 +44,7 @@ export class AuthorizationService {
     return result;
   }
 
-  getUserId() {
+  getUserId(): number {
 
     let token = this.cookie.get(TOKEN)
 

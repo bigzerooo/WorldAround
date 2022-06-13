@@ -47,6 +47,12 @@ namespace WorldAround.API.Controllers
             return user != null ? Ok(user) : NotFound();
         }
 
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] UserModel user)
+        {
+            return Ok(await _usersService.UpdateAsync(user));
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddToRole(int userId, string role)
         {
