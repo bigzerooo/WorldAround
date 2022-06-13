@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from 'src/app/guards/auth-guard';
 import { AttractionsComponent } from './components/attractions/attractions.component';
 import { CreateEventComponent } from './components/events/create-event/create-event.component';
+import { EventDetailsComponent } from './components/events/event-details/event-details.component';
 import { HomeComponent } from './components/home/home.component';
 import { MyProfileComponent } from './components/my-profile/my-profile.component';
 import { SearchComponent } from './components/search/search.component';
@@ -20,8 +21,9 @@ const routes: Routes = [
   { path: 'trip/:id', canActivate: [AuthGuard], component: TripDetailComponent },
   { path: 'search/:type/:value', component: SearchComponent },
   { path: 'events/create', component: CreateEventComponent },
+  { path: 'events/:id', canActivate: [AuthGuard], component: EventDetailsComponent },
   { path: 'settings', canActivate: [AuthGuard], component: UserSettingsComponent },
-  { path: '**', redirectTo: '/home' }
+  { path: '**', redirectTo: '/events/:id' }
 ];
 
 @NgModule({
