@@ -4,8 +4,6 @@ using WorldAround.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 var services = builder.Services;
 var configuration = builder.Configuration;
 
@@ -15,7 +13,17 @@ services.AddApi(configuration);
 
 services.AddCors(options =>
 {
-    options.AddPolicy("prodOrigins",
+    options.AddPolicy("localhostUIOrigins",
+        policy =>
+        {
+            policy
+                .WithOrigins("http://localhost:4200")
+                .AllowCredentials()
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+
+    options.AddPolicy("prodUIOrigins",
         policy =>
         {
             policy
@@ -28,7 +36,6 @@ services.AddCors(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -37,7 +44,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors("prodOrigins");
+app.UseCors(app.Environment.IsDevelopment() 
+    ? "localhostUIOrigins"
+    : "prodUIOrigins");
 
 app.UseAuthentication();
 app.UseAuthorization();
