@@ -27,6 +27,23 @@ export class UsersGateway {
     return this.http.get(UriHelper.createUri(this.basePath, query));
   }
 
+  checkPassword(userId: number, password: string): Observable<boolean> {
+    return this.http.get<boolean>(UriHelper.createUri(this.basePath, 'CheckPassword'), {
+      params: {
+        userId: userId,
+        password: password
+      }
+    });
+  }
+
+  updatePassword(userId: number, currentPassword: string, newPassword: string) {
+    return this.http.put(UriHelper.createUri(this.basePath, 'UpdatePassword'), {
+      userId: userId,
+      currentPassword: currentPassword,
+      newPassword: newPassword
+    });
+  }
+
   getUserById(id: number): Observable<UserDetailsModel> {
     return this.http.get<UserDetailsModel>(UriHelper.createUri(this.basePath, id.toString()));
   }

@@ -81,18 +81,30 @@
       </div>
     </div>
 
-    <div>
+    <div formGroupName="passwordsGroup">
       <h3>Change password:</h3>
       <mat-form-field
-        [matTooltip]="this.validation.password.message"
+        [matTooltip]="this.validation.currentPassword.message"
         matTooltipPosition="left">
         <mat-label>Password</mat-label>
         <input
           matInput
           type="password"
-          name="password"
-          placeholder="set a password"
-          formControlName="password"
+          name="currentPassword"
+          placeholder="specify your current password"
+          formControlName="currentPassword"
+          required />
+      </mat-form-field>
+      <mat-form-field
+        [matTooltip]="this.validation.newPassword.message"
+        matTooltipPosition="left">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          type="password"
+          name="newPassword"
+          placeholder="set new password"
+          formControlName="newPassword"
           required />
       </mat-form-field>
       <mat-form-field
@@ -103,10 +115,11 @@
           matInput
           type="password"
           name="confirm-password"
-          placeholder="confirm the password"
+          placeholder="confirm the new password"
           formControlName="confirmPassword"
           required />
       </mat-form-field>
+      <button mat-button color="primary" (click)="updatePassword()">Update password</button>
     </div>
   </form>
 </div>

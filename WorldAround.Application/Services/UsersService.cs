@@ -52,6 +52,19 @@ public class UsersService : IUsersService
         return user != null;
     }
 
+    public async Task<bool> CheckPassword(int userId, string password)
+    {
+        var user = await _userManager.FindByIdAsync(userId.ToString());
+
+        return await _userManager.CheckPasswordAsync(user, password);
+    }
+
+    public async Task UpdatePasswordAsync(UpdateUserPasswordParameters parameters)
+    {
+        var user = await _userManager.FindByIdAsync(parameters.UserId.ToString());
+        await _userManager.ChangePasswordAsync(user, parameters.CurrentPassword, parameters.NewPassword);
+    }
+
     public async Task<IList<string>> AddToRoleAsync(int userId, string role)
     {
         var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id.Equals(userId));
