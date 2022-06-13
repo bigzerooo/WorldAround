@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Azure.Storage.Blobs;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WorldAround.Application.Interfaces.Infrastructure;
 using WorldAround.Domain.Entities;
 using WorldAround.Infrastructure.Data;
+using WorldAround.Infrastructure.Storage;
 
 namespace WorldAround.Infrastructure;
 
@@ -42,6 +44,10 @@ public static class DependencyInjection
             options.User.AllowedUserNameCharacters =
                 "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._+";
         });
+
+        services.AddScoped<IBlobStorageGateway, BlobStorageGateway>(_ =>
+            new BlobStorageGateway(
+                new BlobServiceClient(configuration.GetValue<string>("AzureStorageConnectionString"))));
 
         return services;
     }

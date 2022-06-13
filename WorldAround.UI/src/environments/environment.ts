@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: "https://localhost:7073/api/"
+  apiBaseUrl: "https://localhost:7073/api/",
+  cloudStorageUrl: "https://wolrdaroundstorage.blob.core.windows.net/"
 };
 
 /*
