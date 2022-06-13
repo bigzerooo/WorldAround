@@ -58,4 +58,4 @@ jobs:
         with:
           app-name: 'WorldAround'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B83B7454BF8547AEAC7FDDDE44BF4A7F }}
-          package: ./dist/world-around
+          package: ./WorldAround.UI/dist/world-around
