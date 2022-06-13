@@ -24,6 +24,16 @@ services.AddCors(options =>
                 .AllowAnyHeader()
                 .AllowAnyMethod();
         });
+
+    options.AddPolicy("prodOrigins",
+        policy =>
+        {
+            policy
+                .WithOrigins("https://worldaround.azurewebsites.net")
+                .AllowCredentials()
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
 });
 
 var app = builder.Build();
@@ -38,6 +48,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors("localhostUIOrigins");
+app.UseCors("prodOrigins");
 
 app.UseAuthentication();
 app.UseAuthorization();
