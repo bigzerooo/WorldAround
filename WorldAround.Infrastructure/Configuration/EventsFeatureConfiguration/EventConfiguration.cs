@@ -13,13 +13,21 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
             .HasMaxLength(30)
             .IsRequired();
 
+        entity.Property(e => e.ImagePath)
+            .IsRequired(false);
+
+        entity.Property(e => e.EndDate)
+            .IsRequired(false);
+
+        entity.Property(e => e.CreateDate)
+            .HasDefaultValueSql("GETDATE()");
+
         entity.Property(e => e.Display)
             .HasDefaultValue(true);
 
         entity.HasOne(e => e.Accessibility)
             .WithMany(e => e.Events)
             .HasForeignKey(e => e.AccessibilityId)
-            .IsRequired(false)
-            .OnDelete(DeleteBehavior.SetNull);
+            .OnDelete(DeleteBehavior.NoAction);
     }
 }

@@ -82,8 +82,13 @@ export class PasswordAbstractControlValidation extends AbstractControlValidation
 
   get message(): string | null {
 
-    if (!this.isValid && this.control.hasError('required')) {
-      return 'Password is required';
+    if (!this.isValid) {
+      if(this.control.hasError('required')) {
+        return 'Password is required';
+      }
+      if(this.control.hasError('correct')) {
+        return 'Password is not correct';
+      }
     }
 
     return null;

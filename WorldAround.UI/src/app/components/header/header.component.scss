@@ -25,6 +25,7 @@ p {
     font-size: 24px;
     display: flex;
     width: 342px;
+    margin-left: 5%;
     justify-content: space-between;
 
     & > p {
@@ -105,4 +106,12 @@ p {
 
 .active {
     color: white;
+}
+
+.menu-icon {
+  color: white;
+
+  &:hover {
+    cursor: pointer;
+  }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -12,6 +12,8 @@ import { LoginComponent } from '../authentication/login/login.component';
 })
 export class HeaderComponent {
 
+  @Output() public sidenavToggle = new EventEmitter();
+
   selectedValue: any = 0;
   inputValue: any = '';
 
@@ -19,7 +21,12 @@ export class HeaderComponent {
     private readonly router: Router,
     private readonly toastr: ToastrService,
     private readonly authService: AuthorizationService,
-    private readonly dialog: MatDialog) { }
+    private readonly dialog: MatDialog) {
+  }
+
+  onToggleSidenav() {
+    this.sidenavToggle.emit();
+  }
 
   search(): void {
 
@@ -29,12 +36,6 @@ export class HeaderComponent {
     }
 
     this.router.navigate([`/search/${this.selectedValue}/${this.inputValue}`]);
-  }
-
-  logout(): void {
-
-    this.authService.logout();
-    this.router.navigate(["/home"]);
   }
 
   authorized(): boolean {

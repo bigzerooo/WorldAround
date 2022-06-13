@@ -1,5 +1,6 @@
 <div class="background">
-    <p class="logo" routerLink="/home">World around</p>
+    <mat-icon *ngIf="authorized()" class="menu-icon" (click)="onToggleSidenav()">menu</mat-icon>
+    <!-- <p class="logo" routerLink="/home">World around</p> -->
 
     <div class="links">
         <p routerLink="/home" routerLinkActive="active">Home</p>
@@ -23,10 +24,6 @@
     <div>
       <div class="d-flex justify-content-end align-items-end" *ngIf="!authorized()">
         <span class="header-span" (click)="openLogin()">Sign In</span>
-      </div>
-      <div class="d-flex" *ngIf="authorized()">
-        <p class="profile me-md-4" routerLink="/my-profile" routerLinkActive="active">My Profile</p>
-        <span class="header-span" (click)="logout()">Logout</span>
       </div>
     </div>
 </div>

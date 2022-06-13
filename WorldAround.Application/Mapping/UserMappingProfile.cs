@@ -12,6 +12,7 @@ public class UserMappingProfile : Profile
         CreateMap<RegistrationModel, User>();
         CreateMap<LoginModel, User>();
         CreateMap<UserModel, User>()
-            .ReverseMap();
+            .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+        CreateMap<User, UserModel>();
     }
 }

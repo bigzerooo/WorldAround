@@ -3,11 +3,11 @@ import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { map, catchError } from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie';
-import { LoginModel } from 'src/app/models/login';
-import { RegistrationModel, RegistrationModelValidationErrors } from 'src/app/models/registration';
+import { LoginModel } from 'src/app/models/authorization/login';
+import { RegistrationModel, RegistrationModelValidationErrors } from 'src/app/models/authorization/registration';
 import { Observable, throwError } from 'rxjs';
 import { AuthorizationGateway } from '../gateways/authorization.gateway';
-import { AuthenticationResultDetails } from 'src/app/models/authenticationResult';
+import { AuthenticationResultDetails } from 'src/app/models/authorization/authentication-result-details';
 
 const TOKEN = 'TOKEN';
 const BAD_REQUEST_STATUS = 400;
@@ -44,7 +44,7 @@ export class AuthorizationService {
     return result;
   }
 
-  getUserId() {
+  getUserId(): number {
 
     let token = this.cookie.get(TOKEN)
 

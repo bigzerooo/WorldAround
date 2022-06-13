@@ -19,5 +19,9 @@ public interface IUsersService
 
     Task<bool> Exists(string login);
 
+    Task<bool> CheckPassword(int userId, string password);
+
+    Task UpdatePasswordAsync(UpdateUserPasswordParameters parameters);
+
     Task<UserModel> UpdateAsync(UserModel userModel);
 }
