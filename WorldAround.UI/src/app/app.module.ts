@@ -58,6 +58,7 @@ import { SidenavContentComponent } from './components/sidenav-content/sidenav-co
 import { UserSettingsComponent } from './components/user-settings/user-settings.component';
 import { EventDetailsComponent } from './components/events/event-details/event-details.component';
 import { EventCardComponent } from './components/events/event-card/event-card.component';
+import { GetEventsComponent } from './components/events/get-events/get-events.component';
 
 @NgModule({
   declarations: [
@@ -84,7 +85,8 @@ import { EventCardComponent } from './components/events/event-card/event-card.co
     SidenavContentComponent,
     UserSettingsComponent,
     EventDetailsComponent,
-    EventCardComponent
+    EventCardComponent,
+    GetEventsComponent
   ],
   imports: [
     BrowserModule,
