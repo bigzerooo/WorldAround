@@ -14,6 +14,7 @@ import { EventsService } from 'src/app/services/events.service';
   styleUrls: ['./create-event.component.scss']
 })
 export class CreateEventComponent implements OnInit {
+  submitButtonDisabled: boolean = false;
   imageUrl: string | ArrayBuffer;
   model: CreateEventModel;
   form: FormGroup;
@@ -35,7 +36,6 @@ export class CreateEventComponent implements OnInit {
       'accessibility': [this.model.accessibility]
     });
     this.accessibilityEnum = this.enumToKeyValue(Accessibility);
-    console.log(!!this.model.image);
     // this.openPlacesChoosing();
   }
 
@@ -50,8 +50,8 @@ export class CreateEventComponent implements OnInit {
   }
 
   onSubmit(): void {
+    // this.submitButtonDisabled = true;
     FormGroupHelper.mapToModel(this.model, this.form);
-    // console.log(this.model);
     this.eventsService.createEvent(this.model);
   }
 
@@ -98,8 +98,6 @@ export class CreateEventComponent implements OnInit {
 
       pairs.push(pair);
     }
-
-    console.log(pairs)
 
     return pairs;
   }

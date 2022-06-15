@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -10,10 +10,11 @@ import { LoginComponent } from '../authentication/login/login.component';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
 
   @Output() public sidenavToggle = new EventEmitter();
 
+  userName: string;
   selectedValue: any = 0;
   inputValue: any = '';
 
@@ -22,6 +23,12 @@ export class HeaderComponent {
     private readonly toastr: ToastrService,
     private readonly authService: AuthorizationService,
     private readonly dialog: MatDialog) {
+  }
+
+  ngOnInit(): void {
+    if(this.authorized()){
+      this.userName = this.authService.getUserName();
+    }
   }
 
   onToggleSidenav() {

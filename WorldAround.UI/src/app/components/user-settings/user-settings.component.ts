@@ -16,6 +16,7 @@ import { CurrentPasswordValidator } from 'src/app/validation/user-validation';
 })
 export class UserSettingsComponent implements OnInit {
 
+  pending: boolean = true;
   model: UpdateUserModel;
   formGroup: FormGroup;
   validation: {
@@ -77,6 +78,7 @@ export class UserSettingsComponent implements OnInit {
             this.formGroup.get(key).reset(this.model[key]);
           }
         });
+        this.pending = false;
       });
   }
 
@@ -84,7 +86,7 @@ export class UserSettingsComponent implements OnInit {
 
     let group = this.formGroup.get('passwordsGroup');
     let currentPasswordControl = group.get('currentPassword');
-    let confirmPasswordControl = group.get('confirmPassword')
+    let confirmPasswordControl = group.get('confirmPassword');
 
     if (!currentPasswordControl.valid || !confirmPasswordControl.valid) {
       return;

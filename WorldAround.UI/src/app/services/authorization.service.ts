@@ -44,6 +44,13 @@ export class AuthorizationService {
     return result;
   }
 
+  getUserName(): string {
+
+    let token = this.cookie.get(TOKEN)
+
+    return this.jwtHelper.decodeToken(token).unique_name;
+  }
+
   getUserId(): number {
 
     let token = this.cookie.get(TOKEN)

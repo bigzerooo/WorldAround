@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { Router } from "@angular/router";
 import { EventsGateway } from "../gateways/events.gateway";
 import { CreateEventModel } from "../models/events/create-event";
 import { AuthorizationService } from "./authorization.service";
@@ -9,11 +10,12 @@ import { AuthorizationService } from "./authorization.service";
 export class EventsService {
 
   constructor(
-    private eventsGateway: EventsGateway,
-    private authService: AuthorizationService) {
+    private readonly router: Router,
+    private readonly eventsGateway: EventsGateway,
+    private readonly authService: AuthorizationService) {
   }
 
-  createEvent(model: CreateEventModel) {
+  createEvent(model: CreateEventModel): void {
     model.Participants = model.Participants?.map(participant => participant.id);
     model.Trips = model.Trips?.map(trip => trip.id);
     model.createUserId = this.authService.getUserId();
@@ -29,11 +31,14 @@ export class EventsService {
 
     this.eventsGateway.createEvent(model)
       .subscribe(result => {
-        console.log("result", result);
-
         if (formData.has(formDataName)) {
-          this.eventsGateway.updateEventImage(result.id, formData).subscribe();
+          this.eventsGateway.updateEventImage(result.id, formData).subscribe(() => {
+            this.router.navigate([`events/${result.id}`]);
+          });
           model.image = image;
+        }
+        else {
+          this.router.navigate([`events/${result.id}`]);
         }
       });
   }

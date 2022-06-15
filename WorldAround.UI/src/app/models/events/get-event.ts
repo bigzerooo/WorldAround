@@ -1,8 +1,8 @@
 export class GetEventModel {
-  Id: number;
-  Title: string;
-  Description: string;
-  CreateDate: Date;
-  StartDate: Date;
-  EndDate: Date;
+  id: number;
+  title: string;
+  description: string;
+  createDate: Date;
+  startDate: Date;
+  endDate: Date;
 }

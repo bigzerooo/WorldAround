@@ -63,8 +63,14 @@ public class EventsService : IEventsService
     public async Task UpdateImage(int eventId, IFormFile image)
     {
         var blobName = $"Event{eventId}_{DateTime.Now.ToFileTime()}_{image.FileName}";
-
         await _blobStorageGateway.UploadImageAsync(blobName, image);
+        var @event = await _context.Events.FirstOrDefaultAsync(e => e.Id.Equals(eventId));
+        
+        if (@event != null)
+        {
+            @event.ImagePath = blobName;
+            await _context.SaveChangesAsync();
+        }
     }
 
     public async Task<EventDetailsModel> CreateEvent(CreateEventModel model)

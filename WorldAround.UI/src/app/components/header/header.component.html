@@ -22,8 +22,11 @@
     </div>
 
     <div>
-      <div class="d-flex justify-content-end align-items-end" *ngIf="!authorized()">
+      <div class="d-flex justify-content-end align-items-end" *ngIf="!authorized(); else elseBlock">
         <span class="header-span" (click)="openLogin()">Sign In</span>
       </div>
+      <ng-template #elseBlock>
+        <h4 class="username" routerLink="/settings">{{userName}}</h4>
+      </ng-template>
     </div>
 </div>

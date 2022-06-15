@@ -5,9 +5,11 @@ export class EventDetailsModel {
   id: number;
   title: string;
   description: string;
+  author: string;
+  image: string;
   createDate: Date;
   startDate: Date;
-  endDate: Date;
+  endDate?: Date;
 
   trips: GetTripsModel;
   participants: ParticipantModel[];

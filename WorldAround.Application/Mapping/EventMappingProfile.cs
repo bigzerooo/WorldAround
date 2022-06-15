@@ -39,6 +39,7 @@ public class EventMappingProfile : Profile
 
         CreateMap<Event, GetEventModel>();
         CreateMap<Event, EventDetailsModel>()
+            .ForMember(dest => dest.Image, opts => opts.MapFrom(src => src.ImagePath))
             .ForMember(dest => dest.Trips, opts => opts.ConvertUsing(new GetEventModelValueFormatter(), src => src))
             .ForMember(dest => dest.Participants, opts => opts.MapFrom(src => src.Participants));
     }
