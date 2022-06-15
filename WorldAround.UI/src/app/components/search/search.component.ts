@@ -9,9 +9,9 @@ import { ActivatedRoute } from '@angular/router';
 export class SearchComponent implements OnInit, OnDestroy {
 
   tripsLength: number = 0;
+  attractionsLength: number = 0;
 
   users: any = [];
-  attractions: any = [];
   events: any = [];
 
   sub: any;
@@ -35,6 +35,10 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.tripsLength = tripsLength;
   }
 
+  setAttractionsLength(attractionsLength: any): void {
+    this.attractionsLength = attractionsLength;
+  }
+
   getTitle(): string {
     let result = 'Found ';
 
@@ -47,9 +51,9 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
 
     if (this.type == '1') {
-      result += this.attractions.length;
+      result += this.attractionsLength;
       result += ' Attraction';
-      if (this.attractions.length !== 1) {
+      if (this.attractionsLength !== 1) {
         result += 's';
       }
     }

@@ -1,9 +1,7 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { AddCommentModel } from 'src/app/models/comments/addComment';
-import { CommentModel } from 'src/app/models/comments/comment';
 import { CreateTripModel } from 'src/app/models/trips/createTrip';
 import { GetTripsModel } from 'src/app/models/trips/getTripsModel';
 import { UpdateTripModel } from 'src/app/models/trips/updateTrip';
@@ -40,9 +38,5 @@ export class TripsGateway {
 
   deleteTrip(tripId: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/${tripId}`);
-  }
-
-  addTripComment(addTripCommentModel: AddCommentModel): Observable<CommentModel> {
-    return this.http.post<CommentModel>(`${this.baseUrl}/Comment`, addTripCommentModel);
   }
 }

@@ -56,6 +56,11 @@ import { EventsGateway } from './gateways/events.gateway';
 import { EventsService } from './services/events.service';
 import { SidenavContentComponent } from './components/sidenav-content/sidenav-content.component';
 import { UserSettingsComponent } from './components/user-settings/user-settings.component';
+import { AttractionCardComponent } from './components/attractions/attraction-card/attraction-card.component';
+import { AttractionDetailsComponent } from './components/attractions/attraction-details/attraction-details.component';
+import { MyAttractionsComponent } from './components/attractions/my-attractions/my-attractions.component';
+import { AttractionsGridComponent } from './components/shared/attractions-grid/attractions-grid.component';
+import { CreateAttractionComponent } from './components/attractions/create-attraction/create-attraction.component';
 import { EventDetailsComponent } from './components/events/event-details/event-details.component';
 import { EventCardComponent } from './components/events/event-card/event-card.component';
 import { GetEventsComponent } from './components/events/get-events/get-events.component';
@@ -84,6 +89,11 @@ import { GetEventsComponent } from './components/events/get-events/get-events.co
     ChoosePeopleComponent,
     SidenavContentComponent,
     UserSettingsComponent,
+    AttractionCardComponent,
+    AttractionDetailsComponent,
+    MyAttractionsComponent,
+    AttractionsGridComponent,
+    CreateAttractionComponent,
     EventDetailsComponent,
     EventCardComponent,
     GetEventsComponent
