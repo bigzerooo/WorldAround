@@ -55,6 +55,11 @@ import { EventsGateway } from './gateways/events.gateway';
 import { EventsService } from './services/events.service';
 import { SidenavContentComponent } from './components/sidenav-content/sidenav-content.component';
 import { UserSettingsComponent } from './components/user-settings/user-settings.component';
+import { AttractionCardComponent } from './components/attractions/attraction-card/attraction-card.component';
+import { AttractionDetailsComponent } from './components/attractions/attraction-details/attraction-details.component';
+import { MyAttractionsComponent } from './components/attractions/my-attractions/my-attractions.component';
+import { AttractionsGridComponent } from './components/shared/attractions-grid/attractions-grid.component';
+import { CreateAttractionComponent } from './components/attractions/create-attraction/create-attraction.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +84,12 @@ import { UserSettingsComponent } from './components/user-settings/user-settings.
     ChoosePlacesComponent,
     ChoosePeopleComponent,
     SidenavContentComponent,
-    UserSettingsComponent
+    UserSettingsComponent,
+    AttractionCardComponent,
+    AttractionDetailsComponent,
+    MyAttractionsComponent,
+    AttractionsGridComponent,
+    CreateAttractionComponent
   ],
   imports: [
     BrowserModule,

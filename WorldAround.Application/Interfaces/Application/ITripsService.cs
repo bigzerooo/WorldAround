@@ -16,6 +16,4 @@ public interface ITripsService
     Task UpdateTripDescriptionAsync(UpdateTripModel model);
 
     Task DeleteTripAsync(int tripId);
-
-    Task<CommentModel> AddCommentAsync(AddCommentModel model);
 }

@@ -1,0 +1,35 @@
+<div class="content">
+    <h2>Create new attraction</h2>
+    <div class="fields">
+        <mat-form-field appearance="fill">
+            <mat-label>Name</mat-label>
+            <input matInput [(ngModel)]="model.name">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Description</mat-label>
+            <textarea matInput [(ngModel)]="model.description"></textarea>
+        </mat-form-field>
+    </div>
+</div>
+
+<div class="add-photo">
+    <div *ngIf="!this.imageUrl; else elseBlock" class="add-photo-plus" (click)="fileInput.click()">
+        <div></div>
+        <div></div>
+    </div>
+    <ng-template #elseBlock>
+        <div class="add-photo-plus" (click)="fileInput.click()">
+            <img *ngIf="this.imageUrl" [src]="this.imageUrl" alt="" style="height: inherit; width: max-content;">
+        </div>
+    </ng-template>
+    <span class="add-photo-span">Choose image</span>
+    <input #fileInput type="file" accept="image/png, image/jpeg, image/svg+xml" (change)="onImageSelected($event)"
+        style="display:none;" />
+</div>
+
+<app-map height="500px" width="940px"  mapId="create-attraction-map" [mapMode]="2" (mapClick)="updateCurrentPinCoords($event)"></app-map>
+
+<div class="buttons">
+    <button class="btn btn-secondary" (click)="cancel()">Cancel</button>
+    <button class="btn btn-secondary" (click)="saveAttraction()">Save</button>
+  </div>

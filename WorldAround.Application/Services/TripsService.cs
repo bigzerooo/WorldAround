@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using WorldAround.Application.Interfaces.Application;
 using WorldAround.Application.Interfaces.Infrastructure;
 using WorldAround.Domain.Entities;
-using WorldAround.Domain.Models.Comments;
 using WorldAround.Domain.Models.Trips;
 
 namespace WorldAround.Application.Services;
@@ -62,7 +61,7 @@ public class TripsService : ITripsService
                 .ToList(),
             Length = tripsQuery.Count()
         }).FirstOrDefaultAsync(cancellationToken);
-        
+
         return new GetTripsModel
         {
             Data = _mapper.Map<IReadOnlyCollection<TripModel>>(result?.Data),
@@ -112,26 +111,6 @@ public class TripsService : ITripsService
             trip.Description = model.Value;
             await _context.SaveChangesAsync();
         }
-    }
-
-    public async Task<CommentModel> AddCommentAsync(AddCommentModel model)
-    {
-        var comment = new Comment
-        {
-            AuthorId = model.UserId,
-            CreateDate = DateTime.Now,
-            Text = model.Text,
-            TripId = model.TargetId
-        };
-
-        _context.Comments.Add(comment);
-        await _context.SaveChangesAsync();
-
-        var createdComment = await _context.Comments
-            .Include(x => x.Author)
-            .FirstOrDefaultAsync(x => x.Id == comment.Id);
-
-        return _mapper.Map<CommentModel>(createdComment);
     }
 
     public async Task DeleteTripAsync(int tripId)

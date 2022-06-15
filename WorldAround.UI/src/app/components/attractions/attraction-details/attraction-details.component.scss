@@ -1,0 +1,78 @@
+.content {
+    width: 940px;
+}
+
+.info{
+    display: flex;
+    border: 3px solid;
+}
+
+.photo {
+    width: 400px;
+    height: 500px;
+    background: url(https://wolrdaroundstorage.blob.core.windows.net/images/jinxCropped.jpg);
+    background-repeat: no-repeat;
+    background-size:cover;
+    border-right: 3px solid;
+}
+
+.description {
+    width: 540px;
+    height: 500px;
+    padding: 0px 20px 0px 20px;
+
+    &-text {
+        padding-left: 10px;
+        font-weight: bold;
+        border-bottom: 1px solid;
+    }
+
+    p {
+        white-space: pre-line;
+    }
+}
+
+.map-container {
+    
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+
+.image {
+    background-image: url("/assets/images/userPlaceholder.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    margin-right: 10px;
+}
+
+.comments {
+    padding-bottom: 20px;
+}
+
+.comment-name {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.comment {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.comment-add {
+    width: 940px;
+    display: flex;
+    margin-bottom: 20px;
+
+    &>textarea {
+        width: 740px;
+        margin-right: 20px;
+    }
+}

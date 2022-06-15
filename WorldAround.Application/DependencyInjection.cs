@@ -13,6 +13,9 @@ public static class DependencyInjection
     {
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddFluentValidation(c => c.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
+
+        services.AddScoped<IAttractionsService, AttractionsService>();
+        services.AddScoped<ICommentsService, CommentsService>();
         services.AddScoped<ITripsService, TripsService>();
         services.AddScoped<IPinsService, PinsService>();
 
