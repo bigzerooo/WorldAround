@@ -1,7 +1,8 @@
 export class PagingModel {
-  PageIndex: number;
-  PageSize: number
-  TotalPages: number;
-  IsFirstPage: boolean;
-  HasNextPage: boolean;
+  pageIndex: number;
+  pageSize: number;
+  totalPages: number;
+  length: number;
+  isFirstPage: boolean;
+  hasNextPage: boolean;
 }

@@ -58,10 +58,9 @@ public class EventsService : IEventsService
     {
         var queryEvents = Events.Where(e => e.Participants.Any(p => p.UserId.Equals(@params.UserId)));
 
-        if (@params.IsOwner)
-        {
-            queryEvents = queryEvents.Where(e => e.Participants.Any(p => p.ParticipantRoleId.Equals(ParticipantRoleProfile.Owner)));
-        }
+        queryEvents = @params.IsOwner
+            ? queryEvents.Where(e => e.Participants.Any(p => p.ParticipantRoleId.Equals(ParticipantRoleProfile.Owner)))
+            : queryEvents.Where(e => e.Participants.Any(p => p.ParticipantRoleId != ParticipantRoleProfile.Owner));
 
         return await GetEvents(queryEvents, @params, page);
     }
@@ -177,14 +176,12 @@ public class EventsService : IEventsService
 
         var count = await queryEvents.CountAsync();
 
-        page.PageIndex = page.PageIndex <= 0 ? 1 : page.PageIndex;
-        page.PageSize = page.PageSize <= 0 ? 5 : page.PageSize;
+        page.PageIndex = page.PageIndex < 0 ? 0 : page.PageIndex;
+        page.PageSize = page.PageSize < 0 ? 0 : page.PageSize;
 
-        var totalPages = (int)Math.Ceiling((double)count / page.PageSize);
+        var totalPages = page.PageSize != 0 ? (int)Math.Ceiling((double)count / page.PageSize) : 0;
 
-        var index = page.PageIndex <= 1 ? 0 : page.PageIndex;
-
-        var events = await queryEvents.Skip(index * page.PageSize)
+        var events = await queryEvents.Skip(page.PageIndex * page.PageSize)
             .Take(page.PageSize).ToListAsync();
 
         var eventsPage = new GetEventsPageModel
@@ -193,7 +190,8 @@ public class EventsService : IEventsService
             {
                 PageIndex = page.PageIndex,
                 PageSize = page.PageSize,
-                TotalPages = totalPages
+                TotalPages = totalPages,
+                Length = count
             },
             Events = _mapper.Map<IEnumerable<GetEventModel>>(events)
         };

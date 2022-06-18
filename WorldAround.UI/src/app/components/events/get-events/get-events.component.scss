@@ -1,17 +1,57 @@
-.events-content {
-  margin-top: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  min-width: 300px;
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
 }
 
-.events-content>app-event-card {
-  margin-bottom: 50px;
-  transition: 0.2s;
-  margin-left: 20px;
+.events-wrapper {
+  margin-top: 20px;
+  min-width: 300px;
+  padding-left: 10px;
+  padding-right: 10px;
 
-  &:hover {
-    margin-top: -20px;
-    margin-bottom: 70px;
+  &>* {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &>button {
+      width: 200px;
+      height: 60px;
+      font-size: larger;
+      color: white;
+      background: #2b2d2e;
+      transition: 0.2s;
+
+      border-radius: 200px;
+
+      &:hover {
+        background: rosybrown;
+      }
+    }
+  }
+
+  .events-content {
+    margin-top: 50px;
+    margin-left: 0px;
+    margin-right: 0px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    &>app-event-card {
+      margin-bottom: 50px;
+      transition: 0.2s;
+      margin-left: 10px;
+      margin-right: 10px;
+
+      &:hover {
+        margin-top: -20px;
+        margin-bottom: 70px;
+      }
+    }
   }
 }
