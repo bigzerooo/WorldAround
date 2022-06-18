@@ -18,6 +18,10 @@
     justify-content: space-between;
     align-items: center;
 
+    .mat-checkbox {
+      font-size: larger;
+    }
+
     &>button {
       width: 200px;
       height: 60px;

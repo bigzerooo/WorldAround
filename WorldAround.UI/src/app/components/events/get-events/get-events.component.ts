@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { EventsGateway } from 'src/app/gateways/events.gateway';
+import { MapperHelper } from 'src/app/helpers/mapper';
+import { CardModel } from 'src/app/models/cards/card';
 import { GetEventsPageModel } from 'src/app/models/events/get-events-page';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 
@@ -14,18 +16,20 @@ export class GetEventsComponent implements OnInit {
   isOwner: boolean = true;
   pageSizeOptions: number[] = [5, 10, 25, 100];
   model: GetEventsPageModel = new GetEventsPageModel();
+  cardModels: CardModel[] = [];
 
   constructor(
+    private readonly mapper: MapperHelper,
     private readonly router: Router,
     private readonly authService: AuthorizationService,
-    private readonly gateway: EventsGateway) { }
+    private readonly gateway: EventsGateway) {
+  }
 
   ngOnInit(): void {
     this.getEvents(0, 5, this.isOwner);
   }
 
   onCheckBoxClick() {
-
     this.getEvents(0, 5, this.isOwner);
   }
 
@@ -34,9 +38,14 @@ export class GetEventsComponent implements OnInit {
   }
 
   getEvents(pageIndex: number, pageSize: number, isOwner): void {
+
     this.gateway.getUserEvents(this.authService.getUserId(), isOwner, pageIndex, pageSize)
     .subscribe(result => {
       this.model = result;
+      this.cardModels = [];
+      this.model.events.forEach(event => {
+      this.cardModels.push(this.mapper.mapGetEventToCard(event));
+      });
     });
   }
 

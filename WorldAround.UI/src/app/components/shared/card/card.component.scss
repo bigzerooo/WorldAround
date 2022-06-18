@@ -1,15 +1,16 @@
-.example-card {
+.mat-card {
   width: 300px;
+  overflow: hidden;
+  padding-right: 0px;
+  padding-bottom: 30px;
 
   &:hover {
     cursor: pointer;
   }
 }
 
-.mat-card {
-  overflow: hidden;
-  padding-right: 0px;
-  padding-bottom: 30px;
+.header-image {
+  background-size: cover;
 }
 
 img {

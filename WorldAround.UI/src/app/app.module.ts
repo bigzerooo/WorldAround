@@ -25,6 +25,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { DatePipe } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -62,7 +63,7 @@ import { MyAttractionsComponent } from './components/attractions/my-attractions/
 import { AttractionsGridComponent } from './components/shared/attractions-grid/attractions-grid.component';
 import { CreateAttractionComponent } from './components/attractions/create-attraction/create-attraction.component';
 import { EventDetailsComponent } from './components/events/event-details/event-details.component';
-import { EventCardComponent } from './components/events/event-card/event-card.component';
+import { CardComponent } from './components/shared/card/card.component';
 import { GetEventsComponent } from './components/events/get-events/get-events.component';
 
 @NgModule({
@@ -95,7 +96,7 @@ import { GetEventsComponent } from './components/events/get-events/get-events.co
     AttractionsGridComponent,
     CreateAttractionComponent,
     EventDetailsComponent,
-    EventCardComponent,
+    CardComponent,
     GetEventsComponent
   ],
   imports: [
@@ -137,7 +138,8 @@ import { GetEventsComponent } from './components/events/get-events/get-events.co
     JwtHelperService,
     AuthorizationService,
     UniqueLoginValidator,
-    EventsService
+    EventsService,
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

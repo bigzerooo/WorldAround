@@ -1,15 +1,13 @@
-<mat-tab-group>
-  <mat-tab class="d-flex" label="Trips">
-    <div class="search d-flex mt-3 align-items-center">
-      <mat-form-field>
-        <input matInput type="text" [(ngModel)]="inputValue" placeholder="Search..." (keyup.enter)="search()">
-      </mat-form-field>
-      <div class="search-button ms-2" (click)="search()">
-        <app-icon height="25px" width="25px" icon="/assets/icons/search.svg" color="#2B2D2E"></app-icon>
-      </div>
+<div class="search-wrapper">
+  <div class="search d-flex mt-3 align-items-center">
+    <mat-form-field>
+      <input matInput type="text" [(ngModel)]="inputValue" placeholder="Search..." (keyup.enter)="search()">
+    </mat-form-field>
+    <div class="search-button ms-2" (click)="search()">
+      <app-icon height="25px" width="25px" icon="/assets/icons/search.svg" color="#2B2D2E"></app-icon>
     </div>
+  </div>
 
-    <span *ngFor="let trip of this.trips">{{trip.test}}, Hello!</span>
+  <span *ngFor="let trip of this.trips">{{trip.test}}, Hello!</span>
 
-  </mat-tab>
-</mat-tab-group>
+</div>

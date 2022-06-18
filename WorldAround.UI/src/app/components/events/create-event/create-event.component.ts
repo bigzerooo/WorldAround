@@ -36,7 +36,7 @@ export class CreateEventComponent implements OnInit {
       'accessibility': [this.model.accessibility]
     });
     this.accessibilityEnum = this.enumToKeyValue(Accessibility);
-    // this.openPlacesChoosing();
+    this.openPlacesChoosing();
   }
 
   openPlacesChoosing() {

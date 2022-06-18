@@ -9,7 +9,7 @@
     </button>
   </div>
   <div class="events-content">
-    <app-event-card *ngFor="let event of this.model.events" [event]="event" (click)="onCardClick(event.id)">
+    <app-event-card *ngFor="let card of this.cardModels" [model]="card" (click)="onCardClick(card.id)">
     </app-event-card>
   </div>
   <mat-paginator

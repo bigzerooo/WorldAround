@@ -1,0 +1,14 @@
+<mat-card class="card">
+  <mat-card-header>
+    <div #avatar mat-card-avatar class="header-image"></div>
+    <mat-card-title>{{this.model.title}}</mat-card-title>
+    <mat-card-subtitle>Starts: {{this.model.subtitle}}</mat-card-subtitle>
+  </mat-card-header>
+  <img mat-card-image [src]="this.model.imagePath ?? this.noImageUrl"
+  alt="Photo of card">
+  <mat-card-content>
+    <p>
+      {{this.model.description}}
+    </p>
+  </mat-card-content>
+</mat-card>
