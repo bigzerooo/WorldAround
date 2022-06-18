@@ -26,8 +26,7 @@ export class EventDetailsComponent implements OnInit {
     private readonly router: Router,
     private readonly route: ActivatedRoute,
     private readonly gateway: EventsGateway,
-    private readonly authService: AuthorizationService,
-    private readonly imageService: ImageService) {
+    private readonly authService: AuthorizationService) {
   }
 
   ngOnInit(): void {
@@ -64,10 +63,6 @@ export class EventDetailsComponent implements OnInit {
 
         if (this.model.endDate <= this.model.startDate) {
           this.model.endDate = null;
-        }
-
-        if (this.model.image) {
-          this.model.image = this.imageService.getImageUrl(this.model.image);
         }
 
         this.pending = false;

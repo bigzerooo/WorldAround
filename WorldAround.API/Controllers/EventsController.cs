@@ -17,21 +17,24 @@ namespace WorldAround.API.Controllers
             _service = service;
         }
 
-        // GET: api/<EventsController>
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetUserEvents([FromQuery] GetUserEventsParams @params, [FromQuery] GetPageModel page)
+        {
+            return Ok(await _service.GetUserEvents(@params, page));
+        }
+
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] GetDataParams @params, [FromQuery] GetPageModel page)
         {
             return Ok(await _service.GetEvents(@params, page));
         }
 
-        // GET api/<EventsController>/5
         [HttpGet("{id:int}")]
         public async Task<IActionResult> Get(int id)
         {
             return Ok(await _service.GetEvent(id));
         }
 
-        // POST api/<EventsController>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateEventModel @event)
         {
@@ -46,7 +49,6 @@ namespace WorldAround.API.Controllers
             return Ok();
         }
 
-        // PUT api/<EventsController>/5
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Put(int id, [FromBody] UpdateEventModel @event)
         {
@@ -55,7 +57,6 @@ namespace WorldAround.API.Controllers
                 BadRequest("The Id's in the route parameter and the body are not same");
         }
 
-        // DELETE api/<EventsController>/5
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {

@@ -33,12 +33,12 @@ export class EventsService {
       .subscribe(result => {
         if (formData.has(formDataName)) {
           this.eventsGateway.updateEventImage(result.id, formData).subscribe(() => {
-            this.router.navigate([`events/${result.id}`]);
+            this.router.navigate([`events/details/${result.id}`]);
           });
           model.image = image;
         }
         else {
-          this.router.navigate([`events/${result.id}`]);
+          this.router.navigate([`events/details/${result.id}`]);
         }
       });
   }

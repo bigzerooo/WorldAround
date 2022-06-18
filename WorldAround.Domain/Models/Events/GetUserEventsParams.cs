@@ -1,5 +1,4 @@
-﻿using WorldAround.Domain.Enums;
-using WorldAround.Domain.Models.Base;
+﻿using WorldAround.Domain.Models.Base;
 
 namespace WorldAround.Domain.Models.Events;
 

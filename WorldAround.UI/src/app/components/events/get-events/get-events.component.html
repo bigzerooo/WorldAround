@@ -1,1 +1,3 @@
-<p>get-events works!</p>
+<div class="events-content">
+  <app-event-card *ngFor="let event of this.model.events" [event]="event" (click)="onCardClick(event.id)"></app-event-card>
+</div>

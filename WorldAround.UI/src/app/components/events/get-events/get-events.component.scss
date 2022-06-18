@@ -1,0 +1,17 @@
+.events-content {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  min-width: 300px;
+}
+
+.events-content>app-event-card {
+  margin-bottom: 50px;
+  transition: 0.2s;
+  margin-left: 20px;
+
+  &:hover {
+    margin-top: -20px;
+    margin-bottom: 70px;
+  }
+}

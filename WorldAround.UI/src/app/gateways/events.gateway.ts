@@ -32,6 +32,17 @@ export class EventsGateway {
     });
   }
 
+  getUserEvents(userId: number, isOwner: boolean, pageIndex: number, pageSize: number): Observable<GetEventsPageModel> {
+    return this.http.get<GetEventsPageModel>(UriHelper.createUri(this.basePath, 'GetUserEvents'), {
+      params: {
+        userId: userId,
+        isOwner: isOwner,
+        pageIndex: pageIndex,
+        pageSize: pageSize
+      }
+    });
+  }
+
   createEvent(model: CreateEventModel): Observable<EventDetailsModel> {
     return this.http.post<EventDetailsModel>(this.basePath, model);
   }

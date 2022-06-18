@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using WorldAround.Application.Helpers;
 using WorldAround.Application.Interfaces.Application;
 using WorldAround.Application.Interfaces.Infrastructure;
 using WorldAround.Domain.Entities;
@@ -43,19 +44,24 @@ public class EventsService : IEventsService
             .ThenInclude(e => e.User)
             .FirstOrDefaultAsync(e => e.Id.Equals(id));
 
-        return _mapper.Map<EventDetailsModel>(@event);
+        var model = _mapper.Map<EventDetailsModel>(@event);
+
+        if (!string.IsNullOrEmpty(model.Image))
+        {
+            model.Image = ImageHelper.CreateUrl(model.Image);
+        }
+
+        return model;
     }
 
     public async Task<GetEventsPageModel> GetUserEvents(GetUserEventsParams @params, GetPageModel page)
     {
-        var queryEvents = Events.Where(e => e.Display)
-            .AsQueryable();
+        var queryEvents = Events.Where(e => e.Participants.Any(p => p.UserId.Equals(@params.UserId)));
 
-        queryEvents = @params.IsOwner
-            ? queryEvents.Where(e => e.Participants.Exists(p =>
-                p.UserId.Equals(@params.UserId)))
-            : queryEvents.Where(e => e.Participants.Exists(p =>
-                p.UserId.Equals(@params.UserId) && p.ParticipantRoleId.Equals(ParticipantRoleProfile.Owner)));
+        if (@params.IsOwner)
+        {
+            queryEvents = queryEvents.Where(e => e.Participants.Any(p => p.ParticipantRoleId.Equals(ParticipantRoleProfile.Owner)));
+        }
 
         return await GetEvents(queryEvents, @params, page);
     }
@@ -65,7 +71,7 @@ public class EventsService : IEventsService
         var blobName = $"Event{eventId}_{DateTime.Now.ToFileTime()}_{image.FileName}";
         await _blobStorageGateway.UploadImageAsync(blobName, image);
         var @event = await _context.Events.FirstOrDefaultAsync(e => e.Id.Equals(eventId));
-        
+
         if (@event != null)
         {
             @event.ImagePath = blobName;
@@ -191,6 +197,14 @@ public class EventsService : IEventsService
             },
             Events = _mapper.Map<IEnumerable<GetEventModel>>(events)
         };
+
+        foreach (var eventModel in eventsPage.Events)
+        {
+            if (!string.IsNullOrEmpty(eventModel.ImagePath))
+            {
+                eventModel.ImagePath = ImageHelper.CreateUrl(eventModel.ImagePath);
+            }
+        }
 
         return eventsPage;
     }
