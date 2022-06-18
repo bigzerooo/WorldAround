@@ -2,11 +2,11 @@
   <mat-card-header>
     <div #avatar mat-card-avatar class="header-image"></div>
     <mat-card-title>{{this.model.title}}</mat-card-title>
-    <mat-card-subtitle>Starts: {{this.model.subtitle}}</mat-card-subtitle>
+    <mat-card-subtitle>{{this.model.subtitle}}</mat-card-subtitle>
   </mat-card-header>
   <img mat-card-image [src]="this.model.imagePath ?? this.noImageUrl"
   alt="Photo of card">
-  <mat-card-content>
+  <mat-card-content *ngIf="this.model.description">
     <p>
       {{this.model.description}}
     </p>

@@ -62,9 +62,9 @@
     <mat-form-field>
       <mat-chip-list #chipList aria-label="Fruit selection">
         <mat-chip-list aria-label="Fish selection">
-          <mat-chip color="primary" selected>
-            Primary place
-            <button matChipRemove>
+          <mat-chip *ngFor="let chipPlace of this.chipPlaces" [color]="this.chipPlace.itemType === 0 ? 'accent' : 'primary'" selected>
+            {{this.chipPlace.name}}
+            <button matChipRemove (click)="removePlace(this.chipPlace)">
               <mat-icon>cancel</mat-icon>
             </button>
           </mat-chip>

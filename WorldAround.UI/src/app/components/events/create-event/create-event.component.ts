@@ -7,6 +7,7 @@ import { CreateEventModel } from 'src/app/models/events/create-event';
 import { ChoosePlacesComponent } from 'src/app/components/shared/choose-places/choose-places.component';
 import { ChoosePeopleComponent } from 'src/app/components/shared/choose-people/choose-people.component';
 import { EventsService } from 'src/app/services/events.service';
+import { ChipItem } from 'src/app/models/events/chip-item';
 
 @Component({
   selector: 'app-create-event',
@@ -19,6 +20,7 @@ export class CreateEventComponent implements OnInit {
   model: CreateEventModel;
   form: FormGroup;
   accessibilityEnum: { key: string, value: number }[];
+  chipPlaces: ChipItem[] = [];
 
   constructor(
     private readonly eventsService: EventsService,
@@ -40,13 +42,28 @@ export class CreateEventComponent implements OnInit {
   }
 
   openPlacesChoosing() {
-    this.dialog.open(ChoosePlacesComponent, {
-      panelClass: 'search-modal'
+    let dialogRef = this.dialog.open(ChoosePlacesComponent, {
+      panelClass: 'search-modal',
+      data: {
+        selectedItems: [...this.chipPlaces]
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.chipPlaces = result;
+      }
     });
   }
 
   openParticipantsChoosing() {
     this.dialog.open(ChoosePeopleComponent);
+  }
+
+  removePlace(chip: ChipItem): void {
+    let index = this.chipPlaces.findIndex((item) => item.id === chip.id && item.itemType === chip.itemType);
+
+    this.chipPlaces.splice(index, 1);
   }
 
   onSubmit(): void {

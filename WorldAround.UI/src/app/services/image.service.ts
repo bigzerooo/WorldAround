@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { UriHelper } from "../helpers/uri-helper";
-
-const storageUrl = 'https://wolrdaroundstorage.blob.core.windows.net/images/'
+import { environment } from "src/environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +8,6 @@ const storageUrl = 'https://wolrdaroundstorage.blob.core.windows.net/images/'
 export class ImageService {
 
   getImageUrl(imageName: string) {
-    return UriHelper.createUri(storageUrl, imageName);
+    return UriHelper.createUri(environment.cloudStorageUrl, imageName);
   }
 }

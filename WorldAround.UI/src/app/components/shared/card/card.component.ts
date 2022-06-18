@@ -2,7 +2,7 @@ import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { CardModel } from 'src/app/models/cards/card';
 
 @Component({
-  selector: 'app-event-card',
+  selector: 'app-card',
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss']
 })
@@ -30,7 +30,7 @@ export class CardComponent implements OnInit {
       maxSymbols = 3;
     }
 
-    if(text.length > maxSymbols) {
+    if(text?.length > maxSymbols) {
       text = text.substring(0, maxSymbols-3) + '...';
     }
 

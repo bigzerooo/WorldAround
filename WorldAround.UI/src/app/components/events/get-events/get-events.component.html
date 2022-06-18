@@ -8,10 +8,12 @@
       <mat-icon>add</mat-icon>
     </button>
   </div>
+
   <div class="events-content">
-    <app-event-card *ngFor="let card of this.cardModels" [model]="card" (click)="onCardClick(card.id)">
-    </app-event-card>
+    <app-card class="card" *ngFor="let card of this.cardModels" [model]="card" (click)="onCardClick(card.id)">
+    </app-card>
   </div>
+
   <mat-paginator
     [length]="this.model.pageInfo?.length"
     [pageSize]="this.model.pageInfo?.pageSize"

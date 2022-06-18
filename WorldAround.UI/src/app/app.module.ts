@@ -24,6 +24,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
+import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DatePipe } from '@angular/common';
 
@@ -126,6 +127,7 @@ import { GetEventsComponent } from './components/events/get-events/get-events.co
     MatToolbarModule,
     MatCardModule,
     MatListModule,
+    MatSelectModule,
     MatProgressSpinnerModule
   ],
   providers: [
