@@ -8,6 +8,7 @@ import { UserModel } from 'src/app/models/users/user';
 })
 export class UserCardComponent implements OnInit {
 
+  noImage: string = 'assets/images/userPlaceholder.png';
   @Input() user: UserModel;
 
   constructor() { }

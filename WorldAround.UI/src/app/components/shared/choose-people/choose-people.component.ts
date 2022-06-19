@@ -3,6 +3,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { UsersGateway } from 'src/app/gateways/users.gateway';
+import { ImageHelper } from 'src/app/helpers/image-helper';
 import { ChipItem } from 'src/app/models/events/chip-item';
 import { PagingModel } from 'src/app/models/paging/paging';
 import { UserModel } from 'src/app/models/users/user';
@@ -60,7 +61,10 @@ export class ChoosePeopleComponent implements OnInit {
         this.data = [];
         let authorId = this.authService.getUserId();
         result.users.forEach(user => {
-          if(user.id != authorId) {
+          if (user.id != authorId) {
+            if (user.imagePath) {
+              user.imagePath = ImageHelper.convertImagePathToUrl(user.imagePath);
+            }
             this.data.push(user);
           }
         });

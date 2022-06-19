@@ -50,7 +50,9 @@ public class UsersService : IUsersService
         page.PageSize = page.PageSize < 0 ? 0 : page.PageSize;
 
         var users = await queryUsers.Skip(page.PageIndex * page.PageSize)
-            .Take(page.PageSize).ToListAsync();
+            .Take(page.PageSize)
+            .Include(e => e.Image)
+            .ToListAsync();
 
         var totalPages = page.PageSize != 0 ? (int)Math.Ceiling((double)users.Count / page.PageSize) : 0;
 
@@ -69,7 +71,9 @@ public class UsersService : IUsersService
 
     public async Task<UserModel> GetAsync(int id)
     {
-        var user = await _userManager.FindByIdAsync(id.ToString());
+        var user = await Users.Where(e => e.Id == id)
+            .Include(e => e.Image)
+            .FirstOrDefaultAsync();
 
         return _mapper.Map<UserModel>(user);
     }
@@ -80,11 +84,15 @@ public class UsersService : IUsersService
 
         if (@params.UserName != null)
         {
-            user = await _userManager.FindByNameAsync(@params.UserName);
+            user = await Users.Where(e => e.UserName.Contains(@params.UserName.ToUpper()))
+                .Include(e => e.Image)
+                .FirstOrDefaultAsync();
         }
         else if (@params.Email != null)
         {
-            user = await _userManager.FindByEmailAsync(@params.Email);
+            user = await Users.Where(e => e.NormalizedEmail.Contains(@params.Email.ToUpper()))
+                .Include(e => e.Image)
+                .FirstOrDefaultAsync();
         }
 
         return _mapper.Map<UserModel>(user);
@@ -104,6 +112,7 @@ public class UsersService : IUsersService
         if (user.Image != null)
         {
             await _blobStorageGateway.DeleteImageAsync(user?.Image.ImagePath);
+            await _imageService.Delete(user.Image.Id);
         }
 
         var blobName = $"User{userId}_{DateTime.Now.ToFileTime()}_{image.FileName}";
@@ -157,13 +166,6 @@ public class UsersService : IUsersService
         await _userManager.RemoveFromRoleAsync(user, role);
 
         return await _userManager.GetRolesAsync(user);
-    }
-
-    public async Task<IReadOnlyCollection<UserModel>> GetAllAsync()
-    {
-        var users = await _userManager.Users.ToListAsync();
-
-        return _mapper.Map<IReadOnlyCollection<UserModel>>(users);
     }
 
     public async Task<UserModel> UpdateAsync(UserModel userModel)

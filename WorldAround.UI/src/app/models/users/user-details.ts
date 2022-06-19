@@ -4,4 +4,5 @@ export class UserDetailsModel {
   email: string;
   firstName: string;
   lastName: string;
+  imagePath: string;
 }

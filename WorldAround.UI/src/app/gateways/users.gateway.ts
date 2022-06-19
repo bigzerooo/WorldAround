@@ -17,6 +17,13 @@ export class UsersGateway {
 
   constructor(private http: HttpClient) { }
 
+  updateImage(userId: number, data: FormData) {
+
+    let path = 'UpdateImage/' + userId;
+
+    return this.http.put(UriHelper.createUri(this.basePath, path), data);
+  }
+
   update(user: UpdateUserModel): Observable<UserDetailsModel> {
     return this.http.put<UserDetailsModel>(this.basePath, user);
   }

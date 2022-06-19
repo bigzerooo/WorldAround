@@ -37,5 +37,6 @@ public class ImageService : IImageService
         var image = await _context.Images.AsNoTracking().FirstAsync(e => e.Id == id);
 
         _context.Images.Remove(image);
+        await _context.SaveChangesAsync();
     }
 }

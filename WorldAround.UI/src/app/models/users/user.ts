@@ -4,7 +4,8 @@ export class UserModel {
   public userName: string;
   public email: string;
   public firstName: string;
-  public lastName: string
+  public lastName: string;
+  public imagePath: string;
 
   constructor(init?: Partial<UserModel>) {
     Object.assign(this, init);

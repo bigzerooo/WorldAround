@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { UsersGateway } from 'src/app/gateways/users.gateway';
+import { ImageHelper } from 'src/app/helpers/image-helper';
 import { UpdateUserModel } from 'src/app/models/users/update-user';
 import { IValidationModel } from 'src/app/models/validation/interfaces/IValidationModel';
 import { AuthorizationService } from 'src/app/services/authorization.service';
@@ -16,6 +17,7 @@ import { CurrentPasswordValidator } from 'src/app/validation/user-validation';
 })
 export class UserSettingsComponent implements OnInit {
 
+  imageUrl: string | ArrayBuffer;
   pending: boolean = true;
   model: UpdateUserModel;
   formGroup: FormGroup;
@@ -70,9 +72,11 @@ export class UserSettingsComponent implements OnInit {
       newPassword: new PasswordAbstractControlValidation(this.formGroup.get('passwordsGroup').get('newPassword')),
       confirmPassword: new ConfirmPasswordAbstractControlValidation(this.formGroup.get('passwordsGroup').get('confirmPassword')),
     };
+
     this.usersGateway.getById(this.authService.getUserId())
       .subscribe(result => {
-        this.model = <UpdateUserModel>result;
+        this.model = <UpdateUserModel><unknown>result;
+        this.imageUrl = ImageHelper.convertImagePathToUrl(result.imagePath);
         Object.keys(this.model).forEach(key => {
           if (key !== 'id' && key !== 'imagePath') {
             this.formGroup.get(key).reset(this.model[key]);
@@ -96,6 +100,33 @@ export class UserSettingsComponent implements OnInit {
     .subscribe(() => {
       window.location.reload();
     })
+  }
+
+  onImageSelected(event: any) {
+    if (!event.target.files[0] || event.target.files.length === 0) {
+      return;
+    }
+
+    let image = <File>event.target.files[0];
+
+    if (image.type.match(/image\/*/) === null) {
+      return;
+    }
+
+    this.updateImage(image);
+
+    let reader = new FileReader();
+    reader.readAsDataURL(image);
+    reader.onload = () => {
+      this.imageUrl = reader.result;
+    };
+  }
+
+  updateImage(image: File) {
+
+    let data = new FormData();
+    data.append('image', image);
+    this.usersGateway.updateImage(this.authService.getUserId(), data).subscribe();
   }
 
   updateField(controlName): void {
