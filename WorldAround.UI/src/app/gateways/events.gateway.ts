@@ -32,8 +32,8 @@ export class EventsGateway {
     });
   }
 
-  createEvent(model: CreateEventModel): Observable<EventDetailsModel> {
-    return this.http.post<EventDetailsModel>(this.basePath, model);
+  createEvent(data: FormData): Observable<EventDetailsModel> {
+    return this.http.post<EventDetailsModel>(this.basePath, data);
   }
 
   update(model: UpdateEventModel): Observable<EventDetailsModel> {

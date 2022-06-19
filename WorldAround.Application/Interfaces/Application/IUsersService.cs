@@ -1,4 +1,5 @@
-﻿using WorldAround.Domain.Models.Base;
+﻿using Microsoft.AspNetCore.Http;
+using WorldAround.Domain.Models.Base;
 using WorldAround.Domain.Models.Paging;
 using WorldAround.Domain.Models.Users;
 
@@ -17,6 +18,8 @@ public interface IUsersService
     Task<UserModel> GetAsync(int id);
 
     Task<UserModel> GetAsync(GetUserParams @params);
+
+    Task<UserModel> UpdateUserImageAsync(int userId, IFormFile image);
 
     Task<bool> Exists(string login);
 

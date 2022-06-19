@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
-import { EventsGateway } from 'src/app/gateways/events.gateway';
 import { MapperHelper } from 'src/app/helpers/mapper';
 import { GetEventsOptions } from 'src/app/models/gateways/get-events-options';
 import { CardModel } from 'src/app/models/cards/card';
 import { GetEventsPageModel } from 'src/app/models/events/get-events-page';
 import { AuthorizationService } from 'src/app/services/authorization.service';
+import { EventsService } from 'src/app/services/events.service';
 
 @Component({
   selector: 'app-get-events',
@@ -24,7 +24,7 @@ export class GetEventsComponent implements OnInit {
     private readonly mapper: MapperHelper,
     private readonly router: Router,
     private readonly authService: AuthorizationService,
-    private readonly gateway: EventsGateway) {
+    private readonly eventsService: EventsService) {
   }
 
   ngOnInit(): void {
@@ -48,7 +48,7 @@ export class GetEventsComponent implements OnInit {
       pageSize: pageSize,
     });
 
-    this.gateway.getEvents(options)
+    this.eventsService.getEvents(options)
       .subscribe(result => {
         this.model = result;
         this.cardModels = [];

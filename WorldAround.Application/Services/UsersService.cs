@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WorldAround.Application.Interfaces.Application;
+using WorldAround.Application.Interfaces.Infrastructure;
 using WorldAround.Domain.Entities;
 using WorldAround.Domain.Models.Base;
 using WorldAround.Domain.Models.Paging;
@@ -13,14 +15,21 @@ public class UsersService : IUsersService
 {
     private readonly IMapper _mapper;
     private readonly UserManager<User> _userManager;
+    private readonly IImageService _imageService;
+    private readonly IBlobStorageGateway _blobStorageGateway;
+
     private IQueryable<User> Users => _userManager.Users.Where(u => u.IsActive == true);
 
     public UsersService(
         IMapper mapper
-        , UserManager<User> userManager)
+        , UserManager<User> userManager
+        , IBlobStorageGateway blobStorageGateway
+        , IImageService imageService)
     {
-        _userManager = userManager;
         _mapper = mapper;
+        _userManager = userManager;
+        _blobStorageGateway = blobStorageGateway;
+        _imageService = imageService;
     }
 
     public async Task<GetUsersPageModel> GetUsersAsync(GetDataParams @params, GetPageModel page)
@@ -77,6 +86,36 @@ public class UsersService : IUsersService
         {
             user = await _userManager.FindByEmailAsync(@params.Email);
         }
+
+        return _mapper.Map<UserModel>(user);
+    }
+
+    public async Task<UserModel> UpdateUserImageAsync(int userId, IFormFile image)
+    {
+        var user = _userManager.Users.Where(e => e.Id == userId)
+            .Include(e => e.Image)
+            .FirstOrDefault();
+
+        if (user == null)
+        {
+            throw new InvalidOperationException("The user not found");
+        }
+
+        if (user.Image != null)
+        {
+            await _blobStorageGateway.DeleteImageAsync(user?.Image.ImagePath);
+        }
+
+        var blobName = $"User{userId}_{DateTime.Now.ToFileTime()}_{image.FileName}";
+
+        user.Image = new Image
+        {
+            ImagePath = blobName
+        };
+
+        await _userManager.UpdateAsync(user);
+
+        await _blobStorageGateway.UploadImageAsync(blobName, image);
 
         return _mapper.Map<UserModel>(user);
     }

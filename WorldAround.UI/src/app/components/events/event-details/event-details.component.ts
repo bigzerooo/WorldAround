@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { EventsGateway } from 'src/app/gateways/events.gateway';
 import { EventDetailsModel } from 'src/app/models/events/get-event-details';
 import { ActivatedRoute, Router, } from '@angular/router';
 import { ParticipantRole } from 'src/app/enums/participant-role';
@@ -7,6 +6,7 @@ import { ParticipantModel } from 'src/app/models/users/participant';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 import { ChipItem } from 'src/app/models/events/chip-item';
 import { ItemType } from 'src/app/enums/item-type';
+import { EventsService } from 'src/app/services/events.service';
 
 @Component({
   selector: 'app-event-details',
@@ -26,7 +26,7 @@ export class EventDetailsComponent implements OnInit {
   constructor(
     private readonly router: Router,
     private readonly route: ActivatedRoute,
-    private readonly gateway: EventsGateway,
+    private readonly eventsService: EventsService,
     private readonly authService: AuthorizationService) {
   }
 
@@ -36,12 +36,9 @@ export class EventDetailsComponent implements OnInit {
       this.id = params['id'];
     });
 
-    this.gateway.getById(this.id)
+    this.eventsService.getById(this.id)
       .subscribe(result => {
         this.model = result;
-        this.model.createDate = new Date(Date.parse(this.model.createDate.toString()));
-        this.model.startDate = new Date(Date.parse(this.model.startDate?.toString()));
-        this.model.endDate = new Date(Date.parse(this.model.endDate?.toString()));
 
         for (let i = 0; i < this.model.participants.length; i++) {
           if (this.model.participants[i].participantRoleId === ParticipantRole.Owner) {

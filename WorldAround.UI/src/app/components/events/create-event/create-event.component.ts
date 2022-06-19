@@ -8,7 +8,7 @@ import { ChoosePlacesComponent } from 'src/app/components/shared/choose-places/c
 import { ChoosePeopleComponent } from 'src/app/components/shared/choose-people/choose-people.component';
 import { EventsService } from 'src/app/services/events.service';
 import { ChipItem } from 'src/app/models/events/chip-item';
-import { UserModel } from 'src/app/models/users/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-event',
@@ -24,6 +24,7 @@ export class CreateEventComponent implements OnInit {
   selectedUsers: ChipItem[] = [];
 
   constructor(
+    private readonly router: Router,
     private readonly eventsService: EventsService,
     private readonly formBuilder: FormBuilder,
     private readonly dialog: MatDialog) {
@@ -89,7 +90,10 @@ export class CreateEventComponent implements OnInit {
     this.selectedUsers.map(item => {
       this.model.participants.push(item.id);
     })
-    this.eventsService.createEvent(this.model);
+    this.eventsService.createEvent(this.model)
+      .subscribe(result => {
+        this.router.navigate([`events/details/${result.id}`]);
+      });
   }
 
   onImageSelected(event: any) {

@@ -61,6 +61,12 @@ namespace WorldAround.API.Controllers
             return Ok(await _usersService.UpdateAsync(user));
         }
 
+        [HttpPut("[action]/{id:int}")]
+        public async Task<IActionResult> UpdateImage(int id, [FromForm] IFormFile image)
+        {
+            return Ok(await _usersService.UpdateUserImageAsync(id, image));
+        }
+
         [HttpPut("[action]")]
         public async Task<IActionResult> UpdatePassword([FromBody] UpdateUserPasswordParameters @params)
         {

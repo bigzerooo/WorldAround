@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using WorldAround.Application.Helpers;
 using WorldAround.Application.Interfaces.Application;
 using WorldAround.Application.Interfaces.Infrastructure;
 using WorldAround.Domain.Entities;
@@ -90,14 +89,6 @@ public class EventsService : IEventsService
             }
         };
 
-        foreach (var eventModel in eventsPage.Events)
-        {
-            if (!string.IsNullOrEmpty(eventModel.ImagePath))
-            {
-                eventModel.ImagePath = ImageHelper.CreateUrl(eventModel.ImagePath);
-            }
-        }
-
         return eventsPage;
     }
 
@@ -113,25 +104,23 @@ public class EventsService : IEventsService
 
         var model = _mapper.Map<EventDetailsModel>(@event);
 
-        if (!string.IsNullOrEmpty(model.Image))
-        {
-            model.Image = ImageHelper.CreateUrl(model.Image);
-        }
-
         return model;
     }
 
-    public async Task UpdateImage(int eventId, IFormFile image)
+    public async Task UpdateImageAsync(int eventId, IFormFile image)
     {
-        var blobName = $"Event{eventId}_{DateTime.Now.ToFileTime()}_{image.FileName}";
-        await _blobStorageGateway.UploadImageAsync(blobName, image);
         var @event = await _context.Events.FirstOrDefaultAsync(e => e.Id.Equals(eventId));
 
-        if (@event != null)
+        if (@event == null)
         {
-            @event.ImagePath = blobName;
-            await _context.SaveChangesAsync();
+            throw new InvalidOperationException("Event not found to update its image");
         }
+
+        var blobName = $"Event{eventId}_{DateTime.Now.ToFileTime()}_{image.FileName}";
+        await _blobStorageGateway.UploadImageAsync(blobName, image);
+
+        @event.ImagePath = blobName;
+        await _context.SaveChangesAsync();
     }
 
     public async Task<EventDetailsModel> CreateEvent(CreateEventModel model)
@@ -192,6 +181,8 @@ public class EventsService : IEventsService
         }
 
         await _context.SaveChangesAsync();
+
+        await UpdateImageAsync(@event.Id, model.Image);
 
         return await GetEvent(@event.Id);
     }

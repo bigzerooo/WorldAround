@@ -11,7 +11,7 @@ public interface IEventsService
 
     public Task<EventDetailsModel> GetEvent(int id);
 
-    public Task UpdateImage(int eventId, IFormFile image);
+    public Task UpdateImageAsync(int eventId, IFormFile image);
 
     public Task<EventDetailsModel> CreateEvent(CreateEventModel model);
 

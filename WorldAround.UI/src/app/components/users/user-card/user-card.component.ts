@@ -17,9 +17,6 @@ export class UserCardComponent implements OnInit {
 
   get fullName(): string {
 
-    console.log("firstName", this.user.firstName);
-    console.log("lastName", this.user.lastName);
-
     let fullName = this.user.firstName ?? '';
     fullName += ' ' + (this.user.lastName ?? '');
     fullName = fullName.trim();

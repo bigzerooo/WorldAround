@@ -30,7 +30,7 @@ namespace WorldAround.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] CreateEventModel @event)
+        public async Task<IActionResult> Post([FromForm] CreateEventModel @event)
         {
             return Ok(await _service.CreateEvent(@event));
         }
@@ -38,7 +38,7 @@ namespace WorldAround.API.Controllers
         [HttpPut("[action]/{eventId:int}"), DisableRequestSizeLimit]
         public async Task<IActionResult> UpdateEventImage(int eventId, [FromForm] IFormFile image)
         {
-            await _service.UpdateImage(eventId, image);
+            await _service.UpdateImageAsync(eventId, image);
 
             return Ok();
         }

@@ -74,7 +74,7 @@ export class UserSettingsComponent implements OnInit {
       .subscribe(result => {
         this.model = <UpdateUserModel>result;
         Object.keys(this.model).forEach(key => {
-          if (key != 'id') {
+          if (key !== 'id' && key !== 'imagePath') {
             this.formGroup.get(key).reset(this.model[key]);
           }
         });
