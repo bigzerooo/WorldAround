@@ -6,7 +6,6 @@ using WorldAround.Application.Interfaces.Application;
 using WorldAround.Application.Interfaces.Infrastructure;
 using WorldAround.Domain.Entities;
 using WorldAround.Domain.Enums;
-using WorldAround.Domain.Models.Base;
 using WorldAround.Domain.Models.Events;
 using WorldAround.Domain.Models.Paging;
 
@@ -29,11 +28,77 @@ public class EventsService : IEventsService
         _blobStorageGateway = blobStorageGateway;
     }
 
-    public async Task<GetEventsPageModel> GetEvents(GetDataParams @params, GetPageModel page)
+    public async Task<GetEventsPageModel> GetEvents(GetEventsParams @params, GetPageModel page)
     {
         var queryEvents = Events;
 
-        return await GetEvents(queryEvents, @params, page, AccessibilityProfile.Public);
+        if (@params.UserId != null)
+        {
+            queryEvents = queryEvents.Where(e => e.Participants.Any(p => p.UserId.Equals(@params.UserId)));
+
+            if (@params.IsOwner != null)
+            {
+                if (@params.IsOwner == true)
+                {
+                    queryEvents = queryEvents.Where(e =>
+                        e.Participants.Any(p =>
+                            p.UserId.Equals(@params.UserId) &&
+                            p.ParticipantRoleId.Equals(ParticipantRoleProfile.Owner)));
+                }
+                else
+                {
+                    queryEvents = queryEvents.Where(e =>
+                        e.Participants.Any(p =>
+                            p.UserId.Equals(@params.UserId) &&
+                            p.ParticipantRoleId != ParticipantRoleProfile.Owner));
+                }
+            }
+        }
+
+        if (@params.Accessibility != null)
+        {
+            queryEvents = queryEvents.Where(e => @params.Accessibility.Equals(e.AccessibilityId));
+        }
+
+        if (!string.IsNullOrWhiteSpace(@params.SearchValue))
+        {
+            var value = @params.SearchValue.ToUpper();
+
+            queryEvents = queryEvents.Where(e =>
+                e.Title.ToUpper().Contains(value) || e.Description.ToUpper().Contains(value));
+        }
+
+        var count = await queryEvents.CountAsync();
+
+        page.PageIndex = page.PageIndex < 0 ? 0 : page.PageIndex;
+        page.PageSize = page.PageSize < 0 ? 0 : page.PageSize;
+
+        var totalPages = page.PageSize != 0 ? (int)Math.Ceiling((double)count / page.PageSize) : 0;
+
+        var events = await queryEvents.Skip(page.PageIndex * page.PageSize)
+            .Take(page.PageSize).ToListAsync();
+
+        var eventsPage = new GetEventsPageModel
+        {
+            PageInfo = new PagingModel
+            {
+                PageIndex = page.PageIndex,
+                PageSize = page.PageSize,
+                TotalPages = totalPages,
+                Length = count
+            },
+            Events = _mapper.Map<IEnumerable<GetEventModel>>(events)
+        };
+
+        foreach (var eventModel in eventsPage.Events)
+        {
+            if (!string.IsNullOrEmpty(eventModel.ImagePath))
+            {
+                eventModel.ImagePath = ImageHelper.CreateUrl(eventModel.ImagePath);
+            }
+        }
+
+        return eventsPage;
     }
 
     public async Task<EventDetailsModel> GetEvent(int id)
@@ -54,17 +119,6 @@ public class EventsService : IEventsService
         }
 
         return model;
-    }
-
-    public async Task<GetEventsPageModel> GetUserEvents(GetUserEventsParams @params, GetPageModel page)
-    {
-        var queryEvents = Events.Where(e => e.Participants.Any(p => p.UserId.Equals(@params.UserId)));
-
-        queryEvents = @params.IsOwner
-            ? queryEvents.Where(e => e.Participants.Any(p => p.ParticipantRoleId.Equals(ParticipantRoleProfile.Owner)))
-            : queryEvents.Where(e => e.Participants.Any(p => p.ParticipantRoleId != ParticipantRoleProfile.Owner));
-
-        return await GetEvents(queryEvents, @params, page);
     }
 
     public async Task UpdateImage(int eventId, IFormFile image)
@@ -170,57 +224,5 @@ public class EventsService : IEventsService
         await _context.SaveChangesAsync();
 
         return await GetEvent(@event.Id);
-    }
-
-    private async Task<GetEventsPageModel> GetEvents(
-        IQueryable<Event> queryEvents
-        , GetDataParams @params
-        , GetPageModel page
-        , AccessibilityProfile? profile = null)
-    {
-        if (profile != null)
-        {
-            queryEvents = queryEvents.Where(e => profile.Equals(e.AccessibilityId));
-        }
-
-        if (!string.IsNullOrWhiteSpace(@params.SearchValue))
-        {
-            var value = @params.SearchValue.ToUpper();
-
-            queryEvents = queryEvents.Where(e =>
-                e.Title.ToUpper().Contains(value) || e.Description.ToUpper().Contains(value));
-        }
-
-        var count = await queryEvents.CountAsync();
-
-        page.PageIndex = page.PageIndex < 0 ? 0 : page.PageIndex;
-        page.PageSize = page.PageSize < 0 ? 0 : page.PageSize;
-
-        var totalPages = page.PageSize != 0 ? (int)Math.Ceiling((double)count / page.PageSize) : 0;
-
-        var events = await queryEvents.Skip(page.PageIndex * page.PageSize)
-            .Take(page.PageSize).ToListAsync();
-
-        var eventsPage = new GetEventsPageModel
-        {
-            PageInfo = new PagingModel
-            {
-                PageIndex = page.PageIndex,
-                PageSize = page.PageSize,
-                TotalPages = totalPages,
-                Length = count
-            },
-            Events = _mapper.Map<IEnumerable<GetEventModel>>(events)
-        };
-
-        foreach (var eventModel in eventsPage.Events)
-        {
-            if (!string.IsNullOrEmpty(eventModel.ImagePath))
-            {
-                eventModel.ImagePath = ImageHelper.CreateUrl(eventModel.ImagePath);
-            }
-        }
-
-        return eventsPage;
     }
 }

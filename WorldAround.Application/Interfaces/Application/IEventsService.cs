@@ -7,11 +7,9 @@ namespace WorldAround.Application.Interfaces.Application;
 
 public interface IEventsService
 {
-    public Task<GetEventsPageModel> GetEvents(GetDataParams @params, GetPageModel page);
+    public Task<GetEventsPageModel> GetEvents(GetEventsParams @params, GetPageModel page);
 
     public Task<EventDetailsModel> GetEvent(int id);
-
-    public Task<GetEventsPageModel> GetUserEvents(GetUserEventsParams @params, GetPageModel page);
 
     public Task UpdateImage(int eventId, IFormFile image);
 

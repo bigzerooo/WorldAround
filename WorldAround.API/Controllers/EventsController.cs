@@ -17,14 +17,8 @@ namespace WorldAround.API.Controllers
             _service = service;
         }
 
-        [HttpGet("[action]")]
-        public async Task<IActionResult> GetUserEvents([FromQuery] GetUserEventsParams @params, [FromQuery] GetPageModel page)
-        {
-            return Ok(await _service.GetUserEvents(@params, page));
-        }
-
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] GetDataParams @params, [FromQuery] GetPageModel page)
+        public async Task<IActionResult> Get([FromQuery] GetEventsParams @params, [FromQuery] GetPageModel page)
         {
             return Ok(await _service.GetEvents(@params, page));
         }

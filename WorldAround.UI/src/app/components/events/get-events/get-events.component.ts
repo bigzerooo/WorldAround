@@ -3,6 +3,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { EventsGateway } from 'src/app/gateways/events.gateway';
 import { MapperHelper } from 'src/app/helpers/mapper';
+import { GetEventsOptions } from 'src/app/models/gateways/get-events-options';
 import { CardModel } from 'src/app/models/cards/card';
 import { GetEventsPageModel } from 'src/app/models/events/get-events-page';
 import { AuthorizationService } from 'src/app/services/authorization.service';
@@ -13,6 +14,7 @@ import { AuthorizationService } from 'src/app/services/authorization.service';
   styleUrls: ['./get-events.component.scss']
 })
 export class GetEventsComponent implements OnInit {
+
   isOwner: boolean = true;
   pageSizeOptions: number[] = [5, 10, 25, 100];
   model: GetEventsPageModel = new GetEventsPageModel();
@@ -39,14 +41,21 @@ export class GetEventsComponent implements OnInit {
 
   getEvents(pageIndex: number, pageSize: number, isOwner): void {
 
-    this.gateway.getUserEvents(this.authService.getUserId(), isOwner, pageIndex, pageSize)
-    .subscribe(result => {
-      this.model = result;
-      this.cardModels = [];
-      this.model.events.forEach(event => {
-      this.cardModels.push(this.mapper.mapGetEventToCard(event));
-      });
+    let options: GetEventsOptions = new GetEventsOptions({
+      userId: this.authService.getUserId(),
+      isOwner: isOwner,
+      pageIndex: pageIndex,
+      pageSize: pageSize,
     });
+
+    this.gateway.getEvents(options)
+      .subscribe(result => {
+        this.model = result;
+        this.cardModels = [];
+        this.model.events.forEach(event => {
+          this.cardModels.push(this.mapper.mapGetEventToCard(event));
+        });
+      });
   }
 
   onCardClick(id: number) {
