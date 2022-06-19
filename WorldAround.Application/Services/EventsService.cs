@@ -80,14 +80,14 @@ public class EventsService : IEventsService
 
         var eventsPage = new GetEventsPageModel
         {
+            Events = _mapper.Map<IEnumerable<GetEventModel>>(events),
             PageInfo = new PagingModel
             {
                 PageIndex = page.PageIndex,
                 PageSize = page.PageSize,
                 TotalPages = totalPages,
                 Length = count
-            },
-            Events = _mapper.Map<IEnumerable<GetEventModel>>(events)
+            }
         };
 
         foreach (var eventModel in eventsPage.Events)
@@ -150,6 +150,8 @@ public class EventsService : IEventsService
                 ParticipantRoleId = ParticipantRoleProfile.Owner
             }
         };
+
+        model.Participants.Remove(model.CreateUserId);
 
         if (model.Places != null || model.Participants != null)
         {

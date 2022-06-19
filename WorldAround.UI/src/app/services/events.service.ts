@@ -16,7 +16,6 @@ export class EventsService {
   }
 
   createEvent(model: CreateEventModel): void {
-    model.participants = model.participants?.map(participant => participant.id);
     model.createUserId = this.authService.getUserId();
     let formData = new FormData();
     let formDataName = 'image';

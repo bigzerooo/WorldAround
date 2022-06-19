@@ -60,9 +60,7 @@ export class ChoosePlacesComponent implements OnInit {
   }
 
   onConfirm(): void {
-
     this.matDialogRef.close(this.selectedItems);
-    this.onClear();
   }
 
   onClear(): void {

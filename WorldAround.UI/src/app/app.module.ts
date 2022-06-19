@@ -66,6 +66,8 @@ import { CreateAttractionComponent } from './components/attractions/create-attra
 import { EventDetailsComponent } from './components/events/event-details/event-details.component';
 import { CardComponent } from './components/shared/card/card.component';
 import { GetEventsComponent } from './components/events/get-events/get-events.component';
+import { UsersGridComponent } from './components/shared/users-grid/users-grid.component';
+import { UserCardComponent } from './components/users/user-card/user-card.component';
 
 @NgModule({
   declarations: [
@@ -98,7 +100,9 @@ import { GetEventsComponent } from './components/events/get-events/get-events.co
     CreateAttractionComponent,
     EventDetailsComponent,
     CardComponent,
-    GetEventsComponent
+    GetEventsComponent,
+    UsersGridComponent,
+    UserCardComponent
   ],
   imports: [
     BrowserModule,

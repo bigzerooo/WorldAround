@@ -70,7 +70,7 @@ export class UserSettingsComponent implements OnInit {
       newPassword: new PasswordAbstractControlValidation(this.formGroup.get('passwordsGroup').get('newPassword')),
       confirmPassword: new ConfirmPasswordAbstractControlValidation(this.formGroup.get('passwordsGroup').get('confirmPassword')),
     };
-    this.usersGateway.getUserById(this.authService.getUserId())
+    this.usersGateway.getById(this.authService.getUserId())
       .subscribe(result => {
         this.model = <UpdateUserModel>result;
         Object.keys(this.model).forEach(key => {

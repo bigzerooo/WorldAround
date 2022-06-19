@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WorldAround.Application.Interfaces.Application;
+using WorldAround.Domain.Models.Base;
+using WorldAround.Domain.Models.Paging;
 using WorldAround.Domain.Models.Users;
 
 namespace WorldAround.API.Controllers
@@ -25,9 +27,9 @@ namespace WorldAround.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromQuery] GetDataParams @params, [FromQuery] GetPageModel page)
         {
-            return Ok(await _usersService.GetAllAsync());
+            return Ok(await _usersService.GetUsersAsync(@params, page));
         }
 
         [Authorize]

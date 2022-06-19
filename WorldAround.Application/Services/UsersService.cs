@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WorldAround.Application.Interfaces.Application;
 using WorldAround.Domain.Entities;
-using WorldAround.Domain.Models;
+using WorldAround.Domain.Models.Base;
+using WorldAround.Domain.Models.Paging;
 using WorldAround.Domain.Models.Users;
 
 namespace WorldAround.Application.Services;
@@ -12,6 +13,7 @@ public class UsersService : IUsersService
 {
     private readonly IMapper _mapper;
     private readonly UserManager<User> _userManager;
+    private IQueryable<User> Users => _userManager.Users.Where(u => u.IsActive == true);
 
     public UsersService(
         IMapper mapper
@@ -19,6 +21,41 @@ public class UsersService : IUsersService
     {
         _userManager = userManager;
         _mapper = mapper;
+    }
+
+    public async Task<GetUsersPageModel> GetUsersAsync(GetDataParams @params, GetPageModel page)
+    {
+        var queryUsers = Users;
+
+        if (!string.IsNullOrWhiteSpace(@params.SearchValue))
+        {
+            var normalizedValue = @params.SearchValue.ToUpper();
+
+            queryUsers = queryUsers.Where(u =>
+                u.NormalizedUserName.Contains(normalizedValue) ||
+                (u.FirstName ?? "").ToUpper().Contains(normalizedValue) ||
+                (u.LastName ?? "").ToUpper().Contains(normalizedValue));
+        }
+
+        page.PageIndex = page.PageIndex < 0 ? 0 : page.PageIndex;
+        page.PageSize = page.PageSize < 0 ? 0 : page.PageSize;
+
+        var users = await queryUsers.Skip(page.PageIndex * page.PageSize)
+            .Take(page.PageSize).ToListAsync();
+
+        var totalPages = page.PageSize != 0 ? (int)Math.Ceiling((double)users.Count / page.PageSize) : 0;
+
+        return new GetUsersPageModel
+        {
+            Users = _mapper.Map<IEnumerable<UserModel>>(users),
+            PageInfo = new PagingModel
+            {
+                PageIndex = page.PageIndex,
+                PageSize = page.PageSize,
+                TotalPages = totalPages,
+                Length = users.Count
+            }
+        };
     }
 
     public async Task<UserModel> GetAsync(int id)

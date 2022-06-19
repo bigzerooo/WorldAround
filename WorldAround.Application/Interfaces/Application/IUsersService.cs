@@ -1,4 +1,5 @@
-﻿using WorldAround.Domain.Models;
+﻿using WorldAround.Domain.Models.Base;
+using WorldAround.Domain.Models.Paging;
 using WorldAround.Domain.Models.Users;
 
 namespace WorldAround.Application.Interfaces.Application;
@@ -11,7 +12,7 @@ public interface IUsersService
 
     Task<UserModel> DeactivateAsync(int id);
 
-    Task<IReadOnlyCollection<UserModel>> GetAllAsync();
+    Task<GetUsersPageModel> GetUsersAsync(GetDataParams @params, GetPageModel page);
 
     Task<UserModel> GetAsync(int id);
 

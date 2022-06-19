@@ -10,5 +10,5 @@ export class CreateEventModel {
   createUserId: number;
   image: File;
   places: ChipItem[] = [];
-  participants: ChipItem[] | number[];
+  participants: number[] = [];
 }

@@ -8,6 +8,7 @@ import { ChoosePlacesComponent } from 'src/app/components/shared/choose-places/c
 import { ChoosePeopleComponent } from 'src/app/components/shared/choose-people/choose-people.component';
 import { EventsService } from 'src/app/services/events.service';
 import { ChipItem } from 'src/app/models/events/chip-item';
+import { UserModel } from 'src/app/models/users/user';
 
 @Component({
   selector: 'app-create-event',
@@ -20,6 +21,7 @@ export class CreateEventComponent implements OnInit {
   model: CreateEventModel;
   form: FormGroup;
   accessibilityEnum: { key: string, value: number }[];
+  selectedUsers: ChipItem[] = [];
 
   constructor(
     private readonly eventsService: EventsService,
@@ -37,7 +39,6 @@ export class CreateEventComponent implements OnInit {
       'accessibility': [this.model.accessibility]
     });
     this.accessibilityEnum = this.enumToKeyValue(Accessibility);
-    this.openParticipantsChoosing();
   }
 
   openPlacesChoosing() {
@@ -59,15 +60,15 @@ export class CreateEventComponent implements OnInit {
     let dialogRef = this.dialog.open(ChoosePeopleComponent, {
       panelClass: 'search-modal',
       data: {
-        selectedItems: [...this.model.places]
+        selectedItems: [...this.selectedUsers]
       }
     });
 
-    // dialogRef.afterClosed().subscribe(result => {
-    //   if(result) {
-    //     this.model.places = result;
-    //   }
-    // });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.selectedUsers = result;
+      }
+    });
   }
 
   removePlace(chip: ChipItem): void {
@@ -76,9 +77,18 @@ export class CreateEventComponent implements OnInit {
     this.model.places.splice(index, 1);
   }
 
+  removeParticipant(participant: ChipItem): void {
+    let index = this.selectedUsers.findIndex((item) => item.id === participant.id);
+
+    this.selectedUsers.splice(index, 1);
+  }
+
   onSubmit(): void {
-    // this.submitButtonDisabled = true;
     FormGroupHelper.mapToModel(this.model, this.form);
+    this.model.participants = [];
+    this.selectedUsers.map(item => {
+      this.model.participants.push(item.id);
+    })
     this.eventsService.createEvent(this.model);
   }
 

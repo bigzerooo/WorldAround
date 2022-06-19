@@ -15,20 +15,20 @@
   </div>
 
   <div class="content" *ngIf="this.data && this.data.length > 0">
-    <!-- <div class="content-cards">
-      <div class="card-wrapper" *ngFor="let card of this.data" >
-        <mat-checkbox (change)="onItemSelect($event, card)" [checked]="isInItemList(card)"></mat-checkbox>
-        <app-card class="card" [model]="card" (click)="onCardClick(card)"></app-card>
+    <div class="content-cards">
+      <div class="card-wrapper" *ngFor="let item of this.data" >
+        <mat-checkbox (change)="onItemSelect($event, item)" [checked]="isInItemList(item)"></mat-checkbox>
+        <app-user-card [user]="item"></app-user-card>
       </div>
-    </div> -->
-    <!-- <mat-paginator
+    </div>
+    <mat-paginator
       [length]="this.pagingOptions?.length"
       [pageSize]="this.pagingOptions?.pageSize"
       [pageIndex]="this.pagingOptions?.pageIndex"
       [pageSizeOptions]="this.pageSizeOptions"
       (page)="onPaginationOptionsChange($event)"
       aria-label="Select page">
-    </mat-paginator> -->
+    </mat-paginator>
   </div>
 
 </div>

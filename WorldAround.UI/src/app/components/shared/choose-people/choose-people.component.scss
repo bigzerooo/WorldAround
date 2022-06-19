@@ -34,39 +34,44 @@
   }
 }
 
-// .content {
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   justify-content: center;
-//   flex-wrap: wrap;
-// }
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
 
-// .content-cards {
-//   margin-top: 50px;
-//   margin-left: 0px;
-//   margin-right: 0px;
-//   display: flex;
-//   justify-content: center;
-//   flex-wrap: wrap;
+.content-cards {
+  margin-top: 50px;
+  margin-left: 0px;
+  margin-right: 0px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 
-//   .card-wrapper {
-//     margin-bottom: 50px;
-//     transition: 0.2s;
-//     margin-left: 10px;
-//     margin-right: 10px;
+  .card-wrapper {
+    margin-bottom: 50px;
+    transition: 0.2s;
+    margin-left: 10px;
+    margin-right: 10px;
+    border: 0px;
 
-//     &>.mat-checkbox {
-//       margin-bottom: 5px;
-//     }
+    &>.mat-checkbox {
+      margin-bottom: 5px;
+    }
 
-//     &>.card:hover {
-//       filter: brightness(90%);
-//     }
-//   }
-// }
+    &:hover {
+      filter: brightness(90%);
+    }
 
-// mat-checkbox ::ng-deep .mat-checkbox-inner-container {
-//   width: 20px;
-//   height: 20px;
-// }
+    &>app-user-card:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+mat-checkbox ::ng-deep .mat-checkbox-inner-container {
+  width: 20px;
+  height: 20px;
+}
