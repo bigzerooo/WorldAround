@@ -26,9 +26,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.authorized()){
-      this.userName = this.authService.getUserName();
-    }
+
   }
 
   onToggleSidenav() {
@@ -47,7 +45,16 @@ export class HeaderComponent implements OnInit {
 
   authorized(): boolean {
 
-    return this.authService.isAuthorized();
+    if(!this.authService.isAuthorized()) {
+      this.userName = undefined;
+      return false;
+    }
+
+    if (!this.userName) {
+      this.userName = this.authService.getUserName();
+    }
+
+    return true;
   }
 
   openLogin(): void {
