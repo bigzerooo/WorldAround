@@ -182,7 +182,10 @@ public class EventsService : IEventsService
 
         await _context.SaveChangesAsync();
 
-        await UpdateImageAsync(@event.Id, model.Image);
+        if (model.Image != null)
+        {
+            await UpdateImageAsync(@event.Id, model.Image);
+        }
 
         return await GetEvent(@event.Id);
     }
