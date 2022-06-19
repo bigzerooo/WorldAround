@@ -68,6 +68,7 @@ import { CardComponent } from './components/shared/card/card.component';
 import { GetEventsComponent } from './components/events/get-events/get-events.component';
 import { UsersGridComponent } from './components/shared/users-grid/users-grid.component';
 import { UserCardComponent } from './components/users/user-card/user-card.component';
+import { AddImageComponent } from './components/shared/add-image/add-image.component';
 
 @NgModule({
   declarations: [
@@ -102,7 +103,8 @@ import { UserCardComponent } from './components/users/user-card/user-card.compon
     CardComponent,
     GetEventsComponent,
     UsersGridComponent,
-    UserCardComponent
+    UserCardComponent,
+    AddImageComponent
   ],
   imports: [
     BrowserModule,
