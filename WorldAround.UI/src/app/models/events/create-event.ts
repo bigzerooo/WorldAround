@@ -1,4 +1,5 @@
 import { Accessibility } from "src/app/enums/event-accessibility";
+import { ChipItem } from "./chip-item";
 
 export class CreateEventModel {
   title: string;
@@ -8,6 +9,6 @@ export class CreateEventModel {
   accessibility: Accessibility = 1;
   createUserId: number;
   image: File;
-  Trips: { id: number, name: string }[] | number[];
-  Participants: { id: number, userName: string }[] | number[];
+  places: ChipItem[] = [];
+  participants: ChipItem[] | number[];
 }

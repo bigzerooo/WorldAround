@@ -12,6 +12,6 @@ public class CreateEventModel
     public AccessibilityProfile Accessibility { get; set; }
     public int CreateUserId { get; set; }
 
-    public List<int> Trips { get; set; }
+    public List<PlaceItem> Places { get; set; }
     public List<int> Participants { get; set; }
 }

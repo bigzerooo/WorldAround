@@ -1,5 +1,5 @@
-import { GetTripsModel } from "../trips/getTripsModel";
 import { ParticipantModel } from "../users/participant";
+import { ChipItem } from "./chip-item";
 
 export class EventDetailsModel {
   id: number;
@@ -11,6 +11,6 @@ export class EventDetailsModel {
   startDate: Date;
   endDate?: Date;
 
-  trips: GetTripsModel;
+  places: ChipItem[];
   participants: ParticipantModel[];
 }

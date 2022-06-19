@@ -45,8 +45,8 @@
       </div>
       <mat-chip-list class="chip-list" #chipList aria-label="Fruit selection">
         <mat-chip-list>
-          <mat-chip *ngFor="let trip of this.model.trips.data" (click)="onTripClick(trip.id)" color="primary" selected>
-            {{trip.name}}
+          <mat-chip *ngFor="let place of this.model.places" (click)="onPlaceClick(place)" [color]=" place.placeType === 0 ? 'accent' : 'primary'" selected>
+            {{place.name}}
           </mat-chip>
         </mat-chip-list>
       </mat-chip-list>

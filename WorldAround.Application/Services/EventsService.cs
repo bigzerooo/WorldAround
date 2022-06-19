@@ -38,7 +38,9 @@ public class EventsService : IEventsService
 
     public async Task<EventDetailsModel> GetEvent(int id)
     {
-        var @event = await Events.Include(e => e.TripEventLinks)
+        var @event = await Events.Include(e => e.AttractionEventLinks)
+            .ThenInclude(e => e.Attraction)
+            .Include(e => e.TripEventLinks)
             .ThenInclude(e => e.Trip)
             .Include(e => e.Participants)
             .ThenInclude(e => e.User)
@@ -95,16 +97,31 @@ public class EventsService : IEventsService
             }
         };
 
-        if (model.Trips != null || model.Participants != null)
+        if (model.Places != null || model.Participants != null)
         {
             @event.TripEventLinks = new List<TripEventLink>();
-            model.Trips?.ForEach(id =>
+            @event.AttractionEventLinks = new List<AttractionEventLink>();
+
+            model.Places?.ForEach(item =>
             {
-                @event.TripEventLinks.Add(new TripEventLink
+                switch (item.PlaceType)
                 {
-                    EventId = @event.Id,
-                    TripId = id
-                });
+                    case PlaceType.Attraction:
+                        @event.AttractionEventLinks.Add(new AttractionEventLink
+                        {
+                            EventId = @event.Id,
+                            AttractionId = item.Id
+                        });
+                        break;
+
+                    case PlaceType.Trip:
+                        @event.TripEventLinks.Add(new TripEventLink
+                        {
+                            EventId = @event.Id,
+                            TripId = item.Id
+                        });
+                        break;
+                }
             });
 
             model.Participants?.ForEach(id =>

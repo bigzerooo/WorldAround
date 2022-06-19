@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorldAround.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using WorldAround.Infrastructure.Data;
 namespace WorldAround.Infrastructure.Migrations
 {
     [DbContext(typeof(WorldAroundDbContext))]
-    partial class WorldAroundDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220618171755_CREATE_many_to_many_attraction_event")]
+    partial class CREATE_many_to_many_attraction_event
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

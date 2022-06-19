@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UsersGateway } from 'src/app/gateways/users.gateway';
 
 @Component({
   selector: 'app-choose-people',
@@ -7,9 +8,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChoosePeopleComponent implements OnInit {
 
-  constructor() { }
+  searchValue: string = null;
+  data: any[];
+
+  constructor(private readonly usersGateway: UsersGateway) { }
 
   ngOnInit(): void {
   }
 
+  search(): void {
+    this.getData();
+  }
+
+  getData() {
+
+  }
+
+  onConfirm(): void {
+
+  }
+
+  onClear(): void {
+
+  }
 }

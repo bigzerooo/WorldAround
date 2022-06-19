@@ -20,7 +20,6 @@ export class CreateEventComponent implements OnInit {
   model: CreateEventModel;
   form: FormGroup;
   accessibilityEnum: { key: string, value: number }[];
-  chipPlaces: ChipItem[] = [];
 
   constructor(
     private readonly eventsService: EventsService,
@@ -38,32 +37,43 @@ export class CreateEventComponent implements OnInit {
       'accessibility': [this.model.accessibility]
     });
     this.accessibilityEnum = this.enumToKeyValue(Accessibility);
-    this.openPlacesChoosing();
+    this.openParticipantsChoosing();
   }
 
   openPlacesChoosing() {
     let dialogRef = this.dialog.open(ChoosePlacesComponent, {
       panelClass: 'search-modal',
       data: {
-        selectedItems: [...this.chipPlaces]
+        selectedItems: [...this.model.places]
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if(result) {
-        this.chipPlaces = result;
+        this.model.places = result;
       }
     });
   }
 
   openParticipantsChoosing() {
-    this.dialog.open(ChoosePeopleComponent);
+    let dialogRef = this.dialog.open(ChoosePeopleComponent, {
+      panelClass: 'search-modal',
+      data: {
+        selectedItems: [...this.model.places]
+      }
+    });
+
+    // dialogRef.afterClosed().subscribe(result => {
+    //   if(result) {
+    //     this.model.places = result;
+    //   }
+    // });
   }
 
   removePlace(chip: ChipItem): void {
-    let index = this.chipPlaces.findIndex((item) => item.id === chip.id && item.itemType === chip.itemType);
+    let index = this.model.places.findIndex((item) => item.id === chip.id && item.placeType === chip.placeType);
 
-    this.chipPlaces.splice(index, 1);
+    this.model.places.splice(index, 1);
   }
 
   onSubmit(): void {

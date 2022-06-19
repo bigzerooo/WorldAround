@@ -74,7 +74,7 @@ export class ChoosePlacesComponent implements OnInit {
   }
 
   isInItemList(item: CardModel): boolean {
-    let index = this.selectedItems.findIndex((e) => e.id === item.id && e.itemType === this.selectedSearchType)
+    let index = this.selectedItems.findIndex((e) => e.id === item.id && e.placeType === this.selectedSearchType)
 
     if (index !== -1) {
       return true;
@@ -89,11 +89,11 @@ export class ChoosePlacesComponent implements OnInit {
       this.selectedItems.push({
         id: item.id,
         name: item.title,
-        itemType: this.selectedSearchType
+        placeType: this.selectedSearchType
       });
     }
     else {
-      let index = this.selectedItems.findIndex((e) => e.id === item.id && e.itemType === this.selectedSearchType);
+      let index = this.selectedItems.findIndex((e) => e.id === item.id && e.placeType === this.selectedSearchType);
 
       if (this.isInItemList(item)) {
         this.selectedItems.splice(index, 1);

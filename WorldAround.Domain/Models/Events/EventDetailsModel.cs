@@ -13,6 +13,6 @@ public class EventDetailsModel
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
 
-    public GetTripsModel Trips { get; set; }
+    public List<PlaceItem> Places { get; set; }
     public List<ParticipantModel> Participants { get; set; }
 }

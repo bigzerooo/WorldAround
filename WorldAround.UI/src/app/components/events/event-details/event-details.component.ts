@@ -5,7 +5,8 @@ import { ActivatedRoute, Router, } from '@angular/router';
 import { ParticipantRole } from 'src/app/enums/participant-role';
 import { ParticipantModel } from 'src/app/models/users/participant';
 import { AuthorizationService } from 'src/app/services/authorization.service';
-import { ImageService } from 'src/app/services/image.service';
+import { ChipItem } from 'src/app/models/events/chip-item';
+import { ItemType } from 'src/app/enums/item-type';
 
 @Component({
   selector: 'app-event-details',
@@ -73,9 +74,16 @@ export class EventDetailsComponent implements OnInit {
     // this.router.navigate(['events/', { id: 7 }]);
   }
 
-  onTripClick(id: number) {
+  onPlaceClick(place: ChipItem) {
+
+    let link = 'trip/' + place.id;
+
+    if (place.placeType === ItemType.attraction) {
+      link = 'attractions/' + place.id;
+    }
+
     this.router.navigate([])
-      .then(() => { window.open(`trip/${id}`), '_blank' });
+      .then(() => { window.open(link), '_blank' });
   }
 
   private setAuthor(): void {
