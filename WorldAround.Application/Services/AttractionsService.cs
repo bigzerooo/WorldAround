@@ -63,7 +63,7 @@ public class AttractionsService : IAttractionsService
                     AuthorName = y.Author.FirstName + " " + y.Author.LastName,
                     CommentsCount = y.Comments.Count,
                     ImagePath = y.Images.Any()
-                        ? y.Images.First().FilePath
+                        ? y.Images.First().ImagePath
                         : string.Empty,
                     Rating = y.Ratings.Any()
                         ? y.Ratings.Select(y => y.Value).Average()
@@ -94,7 +94,7 @@ public class AttractionsService : IAttractionsService
             {
                 new()
                 {
-                    FilePath = "images/" + blobName
+                    ImagePath = "images/" + blobName
                 }
             }
         };

@@ -17,7 +17,7 @@ public class AttractionsMappingProfile : Profile
     {
         CreateMap<Attraction, GetAttractionModel>()
             .ForMember(d => d.Comments, o => o.MapFrom(s => s.Comments))
-            .ForMember(d => d.ImagePath, o => o.MapFrom(s => s.Images.FirstOrDefault().FilePath));
+            .ForMember(d => d.ImagePath, o => o.MapFrom(s => s.Images.FirstOrDefault().ImagePath));
 
         CreateMap<Attraction, PlaceItem>()
             .ForMember(dest => dest.PlaceType, opts => opts.MapFrom((src) => PlaceType.Attraction));
