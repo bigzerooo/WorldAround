@@ -1,4 +1,5 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { ImageHelper } from 'src/app/helpers/image-helper';
 import { CardModel } from 'src/app/models/cards/card';
 
 @Component({
@@ -11,7 +12,6 @@ export class CardComponent implements OnInit {
   @Input() model: CardModel;
 
   readonly noImageUrl: string = 'https://demofree.sirv.com/nope-not-here.jpg';
-  private readonly noAvatarImageUrl = 'assets/images/userPlaceholder.png';
 
   @ViewChild("avatar", { static: true })
   private avatarRef: ElementRef<HTMLDivElement>;
@@ -20,7 +20,7 @@ export class CardComponent implements OnInit {
 
   ngOnInit(): void {
     this.model.description = this.cropText(this.model.description, 100);
-    this.avatarRef.nativeElement.style.setProperty('background-image', `url(${this.model.avatarPath ?? this.noAvatarImageUrl})`);
+    this.avatarRef.nativeElement.style.setProperty('background-image', `url(${this.model.avatarPath ?? ImageHelper.noUserImage})`);
   }
 
   private cropText(text: string, maxSymbols: number) {

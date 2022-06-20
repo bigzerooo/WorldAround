@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ImageHelper } from 'src/app/helpers/image-helper';
 import { UserModel } from 'src/app/models/users/user';
 
 @Component({
@@ -8,14 +9,13 @@ import { UserModel } from 'src/app/models/users/user';
 })
 export class UserCardComponent implements OnInit {
 
-  private readonly noImage: string = 'assets/images/userPlaceholder.png';
   imageUrl: string;
   @Input() user: UserModel;
 
   constructor() { }
 
   ngOnInit(): void {
-    this.imageUrl = `url(${this.user.imagePath ?? this.noImage})`;
+    this.imageUrl = `url(${this.user.imagePath ?? ImageHelper.noUserImage})`;
   }
 
   get fullName(): string {
