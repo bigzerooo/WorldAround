@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using WorldAround.Domain.Models.Base;
 using WorldAround.Domain.Models.Events;
 using WorldAround.Domain.Models.Paging;
 
@@ -7,17 +6,15 @@ namespace WorldAround.Application.Interfaces.Application;
 
 public interface IEventsService
 {
-    public Task<GetEventsPageModel> GetEvents(GetDataParams @params, GetPageModel page);
+    Task<GetEventsPageModel> GetEvents(GetEventsParams @params, GetPageModel page);
 
-    public Task<EventDetailsModel> GetEvent(int id);
+    Task<EventDetailsModel> GetEvent(int id);
 
-    public Task<GetEventsPageModel> GetUserEvents(GetUserEventsParams @params, GetPageModel page);
+    Task UpdateImageAsync(int eventId, IFormFile image);
 
-    public Task UpdateImage(int eventId, IFormFile image);
+    Task<EventDetailsModel> CreateEvent(CreateEventModel model);
 
-    public Task<EventDetailsModel> CreateEvent(CreateEventModel model);
+    Task DeleteEvent(int id);
 
-    public Task DeleteEvent(int id);
-
-    public Task<EventDetailsModel> UpdateEvent(UpdateEventModel model);
+    Task<EventDetailsModel> UpdateEvent(UpdateEventModel model);
 }

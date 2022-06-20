@@ -37,38 +37,15 @@ public class EventMappingProfile : Profile
                 opts.MapFrom(src => src.Accessibility);
             });
 
-        CreateMap<Event, GetEventModel>();
+        CreateMap<Event, GetEventModel>()
+            .ForMember(dest => dest.Author, opts => opts.Ignore());
         CreateMap<Event, EventDetailsModel>()
-            .ForMember(dest => dest.Trips, opts => opts.ConvertUsing(new GetEventModelValueFormatter(), src => src))
+            .ForMember(dest => dest.Image, opts => opts.MapFrom(src => src.ImagePath))
+            .ForMember(dest => dest.Places, opts => opts.ConvertUsing(new GetEventModelValueFormatter(), src => src))
             .ForMember(dest => dest.Participants, opts => opts.MapFrom(src => src.Participants));
     }
 
-    // public class ParticipantUserModelValueFormatter : IValueConverter<List<Participant>, List<UserModel>>
-    // {
-    //     private readonly IMapper _mapper;
-    //
-    //     public ParticipantUserModelValueFormatter()
-    //     {
-    //         _mapper = new MapperConfiguration(cfg =>
-    //         {
-    //             cfg.AddProfile<UserMappingProfile>();
-    //         }).CreateMapper();
-    //     }
-    //
-    //     public List<UserModel> Convert(List<Participant> source, ResolutionContext context)
-    //     {
-    //         var result = new List<UserModel>();
-    //
-    //         source.ForEach(participant =>
-    //         {
-    //             result.Add(_mapper.Map<UserModel>(participant.User));
-    //         });
-    //
-    //         return result;
-    //     }
-    // }
-
-    public class GetEventModelValueFormatter : IValueConverter<Event, GetTripsModel>
+    public class GetEventModelValueFormatter : IValueConverter<Event, List<PlaceItem>>
     {
         private readonly IMapper _mapper;
 
@@ -77,23 +54,25 @@ public class EventMappingProfile : Profile
             _mapper = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile<TripsMappingProfile>();
+                cfg.AddProfile<AttractionsMappingProfile>();
             }).CreateMapper();
         }
 
-        public GetTripsModel Convert(Event source, ResolutionContext context)
+        public List<PlaceItem> Convert(Event source, ResolutionContext context)
         {
-            var model = new GetTripsModel();
-            var trips = new List<Trip>();
+            var placeItems = new List<PlaceItem>();
 
             source.TripEventLinks.ForEach(link =>
             {
-                trips.Add(link?.Trip);
+                placeItems.Add(_mapper.Map<PlaceItem>(link.Trip));
             });
 
-            model.Data = _mapper.Map<IReadOnlyCollection<TripModel>>(trips);
-            model.Length = model.Data.Count;
+            source.AttractionEventLinks.ForEach(link =>
+            {
+                placeItems.Add(_mapper.Map<PlaceItem>(link.Attraction));
+            });
 
-            return model;
+            return placeItems;
         }
     }
 

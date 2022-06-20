@@ -7,7 +7,9 @@ public class User : IdentityUser<int>
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public bool? IsActive { get; set; }
+    public int? ImageId { get; set; }
 
+    public Image Image { get; set; }
     public List<Comment> CreatedComments { get; set; }
     public List<Comment> Comments { get; set; }
     public List<Rating> CreatedRatings { get; set; }

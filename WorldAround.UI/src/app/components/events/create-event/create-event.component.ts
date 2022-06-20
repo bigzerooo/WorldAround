@@ -7,6 +7,8 @@ import { CreateEventModel } from 'src/app/models/events/create-event';
 import { ChoosePlacesComponent } from 'src/app/components/shared/choose-places/choose-places.component';
 import { ChoosePeopleComponent } from 'src/app/components/shared/choose-people/choose-people.component';
 import { EventsService } from 'src/app/services/events.service';
+import { ChipItem } from 'src/app/models/events/chip-item';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-event',
@@ -14,12 +16,15 @@ import { EventsService } from 'src/app/services/events.service';
   styleUrls: ['./create-event.component.scss']
 })
 export class CreateEventComponent implements OnInit {
+  submitButtonDisabled: boolean = false;
   imageUrl: string | ArrayBuffer;
   model: CreateEventModel;
   form: FormGroup;
   accessibilityEnum: { key: string, value: number }[];
+  selectedUsers: ChipItem[] = [];
 
   constructor(
+    private readonly router: Router,
     private readonly eventsService: EventsService,
     private readonly formBuilder: FormBuilder,
     private readonly dialog: MatDialog) {
@@ -35,24 +40,60 @@ export class CreateEventComponent implements OnInit {
       'accessibility': [this.model.accessibility]
     });
     this.accessibilityEnum = this.enumToKeyValue(Accessibility);
-    console.log(!!this.model.image);
-    // this.openPlacesChoosing();
   }
 
   openPlacesChoosing() {
-    this.dialog.open(ChoosePlacesComponent, {
-      panelClass: 'search-modal'
+    let dialogRef = this.dialog.open(ChoosePlacesComponent, {
+      panelClass: 'search-modal',
+      data: {
+        selectedItems: [...this.model.places]
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.model.places = result;
+      }
     });
   }
 
   openParticipantsChoosing() {
-    this.dialog.open(ChoosePeopleComponent);
+    let dialogRef = this.dialog.open(ChoosePeopleComponent, {
+      panelClass: 'search-modal',
+      data: {
+        selectedItems: [...this.selectedUsers]
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.selectedUsers = result;
+      }
+    });
+  }
+
+  removePlace(chip: ChipItem): void {
+    let index = this.model.places.findIndex((item) => item.id === chip.id && item.placeType === chip.placeType);
+
+    this.model.places.splice(index, 1);
+  }
+
+  removeParticipant(participant: ChipItem): void {
+    let index = this.selectedUsers.findIndex((item) => item.id === participant.id);
+
+    this.selectedUsers.splice(index, 1);
   }
 
   onSubmit(): void {
     FormGroupHelper.mapToModel(this.model, this.form);
-    // console.log(this.model);
-    this.eventsService.createEvent(this.model);
+    this.model.participants = [];
+    this.selectedUsers.map(item => {
+      this.model.participants.push(item.id);
+    })
+    this.eventsService.createEvent(this.model)
+      .subscribe(result => {
+        this.router.navigate([`events/details/${result.id}`]);
+      });
   }
 
   onImageSelected(event: any) {
@@ -98,8 +139,6 @@ export class CreateEventComponent implements OnInit {
 
       pairs.push(pair);
     }
-
-    console.log(pairs)
 
     return pairs;
   }

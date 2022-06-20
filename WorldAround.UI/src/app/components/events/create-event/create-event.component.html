@@ -40,20 +40,10 @@
         <mat-datepicker #endDatePicker></mat-datepicker>
       </mat-form-field>
     </div>
-    <div class="add-photo">
-      <div *ngIf="!this.imageUrl; else elseBlock" class="add-photo-plus" (click)="fileInput.click()">
-        <div></div>
-        <div></div>
-      </div>
-      <ng-template #elseBlock>
-        <div class="add-photo-plus" (click)="fileInput.click()">
-          <img *ngIf="this.imageUrl" [src]="this.imageUrl" alt="" style="height: inherit; width: max-content;">
-        </div>
-      </ng-template>
-      <span class="add-photo-span">Choose image</span>
-      <input #fileInput type="file" accept="image/png, image/jpeg, image/svg+xml" (change)="onImageSelected($event)"
-        style="display:none;" />
-    </div>
+    <app-add-image
+      [imageUrl]="this.imageUrl"
+      (selectedImage)="onImageSelected($event)">
+    </app-add-image>
   </div>
   <div class="chip">
     <div class="chip-title" (click)="openPlacesChoosing()">
@@ -62,9 +52,10 @@
     <mat-form-field>
       <mat-chip-list #chipList aria-label="Fruit selection">
         <mat-chip-list aria-label="Fish selection">
-          <mat-chip color="primary" selected>
-            Primary place
-            <button matChipRemove>
+          <mat-chip *ngFor="let chipPlace of this.model.places"
+            [color]="this.chipPlace.placeType === 0 ? 'accent' : 'primary'" selected>
+            {{this.chipPlace.name}}
+            <button matChipRemove (click)="removePlace(this.chipPlace)">
               <mat-icon>cancel</mat-icon>
             </button>
           </mat-chip>
@@ -80,9 +71,9 @@
     <mat-form-field>
       <mat-chip-list #chipList aria-label="Fruit selection">
         <mat-chip-list aria-label="Fish selection">
-          <mat-chip color="accent" selected>
-            Accent person
-            <button matChipRemove>
+          <mat-chip *ngFor="let participant of this.selectedUsers" color="warn" selected>
+            {{participant.name}}
+            <button matChipRemove (click)="removeParticipant(participant)">
               <mat-icon>cancel</mat-icon>
             </button>
           </mat-chip>
@@ -91,7 +82,7 @@
     </mat-form-field>
   </div>
   <div class="finish-adding">
-    <button type="submit" mat-raised-button>
+    <button type="submit" mat-raised-button [disabled]="this.submitButtonDisabled">
       Complete
     </button>
   </div>

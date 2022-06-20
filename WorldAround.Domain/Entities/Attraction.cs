@@ -12,4 +12,5 @@ public class Attraction : Point
     public List<Rating> Ratings { get; set; }
     public List<Pin> Pins { get; set; }
     public List<Image> Images { get; set; }
+    public List<AttractionEventLink> AttractionEventLinks { get; set; }
 }

@@ -27,4 +27,5 @@ public class Event
     public List<TripEventLink> TripEventLinks { get; set; }
     public List<Comment> Comments { get; set; }
     public List<Rating> Ratings { get; set; }
+    public List<AttractionEventLink> AttractionEventLinks { get; set; }
 }

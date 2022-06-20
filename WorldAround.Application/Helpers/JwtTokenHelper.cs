@@ -23,8 +23,8 @@ public class JwtTokenHelper : IJwtTokenHelper
         {
             new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             new("id", user.Id.ToString()),
-            new(ClaimTypes.Name, user.UserName),
-            new(ClaimTypes.Email, user.Email),
+            new(JwtRegisteredClaimNames.UniqueName, user.UserName),
+            new(JwtRegisteredClaimNames.Email, user.Email),
         };
 
         claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));

@@ -19,6 +19,7 @@ public static class DependencyInjection
         services.AddScoped<ITripsService, TripsService>();
         services.AddScoped<IPinsService, PinsService>();
 
+        services.AddScoped<IImageService, ImageService>();
         services.AddScoped<IEventsService, EventsService>();
         services.AddScoped<IUsersService, UsersService>();
         services.AddScoped<IAuthenticationService, AuthenticationService>();

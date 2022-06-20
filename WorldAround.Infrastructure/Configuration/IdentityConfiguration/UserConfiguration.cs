@@ -21,5 +21,11 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
         entity.Property(x => x.IsActive)
             .HasDefaultValue(true);
+
+        entity.HasOne(e => e.Image)
+            .WithMany(e => e.Users)
+            .HasForeignKey(e => e.ImageId)
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.SetNull);
     }
 }

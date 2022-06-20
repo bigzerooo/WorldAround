@@ -13,6 +13,8 @@ public class UserMappingProfile : Profile
         CreateMap<LoginModel, User>();
         CreateMap<UserModel, User>()
             .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
-        CreateMap<User, UserModel>();
+        CreateMap<User, UserModel>()
+            .ForMember(dest => dest.ImagePath,
+                opts => opts.MapFrom(src => src.Image != null ? src.Image.ImagePath : null));
     }
 }

@@ -24,6 +24,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
+import { MatSelectModule } from '@angular/material/select';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { DatePipe } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -60,6 +63,12 @@ import { AttractionDetailsComponent } from './components/attractions/attraction-
 import { MyAttractionsComponent } from './components/attractions/my-attractions/my-attractions.component';
 import { AttractionsGridComponent } from './components/shared/attractions-grid/attractions-grid.component';
 import { CreateAttractionComponent } from './components/attractions/create-attraction/create-attraction.component';
+import { EventDetailsComponent } from './components/events/event-details/event-details.component';
+import { CardComponent } from './components/shared/card/card.component';
+import { GetEventsComponent } from './components/events/get-events/get-events.component';
+import { UsersGridComponent } from './components/shared/users-grid/users-grid.component';
+import { UserCardComponent } from './components/users/user-card/user-card.component';
+import { AddImageComponent } from './components/shared/add-image/add-image.component';
 
 @NgModule({
   declarations: [
@@ -89,7 +98,13 @@ import { CreateAttractionComponent } from './components/attractions/create-attra
     AttractionDetailsComponent,
     MyAttractionsComponent,
     AttractionsGridComponent,
-    CreateAttractionComponent
+    CreateAttractionComponent,
+    EventDetailsComponent,
+    CardComponent,
+    GetEventsComponent,
+    UsersGridComponent,
+    UserCardComponent,
+    AddImageComponent
   ],
   imports: [
     BrowserModule,
@@ -117,7 +132,9 @@ import { CreateAttractionComponent } from './components/attractions/create-attra
     MatSidenavModule,
     MatToolbarModule,
     MatCardModule,
-    MatListModule
+    MatListModule,
+    MatSelectModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true } },
@@ -129,7 +146,8 @@ import { CreateAttractionComponent } from './components/attractions/create-attra
     JwtHelperService,
     AuthorizationService,
     UniqueLoginValidator,
-    EventsService
+    EventsService,
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

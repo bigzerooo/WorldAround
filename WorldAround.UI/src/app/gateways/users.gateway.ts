@@ -4,6 +4,7 @@ import { CookieService } from 'ngx-cookie';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { UriHelper } from '../helpers/uri-helper';
+import { GetUsersPageModel } from '../models/users/get-users-page';
 import { UpdateUserModel } from '../models/users/update-user';
 import { UserDetailsModel } from '../models/users/user-details';
 
@@ -16,13 +17,30 @@ export class UsersGateway {
 
   constructor(private http: HttpClient) { }
 
+  updateImage(userId: number, data: FormData) {
+
+    let path = 'UpdateImage/' + userId;
+
+    return this.http.put(UriHelper.createUri(this.basePath, path), data);
+  }
+
   update(user: UpdateUserModel): Observable<UserDetailsModel> {
     return this.http.put<UserDetailsModel>(this.basePath, user);
   }
 
-  get(userName: string) {
+  get(searchValue: string, pageIndex: number, pageSize: number): Observable<GetUsersPageModel> {
+    return this.http.get<GetUsersPageModel>(this.basePath, {
+      params: {
+        searchValue: searchValue ?? '',
+        pageIndex: pageIndex,
+        pageSize: pageSize,
+      }
+    });
+  }
 
-    let query = '?UserName=' + userName;
+  getUser(userName: string) {
+
+    let query = 'GetUser?UserName=' + userName;
 
     return this.http.get(UriHelper.createUri(this.basePath, query));
   }
@@ -44,7 +62,7 @@ export class UsersGateway {
     });
   }
 
-  getUserById(id: number): Observable<UserDetailsModel> {
+  getById(id: number): Observable<UserDetailsModel> {
     return this.http.get<UserDetailsModel>(UriHelper.createUri(this.basePath, id.toString()));
   }
 

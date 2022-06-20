@@ -1,4 +1,6 @@
-﻿namespace WorldAround.Domain.Models.Events;
+﻿using WorldAround.Domain.Models.Users;
+
+namespace WorldAround.Domain.Models.Events;
 
 public class GetEventModel
 {
@@ -8,4 +10,7 @@ public class GetEventModel
     public DateTime CreateDate { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
+    public string ImagePath { get; set; }
+
+    public UserModel Author { get; set; }
 }

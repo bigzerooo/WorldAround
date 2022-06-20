@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthorizationService } from './services/authorization.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+
+  constructor(public authService: AuthorizationService) {}
+
   title = 'world-around';
 }

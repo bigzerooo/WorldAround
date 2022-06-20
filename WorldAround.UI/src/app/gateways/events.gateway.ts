@@ -7,6 +7,7 @@ import { CreateEventModel } from '../models/events/create-event';
 import { EventDetailsModel } from '../models/events/get-event-details';
 import { GetEventsPageModel } from '../models/events/get-events-page';
 import { UpdateEventModel } from '../models/events/update-event';
+import { GetEventsOptions } from '../models/gateways/get-events-options';
 
 @Injectable({
   providedIn: 'root'
@@ -22,18 +23,17 @@ export class EventsGateway {
     return this.http.get<EventDetailsModel>(UriHelper.createUri(this.basePath, id.toString()));
   }
 
-  getEvents(searchValue: string, pageIndex: number, pageSize: number): Observable<GetEventsPageModel> {
+  getEvents(options: GetEventsOptions): Observable<GetEventsPageModel> {
+
     return this.http.get<GetEventsPageModel>(UriHelper.createUri(this.basePath), {
       params: {
-        searchValue: searchValue,
-        pageIndex: pageIndex,
-        pageSize: pageSize
+        ...options
       }
     });
   }
 
-  createEvent(model: CreateEventModel): Observable<EventDetailsModel> {
-    return this.http.post<EventDetailsModel>(this.basePath, model);
+  createEvent(data: FormData): Observable<EventDetailsModel> {
+    return this.http.post<EventDetailsModel>(this.basePath, data);
   }
 
   update(model: UpdateEventModel): Observable<EventDetailsModel> {

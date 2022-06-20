@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WorldAround.Application.Interfaces.Application;
-using WorldAround.Domain.Models.Base;
 using WorldAround.Domain.Models.Events;
 using WorldAround.Domain.Models.Paging;
 
@@ -17,23 +16,20 @@ namespace WorldAround.API.Controllers
             _service = service;
         }
 
-        // GET: api/<EventsController>
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] GetDataParams @params, [FromQuery] GetPageModel page)
+        public async Task<IActionResult> Get([FromQuery] GetEventsParams @params, [FromQuery] GetPageModel page)
         {
             return Ok(await _service.GetEvents(@params, page));
         }
 
-        // GET api/<EventsController>/5
         [HttpGet("{id:int}")]
         public async Task<IActionResult> Get(int id)
         {
             return Ok(await _service.GetEvent(id));
         }
 
-        // POST api/<EventsController>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] CreateEventModel @event)
+        public async Task<IActionResult> Post([FromForm] CreateEventModel @event)
         {
             return Ok(await _service.CreateEvent(@event));
         }
@@ -41,12 +37,11 @@ namespace WorldAround.API.Controllers
         [HttpPut("[action]/{eventId:int}"), DisableRequestSizeLimit]
         public async Task<IActionResult> UpdateEventImage(int eventId, [FromForm] IFormFile image)
         {
-            await _service.UpdateImage(eventId, image);
+            await _service.UpdateImageAsync(eventId, image);
 
             return Ok();
         }
 
-        // PUT api/<EventsController>/5
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Put(int id, [FromBody] UpdateEventModel @event)
         {
@@ -55,7 +50,6 @@ namespace WorldAround.API.Controllers
                 BadRequest("The Id's in the route parameter and the body are not same");
         }
 
-        // DELETE api/<EventsController>/5
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {

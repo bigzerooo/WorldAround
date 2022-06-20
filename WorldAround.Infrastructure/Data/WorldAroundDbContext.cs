@@ -30,6 +30,7 @@ public class WorldAroundDbContext : IdentityDbContext<User, Role, int>, IWorldAr
     public DbSet<Participant> Participants { get; set; }
     public DbSet<TripEventLink> TripEventLinks { get; set; }
     public DbSet<ParticipantPermissionLink> ParticipantPermissionLinks { get; set; }
+    public DbSet<AttractionEventLink> AttractionEventLinks { get; set; }
 
     public WorldAroundDbContext(DbContextOptions<WorldAroundDbContext> options)
         : base(options) { }

@@ -2,6 +2,16 @@ p {
     margin: 0px;
 }
 
+.username {
+  color: white;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  text-decoration: underline;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
 .background {
     width: 100%;
     background-color: #2B2D2E;

@@ -4,7 +4,7 @@ namespace WorldAround.Domain.Models.Events;
 
 public class GetEventsPageModel
 {
-    public IEnumerable<GetEventModel> Events { get; set; }
+    public List<GetEventModel> Events { get; set; }
 
     public PagingModel PageInfo { get; set; }
 }

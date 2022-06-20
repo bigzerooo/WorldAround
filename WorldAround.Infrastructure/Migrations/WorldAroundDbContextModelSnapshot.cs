@@ -212,6 +212,21 @@ namespace WorldAround.Infrastructure.Migrations
                     b.ToTable("Attractions");
                 });
 
+            modelBuilder.Entity("WorldAround.Domain.Entities.AttractionEventLink", b =>
+                {
+                    b.Property<int>("AttractionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EventId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AttractionId", "EventId");
+
+                    b.HasIndex("EventId");
+
+                    b.ToTable("AttractionEventLinks");
+                });
+
             modelBuilder.Entity("WorldAround.Domain.Entities.Chat", b =>
                 {
                     b.Property<int>("Id")
@@ -398,7 +413,7 @@ namespace WorldAround.Infrastructure.Migrations
                     b.Property<int?>("EventId")
                         .HasColumnType("int");
 
-                    b.Property<string>("FilePath")
+                    b.Property<string>("ImagePath")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("PinId")
@@ -750,6 +765,9 @@ namespace WorldAround.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int?>("ImageId")
+                        .HasColumnType("int");
+
                     b.Property<bool?>("IsActive")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
@@ -793,6 +811,8 @@ namespace WorldAround.Infrastructure.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ImageId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -881,6 +901,25 @@ namespace WorldAround.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Author");
+                });
+
+            modelBuilder.Entity("WorldAround.Domain.Entities.AttractionEventLink", b =>
+                {
+                    b.HasOne("WorldAround.Domain.Entities.Attraction", "Attraction")
+                        .WithMany("AttractionEventLinks")
+                        .HasForeignKey("AttractionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WorldAround.Domain.Entities.Event", "Event")
+                        .WithMany("AttractionEventLinks")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Attraction");
+
+                    b.Navigation("Event");
                 });
 
             modelBuilder.Entity("WorldAround.Domain.Entities.Chat", b =>
@@ -1166,6 +1205,16 @@ namespace WorldAround.Infrastructure.Migrations
                     b.Navigation("Trip");
                 });
 
+            modelBuilder.Entity("WorldAround.Domain.Entities.User", b =>
+                {
+                    b.HasOne("WorldAround.Domain.Entities.Image", "Image")
+                        .WithMany("Users")
+                        .HasForeignKey("ImageId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Image");
+                });
+
             modelBuilder.Entity("WorldAround.Domain.Entities.Accessibility", b =>
                 {
                     b.Navigation("Events");
@@ -1178,6 +1227,8 @@ namespace WorldAround.Infrastructure.Migrations
 
             modelBuilder.Entity("WorldAround.Domain.Entities.Attraction", b =>
                 {
+                    b.Navigation("AttractionEventLinks");
+
                     b.Navigation("Comments");
 
                     b.Navigation("Images");
@@ -1201,6 +1252,8 @@ namespace WorldAround.Infrastructure.Migrations
                 {
                     b.Navigation("Albums");
 
+                    b.Navigation("AttractionEventLinks");
+
                     b.Navigation("Chats");
 
                     b.Navigation("Comments");
@@ -1218,6 +1271,11 @@ namespace WorldAround.Infrastructure.Migrations
                     b.Navigation("Ratings");
 
                     b.Navigation("TripEventLinks");
+                });
+
+            modelBuilder.Entity("WorldAround.Domain.Entities.Image", b =>
+                {
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("WorldAround.Domain.Entities.Message", b =>

@@ -11,7 +11,8 @@ public class CreateEventModel
     public DateTime? EndDate { get; set; }
     public AccessibilityProfile Accessibility { get; set; }
     public int CreateUserId { get; set; }
+    public IFormFile Image { get; set; }
 
-    public List<int> Trips { get; set; }
+    public List<PlaceItem> Places { get; set; }
     public List<int> Participants { get; set; }
 }
