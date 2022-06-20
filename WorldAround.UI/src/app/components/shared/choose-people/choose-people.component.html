@@ -16,8 +16,11 @@
 
   <div class="content" *ngIf="this.data && this.data.length > 0">
     <div class="content-cards">
-      <div class="card-wrapper" *ngFor="let item of this.data" >
-        <mat-checkbox (change)="onItemSelect($event, item)" [checked]="isInItemList(item)"></mat-checkbox>
+      <div class="card-wrapper" *ngFor="let item of this.data">
+        <mat-checkbox
+          (change)="onItemSelect($event, item)"
+          [checked]="isInItemList(item)"
+          color="warn"></mat-checkbox>
         <app-user-card [user]="item"></app-user-card>
       </div>
     </div>

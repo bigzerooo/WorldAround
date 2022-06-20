@@ -26,7 +26,10 @@
   <div class="content" *ngIf="this.data && this.data.length > 0">
     <div class="content-cards">
       <div class="card-wrapper" *ngFor="let card of this.data" >
-        <mat-checkbox (change)="onItemSelect($event, card)" [checked]="isInItemList(card)"></mat-checkbox>
+        <mat-checkbox
+          (change)="onItemSelect($event, card)"
+          [checked]="isInItemList(card)"
+          [color]="this.selectedSearchType === 0 ? 'accent' : 'primary'"></mat-checkbox>
         <app-card class="card" [model]="card" (click)="onCardClick(card)"></app-card>
       </div>
     </div>
