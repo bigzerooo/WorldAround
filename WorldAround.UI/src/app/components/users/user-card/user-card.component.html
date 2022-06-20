@@ -1,5 +1,5 @@
 <div class="card">
-  <img class="avatar" [src]="this.user.imagePath ?? this.noImage" alt="">
+  <div mat-card-avatar class="avatar" [style.backgroundImage]="this.imageUrl"></div>
   <span *ngIf="this.fullName" >{{this.fullName}}</span>
   <span class="username">{{this.user.userName}}</span>
 </div>

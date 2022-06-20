@@ -8,12 +8,14 @@ import { UserModel } from 'src/app/models/users/user';
 })
 export class UserCardComponent implements OnInit {
 
-  noImage: string = 'assets/images/userPlaceholder.png';
+  private readonly noImage: string = 'assets/images/userPlaceholder.png';
+  imageUrl: string;
   @Input() user: UserModel;
 
   constructor() { }
 
   ngOnInit(): void {
+    this.imageUrl = `url(${this.user.imagePath ?? this.noImage})`;
   }
 
   get fullName(): string {
