@@ -20,6 +20,6 @@ public class AttractionsMappingProfile : Profile
             .ForMember(d => d.ImagePath, o => o.MapFrom(s => s.Images.FirstOrDefault().ImagePath));
 
         CreateMap<Attraction, PlaceItem>()
-            .ForMember(dest => dest.PlaceType, opts => opts.MapFrom((src) => PlaceType.Attraction));
+            .ForMember(dest => dest.PlaceType, opts => opts.MapFrom(src => PlaceType.Attraction));
     }
 }
