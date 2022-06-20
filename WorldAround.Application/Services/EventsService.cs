@@ -14,17 +14,20 @@ public class EventsService : IEventsService
 {
     private readonly IMapper _mapper;
     private readonly IWorldAroundDbContext _context;
+    private readonly IUsersService _usersService;
     private readonly IBlobStorageGateway _blobStorageGateway;
     private IQueryable<Event> Events => _context.Events.Where(e => e.Display);
 
     public EventsService(
         IMapper mapper,
         IWorldAroundDbContext context,
-        IBlobStorageGateway blobStorageGateway)
+        IBlobStorageGateway blobStorageGateway,
+        IUsersService usersService)
     {
         _mapper = mapper;
         _context = context;
         _blobStorageGateway = blobStorageGateway;
+        _usersService = usersService;
     }
 
     public async Task<GetEventsPageModel> GetEvents(GetEventsParams @params, GetPageModel page)
@@ -75,11 +78,13 @@ public class EventsService : IEventsService
         var totalPages = page.PageSize != 0 ? (int)Math.Ceiling((double)count / page.PageSize) : 0;
 
         var events = await queryEvents.Skip(page.PageIndex * page.PageSize)
-            .Take(page.PageSize).ToListAsync();
+            .Take(page.PageSize)
+            .Include(e => e.Participants.Where(x => x.ParticipantRoleId == ParticipantRoleProfile.Owner))
+            .ToListAsync();
 
         var eventsPage = new GetEventsPageModel
         {
-            Events = _mapper.Map<IEnumerable<GetEventModel>>(events),
+            Events = _mapper.Map<List<GetEventModel>>(events),
             PageInfo = new PagingModel
             {
                 PageIndex = page.PageIndex,
@@ -88,6 +93,16 @@ public class EventsService : IEventsService
                 Length = count
             }
         };
+
+        for (int i = 0; i < events.Count; i++)
+        {
+            var eventOwner = events[i].Participants.Find(p => p.ParticipantRoleId == ParticipantRoleProfile.Owner);
+
+            if (eventOwner != null)
+            {
+                eventsPage.Events[i].Author = await _usersService.GetAsync(eventOwner.UserId);
+            }
+        }
 
         return eventsPage;
     }

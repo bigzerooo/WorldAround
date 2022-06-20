@@ -37,37 +37,13 @@ public class EventMappingProfile : Profile
                 opts.MapFrom(src => src.Accessibility);
             });
 
-        CreateMap<Event, GetEventModel>();
+        CreateMap<Event, GetEventModel>()
+            .ForMember(dest => dest.Author, opts => opts.Ignore());
         CreateMap<Event, EventDetailsModel>()
             .ForMember(dest => dest.Image, opts => opts.MapFrom(src => src.ImagePath))
             .ForMember(dest => dest.Places, opts => opts.ConvertUsing(new GetEventModelValueFormatter(), src => src))
             .ForMember(dest => dest.Participants, opts => opts.MapFrom(src => src.Participants));
     }
-
-    // public class ParticipantUserModelValueFormatter : IValueConverter<List<Participant>, List<UserModel>>
-    // {
-    //     private readonly IMapper _mapper;
-    //
-    //     public ParticipantUserModelValueFormatter()
-    //     {
-    //         _mapper = new MapperConfiguration(cfg =>
-    //         {
-    //             cfg.AddProfile<UserMappingProfile>();
-    //         }).CreateMapper();
-    //     }
-    //
-    //     public List<UserModel> Convert(List<Participant> source, ResolutionContext context)
-    //     {
-    //         var result = new List<UserModel>();
-    //
-    //         source.ForEach(participant =>
-    //         {
-    //             result.Add(_mapper.Map<UserModel>(participant.User));
-    //         });
-    //
-    //         return result;
-    //     }
-    // }
 
     public class GetEventModelValueFormatter : IValueConverter<Event, List<PlaceItem>>
     {

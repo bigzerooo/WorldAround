@@ -6,6 +6,9 @@ export class ImageHelper {
   constructor() {}
 
   static convertImagePathToUrl(imagePath: string) {
-    return UriHelper.createUri(environment.cloudStorageUrl,'images', imagePath);
+
+    let encodedPath = encodeURI(imagePath);
+
+    return UriHelper.createUri(environment.cloudStorageUrl,'images', encodedPath);
   }
 }

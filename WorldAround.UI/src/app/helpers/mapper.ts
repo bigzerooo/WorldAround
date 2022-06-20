@@ -25,7 +25,8 @@ export class MapperHelper {
 
     let card = <CardModel>this.map(event, new CardModel());
     card.subtitle = 'Starts: ' + this.datepipe.transform(event.startDate, 'dd/MM/yyyy');
-    // card.avatarPath = event.avatarPath;
+    card.avatarPath = event.author?.imagePath;
+    card.avatarTitle = event.author?.userName;
 
     return card;
   }

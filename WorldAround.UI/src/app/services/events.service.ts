@@ -15,7 +15,6 @@ import { AuthorizationService } from "./authorization.service";
 export class EventsService {
 
   constructor(
-    private readonly router: Router,
     private readonly gateway: EventsGateway,
     private readonly authService: AuthorizationService) {
   }
@@ -28,6 +27,10 @@ export class EventsService {
           result.events.forEach(event => {
             if (event.imagePath) {
               event.imagePath = ImageHelper.convertImagePathToUrl(event.imagePath);
+            }
+
+            if (event.author?.imagePath) {
+              event.author.imagePath = ImageHelper.convertImagePathToUrl(event.author.imagePath);
             }
           });
 

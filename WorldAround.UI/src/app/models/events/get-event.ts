@@ -1,3 +1,5 @@
+import { UserModel } from "../users/user";
+
 export class GetEventModel {
   id: number;
   title: string;
@@ -6,4 +8,5 @@ export class GetEventModel {
   createDate: Date;
   startDate: Date;
   endDate: Date;
+  author: UserModel;
 }

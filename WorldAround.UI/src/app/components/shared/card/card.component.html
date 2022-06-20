@@ -1,6 +1,6 @@
 <mat-card class="card peach-gradient">
   <mat-card-header>
-    <div #avatar mat-card-avatar class="header-image"></div>
+    <div #avatar mat-card-avatar class="header-image" [matTooltip]="this.model.avatarTitle" matTooltipPosition="above"></div>
     <mat-card-title>{{this.model.title}}</mat-card-title>
     <mat-card-subtitle>{{this.model.subtitle}}</mat-card-subtitle>
   </mat-card-header>
