@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WorldAround.Application\WorldAround.Application.csproj" />
+    <ProjectReference Include="..\WorldAround.Infrastructure\WorldAround.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
