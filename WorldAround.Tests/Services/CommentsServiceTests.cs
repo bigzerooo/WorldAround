@@ -1,7 +1,6 @@
-﻿using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using WorldAround.Application.Interfaces.Infrastructure;
+using System.Threading.Tasks;
 using WorldAround.Application.Mapping;
 using WorldAround.Application.Services;
 using WorldAround.Domain.Entities;
