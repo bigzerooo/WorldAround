@@ -69,6 +69,8 @@ import { GetEventsComponent } from './components/events/get-events/get-events.co
 import { UsersGridComponent } from './components/shared/users-grid/users-grid.component';
 import { UserCardComponent } from './components/users/user-card/user-card.component';
 import { AddImageComponent } from './components/shared/add-image/add-image.component';
+import { CommentSectionComponent } from './components/shared/comment-section/comment-section.component';
+import { DeleteCommentPopupComponent } from './components/shared/comment-section/delete-comment-popup/delete-comment-popup.component';
 
 @NgModule({
   declarations: [
@@ -104,7 +106,9 @@ import { AddImageComponent } from './components/shared/add-image/add-image.compo
     GetEventsComponent,
     UsersGridComponent,
     UserCardComponent,
-    AddImageComponent
+    AddImageComponent,
+    CommentSectionComponent,
+    DeleteCommentPopupComponent
   ],
   imports: [
     BrowserModule,

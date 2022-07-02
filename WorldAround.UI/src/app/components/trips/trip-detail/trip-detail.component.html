@@ -64,21 +64,5 @@
         </div>
     </div>
 
-    <div class="comments">
-        <h5 class="info-section">Comments</h5>
-
-        <div class="comment-add">
-            <textarea placeholder="Comment..." [(ngModel)]="commentText"></textarea>
-            <button class="btn btn-secondary" (click)="addComment()">Create new comment</button>
-        </div>
-
-        <div *ngFor="let comment of trip?.comments" class="comment">
-            <div class="image"></div>
-            <div>
-                <span class="comment-name">{{comment.firstName}} {{comment.lastName}}</span>
-                <span>Created: {{comment.createDate}}</span>
-                <p>{{comment.text}}</p>
-            </div>
-        </div>
-    </div>
+    <app-comment-section [targetType]="0" [targetId]="trip.id"></app-comment-section>
 </div>

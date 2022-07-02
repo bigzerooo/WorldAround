@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AddCommentModel } from '../models/comments/addCommentModel';
 import { CommentModel } from '../models/comments/comment';
+import { GetCommentsModel } from '../models/comments/getCommentsModel';
+import { UpdateCommentModel } from '../models/comments/updateCommentModel';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,19 @@ export class CommentsGateway {
 
   constructor(private http: HttpClient) { }
 
-  addComment(addTripCommentModel: AddCommentModel): Observable<CommentModel> {
-    return this.http.post<CommentModel>(`${this.baseUrl}`, addTripCommentModel);
+  getComments(getCommentsModel: GetCommentsModel): Observable<CommentModel[]> {
+    return this.http.get<CommentModel[]>(this.baseUrl, { params: { ...getCommentsModel } });
+  }
+
+  addComment(addCommentModel: AddCommentModel): Observable<CommentModel> {
+    return this.http.post<CommentModel>(this.baseUrl, addCommentModel);
+  }
+
+  updateComment(updateCommentModel: UpdateCommentModel){
+    return this.http.put(this.baseUrl, updateCommentModel);
+  }
+
+  deleteComment(commentId: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${commentId}`);
   }
 }

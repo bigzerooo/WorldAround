@@ -26,8 +26,6 @@ public class AttractionsService : IAttractionsService
     public async Task<GetAttractionModel> GetAttractionAsync(int attractionId, CancellationToken cancellationToken)
     {
         var attraction = await _context.Attractions
-            .Include(x => x.Comments)
-            .ThenInclude(x => x.Author)
             .Include(x => x.Images)
             .FirstOrDefaultAsync(x => x.Id == attractionId, cancellationToken);
 

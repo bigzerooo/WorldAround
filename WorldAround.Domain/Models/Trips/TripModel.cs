@@ -1,6 +1,4 @@
-﻿using WorldAround.Domain.Models.Comments;
-
-namespace WorldAround.Domain.Models.Trips;
+﻿namespace WorldAround.Domain.Models.Trips;
 
 public class TripModel
 {
@@ -10,7 +8,6 @@ public class TripModel
     public int? AuthorId { get; set; }
 
     public List<PinModel> Pins { get; set; }
-    public List<CommentModel> Comments { get; set; }
 
     public DateTime CreateDate { get; set; }
 }

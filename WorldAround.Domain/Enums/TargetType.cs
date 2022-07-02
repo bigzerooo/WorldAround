@@ -3,5 +3,7 @@
 public enum TargetType
 {
     Trip,
-    Attraction
+    Attraction,
+    Event,
+    User
 }

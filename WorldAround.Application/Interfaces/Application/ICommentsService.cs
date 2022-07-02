@@ -1,9 +1,15 @@
 ﻿using WorldAround.Domain.Models.Comments;
 
-namespace WorldAround.Application.Interfaces.Application
+namespace WorldAround.Application.Interfaces.Application;
+
+public interface ICommentsService
 {
-    public interface ICommentsService
-    {
-        Task<CommentModel> AddCommentAsync(AddCommentModel model);
-    }
+    Task<IReadOnlyCollection<CommentModel>> GetCommentsAsync(GetCommentsModel model,
+        CancellationToken cancellationToken);
+
+    Task<CommentModel> AddCommentAsync(AddCommentModel model);
+
+    Task UpdateCommentAsync(UpdateCommentModel model);
+
+    Task DeleteCommentAsync(int id);
 }

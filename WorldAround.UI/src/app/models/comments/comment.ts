@@ -1,8 +1,10 @@
 export class CommentModel {
-    constructor(
-        public firstName: string,
-        public lastName: string,
-        public createDate: string,
-        public text: string
-    ) { }
+    id: number;
+    createDate: string;
+    text: string;
+    childComments: CommentModel[];
+
+    authorId: number;
+    authorName: string;
+    imagePath: string;
 }

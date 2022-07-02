@@ -13,21 +13,6 @@
         <h5 class="title">Map</h5>
         <app-map height="500px" width="940px" mapId="attraction-details-map"></app-map>
     </div>
-    <div class="comments">
-        <h5 class="info-section">Comments</h5>
-
-        <div class="comment-add">
-            <textarea placeholder="Comment..." [(ngModel)]="commentText"></textarea>
-            <button class="btn btn-secondary" (click)="addComment()">Create new comment</button>
-        </div>
-
-        <div *ngFor="let comment of attraction.comments" class="comment">
-            <div class="image"></div>
-            <div>
-                <span class="comment-name">{{comment.firstName}} {{comment.lastName}}</span>
-                <span>Created: {{comment.createDate}}</span>
-                <p>{{comment.text}}</p>
-            </div>
-        </div>
-    </div>
+    
+    <app-comment-section [targetType]="1" [targetId]="attraction.id"></app-comment-section>
 </div>

@@ -2,11 +2,8 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { CommentsGateway } from 'src/app/gateways/comments.gateway';
 import { PinsGateway } from 'src/app/gateways/pins-gateway.service';
 import { TripsGateway } from 'src/app/gateways/trips-gateway.service';
-import { AddCommentModel } from 'src/app/models/comments/addCommentModel';
-import { TargetType } from 'src/app/models/comments/targetType';
 import { MapMode } from 'src/app/models/map/map-mode';
 import { PointModel } from 'src/app/models/map/point';
 import { UpdatePinModel } from 'src/app/models/pins/updatePin';
@@ -27,7 +24,6 @@ export class TripDetailComponent implements OnInit, OnDestroy {
   @ViewChild(MapComponent) map: MapComponent;
 
   trip: TripModel;
-  commentText: any;
   sub: any;
   userId: number;
 
@@ -43,7 +39,6 @@ export class TripDetailComponent implements OnInit, OnDestroy {
 
   constructor(private readonly activateRoute: ActivatedRoute,
     private readonly tripsGateway: TripsGateway,
-    private readonly commentsGateway: CommentsGateway,
     private readonly pinsGateway: PinsGateway,
     private readonly toastr: ToastrService,
     private readonly authService: AuthorizationService,
@@ -104,16 +99,6 @@ export class TripDetailComponent implements OnInit, OnDestroy {
     this.tripsGateway.updateTripDescription(new UpdateTripModel(this.trip.id, this.description)).subscribe(() => {
       this.trip.description = this.description;
       this.toggleDescriptionEdit();
-    });
-  }
-
-  addComment(): void {
-    const model = new AddCommentModel(this.commentText, this.userId, this.trip.id, TargetType.Trip);
-
-    this.commentsGateway.addComment(model).subscribe(data => {
-      this.trip.comments.push(data);
-      this.commentText = '';
-      this.toastr.success('Comment successfully added.', 'Success');
     });
   }
 

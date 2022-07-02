@@ -3,8 +3,9 @@ import { TargetType } from "./targetType";
 export class AddCommentModel {
     constructor(
         public text: string,
-        public userId: number,
+        public authorId: number,
         public targetId: number,
-        public targetType: TargetType
+        public targetType: TargetType,
+        public parentCommentId: number = null
     ) { }
 }

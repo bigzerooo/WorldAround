@@ -23,6 +23,7 @@ public interface IWorldAroundDbContext
     public DbSet<ParticipantPermissionLink> ParticipantPermissionLinks { get; set; }
     public DbSet<ParticipantRole> ParticipantRoles { get; set; }
     public DbSet<TripEventLink> TripEventLinks { get; set; }
+    public DbSet<User> Users { get; set; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

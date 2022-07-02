@@ -1,5 +1,3 @@
-import { CommentModel } from "../comments/comment";
-
 export class GetAttractionModel {
     id: number;
     authorId:number;
@@ -11,6 +9,4 @@ export class GetAttractionModel {
     longitude:number
 
     imagePath:string;
-
-    comments: CommentModel[];
 }

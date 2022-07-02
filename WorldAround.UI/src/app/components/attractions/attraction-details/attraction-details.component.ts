@@ -1,11 +1,7 @@
-import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { AttractionsGateway } from 'src/app/gateways/attractions.gateway';
-import { CommentsGateway } from 'src/app/gateways/comments.gateway';
 import { GetAttractionModel } from 'src/app/models/attractions/getAttractionModel';
-import { AddCommentModel } from 'src/app/models/comments/addCommentModel';
-import { TargetType } from 'src/app/models/comments/targetType';
 import { PointModel } from 'src/app/models/map/point';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 import { environment } from 'src/environments/environment';
@@ -30,10 +26,8 @@ export class AttractionDetailsComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly attractionsGateway: AttractionsGateway,
-    private readonly commentsGateway: CommentsGateway,
     private readonly activatedRoute: ActivatedRoute,
-    private readonly authService: AuthorizationService,
-    private readonly toastr: ToastrService
+    private readonly authService: AuthorizationService
   ) { }
 
   ngOnInit(): void {
@@ -53,16 +47,6 @@ export class AttractionDetailsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
-  }
-
-  addComment(): void {
-    const model = new AddCommentModel(this.commentText, this.userId, this.attraction.id, TargetType.Attraction);
-
-    this.commentsGateway.addComment(model).subscribe(data => {
-      this.attraction.comments.push(data);
-      this.commentText = '';
-      this.toastr.success('Comment successfully added.', 'Success');
-    });
   }
 
   setWaypoints(): void {

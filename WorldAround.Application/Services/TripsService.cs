@@ -24,8 +24,6 @@ public class TripsService : ITripsService
     {
         var trip = await _context.Trips
             .Include(x => x.Pins)
-            .Include(x => x.Comments)
-            .ThenInclude(x => x.Author)
             .FirstOrDefaultAsync(x => x.Id == tripId, cancellationToken);
 
         return _mapper.Map<TripModel>(trip);

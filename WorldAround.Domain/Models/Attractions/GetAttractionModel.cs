@@ -1,6 +1,4 @@
-﻿using WorldAround.Domain.Models.Comments;
-
-namespace WorldAround.Domain.Models.Attractions;
+﻿namespace WorldAround.Domain.Models.Attractions;
 
 public class GetAttractionModel
 {
@@ -14,6 +12,4 @@ public class GetAttractionModel
     public double Longitude { get; set; }
 
     public string ImagePath { get; set; }
-
-    public List<CommentModel> Comments { get; set; }
 }

@@ -17,4 +17,8 @@ public class Comment
     public Event Event { get; set; }
     public Attraction Attraction { get; set; }
     public User User { get; set; }
+    
+    public int? ParentCommentId { get; set; }
+    public Comment ParentComment { get; set; }
+    public List<Comment> ChildComments { get; set; }
 }

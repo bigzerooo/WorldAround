@@ -38,7 +38,7 @@ public class WorldAroundDbContext : IdentityDbContext<User, Role, int>, IWorldAr
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
+        
         base.OnModelCreating(modelBuilder);
     }
 }
