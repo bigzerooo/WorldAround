@@ -36,6 +36,7 @@ export class TripDetailComponent implements OnInit, OnDestroy {
   edittingPin: boolean= false;
   pin: PinModel = {};
   mapMode: MapMode = MapMode.View;
+  tripId: number;
 
   constructor(private readonly activateRoute: ActivatedRoute,
     private readonly tripsGateway: TripsGateway,
@@ -51,8 +52,8 @@ export class TripDetailComponent implements OnInit, OnDestroy {
     this.userId = this.authService.getUserId();
 
     this.sub = this.activateRoute.params.subscribe(params => {
-      const tripId = params['id'];
-      this.tripsGateway.getTrip(tripId).subscribe(data => {
+      this.tripId = params['id'];
+      this.tripsGateway.getTrip(this.tripId).subscribe(data => {
         this.trip = data;
 
         this.setWaypoints();

@@ -50,7 +50,6 @@ export class AttractionDetailsComponent implements OnInit, OnDestroy {
   }
 
   setWaypoints(): void {
-    console.log(this.map, this.attraction);
     if(this.map && this.attraction) {
       const waypoints = [new PointModel(this.attraction.latitude, this.attraction.longitude)];
       this.map.setWaypoints(waypoints);
