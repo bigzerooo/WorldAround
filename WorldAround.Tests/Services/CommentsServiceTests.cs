@@ -34,7 +34,6 @@ public class CommentsServiceTests
         await _context.SaveChangesAsync();
         var model = new AddCommentModel
         {
-            UserId = 1,
             TargetId = 1,
             TargetType = TargetType.Trip,
             Text = "test"
@@ -59,7 +58,6 @@ public class CommentsServiceTests
         await _context.SaveChangesAsync();
         var model = new AddCommentModel
         {
-            UserId = 1,
             TargetId = 1,
             TargetType = TargetType.Attraction,
             Text = "test"
@@ -88,7 +86,6 @@ public class CommentsServiceTests
         await _context.SaveChangesAsync();
         var model = new AddCommentModel
         {
-            UserId = 1,
             TargetId = 1,
             TargetType = TargetType.Trip,
             Text = "test"
