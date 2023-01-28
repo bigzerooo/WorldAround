@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ImageHelper } from 'src/app/helpers/image-helper';
+import { ImageUtility } from 'src/app/utilities/image.utility';
 import { UserModel } from 'src/app/models/users/user';
 
 @Component({
@@ -15,7 +15,7 @@ export class UserCardComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.imageUrl = `url(${this.user.imagePath ?? ImageHelper.noUserImage})`;
+    this.imageUrl = `url(${this.user.imagePath ?? ImageUtility.noUserImage})`;
   }
 
   get fullName(): string {

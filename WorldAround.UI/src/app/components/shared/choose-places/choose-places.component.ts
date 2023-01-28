@@ -6,11 +6,11 @@ import { Router } from '@angular/router';
 import { ItemType } from 'src/app/enums/item-type';
 import { AttractionsGateway } from 'src/app/gateways/attractions.gateway';
 import { TripsGateway } from 'src/app/gateways/trips-gateway.service';
-import { MapperHelper } from 'src/app/helpers/mapper';
+import { MapperHelper } from 'src/app/helpers/mapper.helper';
 import { CardModel } from 'src/app/models/cards/card';
 import { ChipItem } from 'src/app/models/events/chip-item';
 import { PagingModel } from 'src/app/models/paging/paging';
-import { ImageService } from 'src/app/services/image.service';
+import { ImageUtility } from 'src/app/utilities/image.utility';
 
 @Component({
   selector: 'app-choose-places',
@@ -40,7 +40,6 @@ export class ChoosePlacesComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) private readonly injectedData: any,
     private readonly matDialogRef: MatDialogRef<ChoosePlacesComponent>,
     private readonly router: Router,
-    private readonly imageService: ImageService,
     private readonly tripsGateway: TripsGateway,
     private readonly attractionsGateway: AttractionsGateway,
     private readonly mapper: MapperHelper) {
@@ -111,8 +110,7 @@ export class ChoosePlacesComponent implements OnInit {
       this.attractionsGateway.getAttractions({
         pageSize: this.pagingOptions.pageSize,
         pageIndex: this.pagingOptions.pageIndex,
-        searchValue: this.searchValue ?? '',
-        userId: 1
+        searchValue: this.searchValue || ''
       })
         .subscribe(result => {
           this.pagingOptions.length = result.length;
@@ -120,7 +118,7 @@ export class ChoosePlacesComponent implements OnInit {
           result.data.forEach(item => {
             let card = this.mapper.mapAttractionToCard(item)
             if (card.imagePath) {
-              card.imagePath = this.imageService.getImageUrl(card.imagePath);
+              card.imagePath = ImageUtility.convertImagePathToUrl(card.imagePath);
             }
             this.data.push(card);
           });
@@ -138,7 +136,7 @@ export class ChoosePlacesComponent implements OnInit {
           result.data.forEach(item => {
             let card = this.mapper.mapTripToCard(item)
             if (card.imagePath) {
-              card.imagePath = this.imageService.getImageUrl(card.imagePath);
+              card.imagePath = ImageUtility.convertImagePathToUrl(card.imagePath);
             }
             this.data.push(card);
           });

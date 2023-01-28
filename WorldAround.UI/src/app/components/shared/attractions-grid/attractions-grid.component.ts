@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { AttractionsGateway } from 'src/app/gateways/attractions.gateway';
 import { AttractionModel } from 'src/app/models/attractions/attractionModel';
+import { GetAttractionsModel } from 'src/app/models/attractions/getAttractionsModel';
 import { GetAttractionsParams } from 'src/app/models/attractions/getAttractionsParams';
 
 @Component({
@@ -52,6 +53,13 @@ export class AttractionsGridComponent implements OnInit, OnChanges {
   getAttractions(): void {
 
     this.attractionsGateway.getAttractions(this.params).subscribe(data => {
+      if (!data) {
+        data = {
+          data: [],
+          length: 0
+        };
+      }
+
       this.attractions = data.data;
       this.length = data.length;
       this.dataLoaded.emit(data.length);

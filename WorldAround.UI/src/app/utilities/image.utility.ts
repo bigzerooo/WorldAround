@@ -1,20 +1,15 @@
 import { environment } from "src/environments/environment";
-import { UriHelper } from "./uri-helper";
+import { UriUtility } from "./uri.utility";
 
-export class ImageHelper {
+export class ImageUtility {
 
   static readonly noUserImage: string = 'assets/images/userPlaceholder.png';
 
-  constructor() {}
-
   static convertImagePathToUrl(imagePath: string) {
-
     if(!imagePath || imagePath.length === 0) {
       return null;
     }
 
-    let encodedPath = encodeURI(imagePath);
-
-    return UriHelper.createUri(environment.cloudStorageUrl,'images', encodedPath);
+    return UriUtility.createUri(environment.cloudStorageUrl,'images', encodeURI(imagePath));
   }
 }

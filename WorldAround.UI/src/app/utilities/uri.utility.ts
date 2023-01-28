@@ -1,4 +1,4 @@
-export class UriHelper {
+export class UriUtility {
 
   static createUri(baseUrl: string, ...paths: string[]): string {
 

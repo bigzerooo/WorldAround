@@ -14,7 +14,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("WorldAround");
+        var connectionString = Environment.GetEnvironmentVariable("WA_DB_CONNECTION");
 
         services.AddDbContext<WorldAroundDbContext>(options => options.UseSqlServer(connectionString))
             .AddScoped<IWorldAroundDbContext, WorldAroundDbContext>();

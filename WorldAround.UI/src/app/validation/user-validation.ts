@@ -14,7 +14,7 @@ export class CurrentPasswordValidator implements AsyncValidator {
     private readonly authService: AuthorizationService) {
   }
 
-  validate(control: AbstractControl): Promise<ValidationErrors> | Observable<ValidationErrors> {
+  validate = (control: AbstractControl): Promise<ValidationErrors> | Observable<ValidationErrors> => {
 
     var userId = this.authService.getUserId();
 

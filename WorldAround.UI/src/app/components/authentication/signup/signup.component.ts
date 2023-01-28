@@ -9,7 +9,7 @@ import { Validators } from '@angular/forms';
 import { identical } from 'src/app/validation/form-validation';
 import { ConfirmPasswordAbstractControlValidation, EmailAbstractControlValidation, PasswordAbstractControlValidation, UniqueLoginValidator, UsernameAbstractControlValidation } from 'src/app/validation/authentication-control-validation';
 import { IValidationModel } from 'src/app/models/validation/interfaces/IValidationModel';
-import { FormGroupHelper } from 'src/app/helpers/form-group-helper';
+import { FormGroupHelper } from 'src/app/helpers/form-group.helper';
 
 @Component({
   selector: 'app-signup',

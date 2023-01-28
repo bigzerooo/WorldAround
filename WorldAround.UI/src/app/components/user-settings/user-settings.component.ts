@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { UsersGateway } from 'src/app/gateways/users.gateway';
-import { ImageHelper } from 'src/app/helpers/image-helper';
+import { ImageUtility } from 'src/app/utilities/image.utility';
 import { UpdateUserModel } from 'src/app/models/users/update-user';
 import { IValidationModel } from 'src/app/models/validation/interfaces/IValidationModel';
 import { AuthorizationService } from 'src/app/services/authorization.service';
@@ -46,18 +46,18 @@ export class UserSettingsComponent implements OnInit {
       'lastName': [this.model.lastName],
       'email': [this.model.email, {
         validators: [Validators.required, Validators.email],
-        asyncValidators: [this.loginValidator.validate.bind(this.loginValidator)],
+        asyncValidators: [this.loginValidator.validate],
         updateOn: 'blur'
       }],
       'userName': [this.model.userName, {
         validators: [Validators.required],
-        asyncValidators: [this.loginValidator.validate.bind(this.loginValidator)],
+        asyncValidators: [this.loginValidator.validate],
         updateOn: 'blur'
       }],
       'passwordsGroup': this.formBuilder.group({
         'currentPassword': [null, {
           validators: [Validators.required],
-          asyncValidators: [this.passwordValidator.validate.bind(this.passwordValidator)],
+          asyncValidators: [this.passwordValidator.validate],
           updateOn: 'blur'
         }],
         'newPassword': [null, Validators.required],
@@ -76,7 +76,7 @@ export class UserSettingsComponent implements OnInit {
     this.usersGateway.getById(this.authService.getUserId())
       .subscribe(result => {
         this.model = <UpdateUserModel><unknown>result;
-        this.imageUrl = ImageHelper.convertImagePathToUrl(result.imagePath);
+        this.imageUrl = ImageUtility.convertImagePathToUrl(result.imagePath);
         Object.keys(this.model).forEach(key => {
           if (key !== 'id' && key !== 'imagePath') {
             this.formGroup.get(key).reset(this.model[key]);

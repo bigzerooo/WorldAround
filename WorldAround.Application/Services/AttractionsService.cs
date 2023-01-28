@@ -53,18 +53,18 @@ public class AttractionsService : IAttractionsService
             Data = attractionsQuery
                 .Skip(@params.PageIndex * @params.PageSize)
                 .Take(@params.PageSize)
-                .Select(y => new AttractionModel
+                .Select(attraction => new AttractionModel
                 {
-                    Id = y.Id,
-                    Name = y.Name,
-                    AuthorId = y.AuthorId,
-                    AuthorName = y.Author.FirstName + " " + y.Author.LastName,
-                    CommentsCount = y.Comments.Count,
-                    ImagePath = y.Images.Any()
-                        ? y.Images.First().ImagePath
+                    Id = attraction.Id,
+                    Name = attraction.Name,
+                    AuthorId = attraction.AuthorId,
+                    AuthorName = attraction.Author.FirstName + " " + attraction.Author.LastName,
+                    CommentsCount = attraction.Comments.Count,
+                    ImagePath = attraction.Images.Any()
+                        ? attraction.Images.First().ImagePath
                         : string.Empty,
-                    Rating = y.Ratings.Any()
-                        ? y.Ratings.Select(y => y.Value).Average()
+                    Rating = attraction.Ratings.Any()
+                        ? attraction.Ratings.Select(rating => rating.Value).Average()
                         : 0
                 })
                 .ToArray(),
@@ -92,7 +92,7 @@ public class AttractionsService : IAttractionsService
             {
                 new()
                 {
-                    ImagePath = "images/" + blobName
+                    ImagePath = blobName
                 }
             }
         };

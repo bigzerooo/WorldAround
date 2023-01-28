@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
-import { MapperHelper } from 'src/app/helpers/mapper';
+import { MapperHelper } from 'src/app/helpers/mapper.helper';
 import { GetEventsOptions } from 'src/app/models/gateways/get-events-options';
 import { CardModel } from 'src/app/models/cards/card';
 import { GetEventsPageModel } from 'src/app/models/events/get-events-page';

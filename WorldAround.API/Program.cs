@@ -34,6 +34,11 @@ services.AddCors(options =>
         });
 });
 
+var cultureInfo = new CultureInfo("en-US");
+
+CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -44,7 +49,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors(app.Environment.IsDevelopment() 
+app.UseCors(app.Environment.IsDevelopment()
     ? "localhostUIOrigins"
     : "prodUIOrigins");
 

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { UriHelper } from '../helpers/uri-helper';
+import { UriUtility } from '../utilities/uri.utility';
 import { CreateEventModel } from '../models/events/create-event';
 import { EventDetailsModel } from '../models/events/get-event-details';
 import { GetEventsPageModel } from '../models/events/get-events-page';
@@ -14,18 +14,18 @@ import { GetEventsOptions } from '../models/gateways/get-events-options';
 })
 export class EventsGateway {
 
-  private basePath = UriHelper.createUri(environment.apiBaseUrl, 'Events');
+  private basePath = UriUtility.createUri(environment.apiBaseUrl, 'Events');
 
   constructor(private readonly http: HttpClient) { }
 
   getById(id: number): Observable<EventDetailsModel> {
 
-    return this.http.get<EventDetailsModel>(UriHelper.createUri(this.basePath, id.toString()));
+    return this.http.get<EventDetailsModel>(UriUtility.createUri(this.basePath, id.toString()));
   }
 
   getEvents(options: GetEventsOptions): Observable<GetEventsPageModel> {
 
-    return this.http.get<GetEventsPageModel>(UriHelper.createUri(this.basePath), {
+    return this.http.get<GetEventsPageModel>(UriUtility.createUri(this.basePath), {
       params: {
         ...options
       }
@@ -37,16 +37,16 @@ export class EventsGateway {
   }
 
   update(model: UpdateEventModel): Observable<EventDetailsModel> {
-    return this.http.post<EventDetailsModel>(UriHelper.createUri(this.basePath, model.id.toString()), model);
+    return this.http.post<EventDetailsModel>(UriUtility.createUri(this.basePath, model.id.toString()), model);
   }
 
   updateEventImage(eventId: number, image: FormData): Observable<any> {
-    let path = UriHelper.createUri(this.basePath, 'UpdateEventImage', eventId.toString());
+    let path = UriUtility.createUri(this.basePath, 'UpdateEventImage', eventId.toString());
 
     return this.http.put(path, image);
   }
 
   delete(eventId: number) {
-    return this.http.delete(UriHelper.createUri(this.basePath, eventId.toString()));
+    return this.http.delete(UriUtility.createUri(this.basePath, eventId.toString()));
   }
 }

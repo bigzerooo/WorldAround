@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Accessibility } from 'src/app/enums/event-accessibility';
-import { FormGroupHelper } from 'src/app/helpers/form-group-helper';
+import { FormGroupHelper } from 'src/app/helpers/form-group.helper';
 import { CreateEventModel } from 'src/app/models/events/create-event';
 import { ChoosePlacesComponent } from 'src/app/components/shared/choose-places/choose-places.component';
 import { ChoosePeopleComponent } from 'src/app/components/shared/choose-people/choose-people.component';

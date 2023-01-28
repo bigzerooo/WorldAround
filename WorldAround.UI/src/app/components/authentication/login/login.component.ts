@@ -8,7 +8,7 @@ import { SignupComponent } from '../signup/signup.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IValidationModel } from 'src/app/models/validation/interfaces/IValidationModel';
 import { LoginAbstractControlValidation } from 'src/app/validation/authentication-control-validation';
-import { FormGroupHelper } from 'src/app/helpers/form-group-helper';
+import { FormGroupHelper } from 'src/app/helpers/form-group.helper';
 
 @Component({
   selector: 'app-login',

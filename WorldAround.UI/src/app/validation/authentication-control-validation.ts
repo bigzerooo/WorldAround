@@ -11,7 +11,7 @@ export class UniqueLoginValidator implements AsyncValidator {
 
   constructor(private readonly gateway: UsersGateway) {}
 
-  validate(control: AbstractControl): Promise<ValidationErrors> | Observable<ValidationErrors> {
+  validate = (control: AbstractControl): Promise<ValidationErrors> | Observable<ValidationErrors> => {
 
     return this.gateway.exists(control.value).pipe(
       map(isTaken => (isTaken ? { unique: true } : null)),

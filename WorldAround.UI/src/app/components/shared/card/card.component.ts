@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { ImageHelper } from 'src/app/helpers/image-helper';
+import { ImageUtility } from 'src/app/utilities/image.utility';
 import { CardModel } from 'src/app/models/cards/card';
 
 @Component({
@@ -20,7 +20,7 @@ export class CardComponent implements OnInit {
 
   ngOnInit(): void {
     this.model.description = this.cropText(this.model.description, 100);
-    this.avatarRef.nativeElement.style.setProperty('background-image', `url(${this.model.avatarPath ?? ImageHelper.noUserImage})`);
+    this.avatarRef.nativeElement.style.setProperty('background-image', `url(${this.model.avatarPath ?? ImageUtility.noUserImage})`);
   }
 
   private cropText(text: string, maxSymbols: number) {

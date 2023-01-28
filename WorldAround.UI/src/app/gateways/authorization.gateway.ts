@@ -5,14 +5,14 @@ import { LoginModel } from 'src/app/models/authorization/login';
 import { RegistrationModel } from 'src/app/models/authorization/registration';
 import { AuthenticationResultModel } from 'src/app/models/authorization/authentication-result';
 import { Observable } from 'rxjs';
-import { UriHelper } from 'src/app/helpers/uri-helper';
+import { UriUtility } from 'src/app/utilities/uri.utility';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthorizationGateway {
 
-  baseUrl = UriHelper.createUri(environment.apiBaseUrl, 'Authentication');
+  baseUrl = UriUtility.createUri(environment.apiBaseUrl, 'Authentication');
 
   constructor(private readonly http: HttpClient) { }
 
@@ -20,13 +20,13 @@ export class AuthorizationGateway {
 
     const path = 'Authorize';
 
-    return this.http.post<AuthenticationResultModel>(UriHelper.createUri(this.baseUrl, path), login)
+    return this.http.post<AuthenticationResultModel>(UriUtility.createUri(this.baseUrl, path), login)
   }
 
   createUser(user: RegistrationModel) {
 
     const path = 'Create';
 
-    return this.http.post(UriHelper.createUri(this.baseUrl, path), user);
+    return this.http.post(UriUtility.createUri(this.baseUrl, path), user);
   }
 }

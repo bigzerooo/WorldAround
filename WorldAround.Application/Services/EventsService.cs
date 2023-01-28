@@ -115,6 +115,8 @@ public class EventsService : IEventsService
             .ThenInclude(e => e.Trip)
             .Include(e => e.Participants)
             .ThenInclude(e => e.User)
+            .Include(e => e.Chats)
+            .ThenInclude(e => e.Messages)
             .FirstOrDefaultAsync(e => e.Id.Equals(id));
 
         var model = _mapper.Map<EventDetailsModel>(@event);
@@ -155,8 +157,6 @@ public class EventsService : IEventsService
             }
         };
 
-        model.Participants.Remove(model.CreateUserId);
-
         if (model.Places != null || model.Participants != null)
         {
             @event.TripEventLinks = new List<TripEventLink>();
@@ -181,9 +181,13 @@ public class EventsService : IEventsService
                             TripId = item.Id
                         });
                         break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
             });
 
+            model.Participants?.Remove(model.CreateUserId);
             model.Participants?.ForEach(id =>
             {
                 @event.Participants.Add(new Participant
@@ -194,6 +198,15 @@ public class EventsService : IEventsService
                 });
             });
         }
+
+        @event.Chats = new List<Chat>
+        {
+            new()
+            {
+                EventId = @event.Id,
+                Name = "Main"
+            }
+        };
 
         await _context.SaveChangesAsync();
 

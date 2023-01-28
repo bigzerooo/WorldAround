@@ -1,8 +1,7 @@
 import { Injectable } from "@angular/core";
-import { Router } from "@angular/router";
 import { map, Observable } from "rxjs";
 import { EventsGateway } from "../gateways/events.gateway";
-import { ImageHelper } from "../helpers/image-helper";
+import { ImageUtility } from "../utilities/image.utility";
 import { CreateEventModel } from "../models/events/create-event";
 import { EventDetailsModel } from "../models/events/get-event-details";
 import { GetEventsPageModel } from "../models/events/get-events-page";
@@ -26,11 +25,11 @@ export class EventsService {
         map(result => {
           result.events.forEach(event => {
             if (event.imagePath) {
-              event.imagePath = ImageHelper.convertImagePathToUrl(event.imagePath);
+              event.imagePath = ImageUtility.convertImagePathToUrl(event.imagePath);
             }
 
             if (event.author?.imagePath) {
-              event.author.imagePath = ImageHelper.convertImagePathToUrl(event.author.imagePath);
+              event.author.imagePath = ImageUtility.convertImagePathToUrl(event.author.imagePath);
             }
           });
 
@@ -46,7 +45,7 @@ export class EventsService {
         map(result => {
 
           if (result.image) {
-            result.image = ImageHelper.convertImagePathToUrl(result.image);
+            result.image = ImageUtility.convertImagePathToUrl(result.image);
           }
 
           result.createDate = new Date(Date.parse(result.createDate.toString()));
